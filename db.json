@@ -1,45 +1,12 @@
 {
   "doss": [
     {
-      "id": "0b20",
-      "nama": "fadhill",
-      "email": "hysaiiyaa@gmail.com",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "0113",
-      "nama": "pak mamat",
-      "email": "ahmatfr@gmail.com",
-      "kategori": "Guru"
-    },
-    {
-      "id": "2b98",
-      "nama": "pak rusd",
-      "email": "huhu@gmail.com",
-      "kategori": "Karyawan"
+      "nama": "rentol",
+      "email": "rentam969@gmail.com",
+      "nomer": "0882969",
+      "kategori": "Siswa",
+      "id": "feba"
     }
   ],
-  "users": [
-    {
-      "id": "5996",
-      "name": "efe",
-      "email": "yuy@gmail.com",
-      "password": "rgr"
-    },
-    {
-      "id": "7e58",
-      "email": "yuy@gmail.com",
-      "password": "rgr"
-    },
-    {
-      "id": "8ef8",
-      "email": "yuy@gmail.com",
-      "password": "rgr"
-    },
-    {
-      "id": "7aea",
-      "email": "yuy@gmail.com",
-      "password": "rgr"
-    }
-  ]
+  "users": []
 }

@@ -241,8 +241,8 @@ const Rodd = () => {
               <tbody>
                 {dataList.map((data) => (
                   <tr key={data.id}>
-                    <td className="text-center border px-4 py-2">{data.kategori}</td>
-                    <td className="text-center border px-4 py-2">{data.nama}</td>
+                    <td className="  border px-4 py-2">{data.kategori}</td>
+                    <td className=" border px-4 py-2">{data.nama}</td>
                     <td className="text-center border px-4 py-2">{data.nomer}</td>
                     <td className="border px-4 py-2">{data.email}</td>
                     <td className="text-center border px-4 py-2 space-x-2">
@@ -264,7 +264,6 @@ const Rodd = () => {
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
     </div>

@@ -231,6 +231,7 @@ const Rodd = () => {
             <table className="border-collapse border border-gray-400 w-full">
               <thead>
                 <tr className="bg-sky-500">
+                  <th className="border px-4 py-2">No</th>
                   <th className="border px-4 py-2">Kategori</th>
                   <th className="border px-4 py-2">Nama</th>
                   <th className="border px-4 py-2">Nomer</th>
@@ -239,8 +240,9 @@ const Rodd = () => {
                 </tr>
               </thead>
               <tbody>
-                {dataList.map((data) => (
+                {dataList.map((data, index) => (
                   <tr key={data.id}>
+                    <td className="border px-4 py-2">{index + 1}</td>
                     <td className="  border px-4 py-2">{data.kategori}</td>
                     <td className=" border px-4 py-2">{data.nama}</td>
                     <td className="text-center border px-4 py-2">{data.nomer}</td>

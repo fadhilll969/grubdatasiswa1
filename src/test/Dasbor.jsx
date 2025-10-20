@@ -29,12 +29,12 @@ function Dasbor() {
     };
 
     return (
-        <div className="w-65 min-h-screen p-2">
+        <div className="w-60 min-h-screen">
             <div className="fixed top-1 h-full w-60 bg-indigo-600 text-white">
                 <div className="text-4xl font-bold mb-8 text-center">MENU</div>
                 <nav className="mt-15">
                     <div className="text-2xl text-center">
-                        <a href="/w" className="block py-2 px-3 rounded hover:bg-blue-600">mbud</a>
+                        <a href="/w" className="block py-2 px-3 rounded hover:bg-blue-600">Dashboard</a>
                         <a href="/h" className="block py-2 px-3 mt-10 rounded hover:bg-blue-600">Tabel</a>
                         <a href="/" onClick={handleLogout} className="block py-2 mt-80 px-3 rounded hover:bg-blue-600">Logout</a>
                     </div>

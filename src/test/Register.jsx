@@ -41,13 +41,13 @@ function Register() {
             >
                 <h2 className="text-center text-xl font-bold mb-6">Daftar Akun</h2>
 
-                <label className="block mb-1 mt-10 font-medium">Nama</label>
+                <label className="block mb-1 mt-10 font-medium">Username</label>
                 <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Masukkan nama"
+                    placeholder="Masukkan username"
                     className="w-full p-2 mb-3 border rounded"
                     required
                 />

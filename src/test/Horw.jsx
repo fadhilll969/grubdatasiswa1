@@ -11,7 +11,7 @@ function Horw() {
         karyawan: 0,
     });
 
-    const [dataList, setDataList] = useState([]);  
+    const [dataList, setDataList] = useState([]);
 
     useEffect(() => {
         const ambilData = async () => {
@@ -30,7 +30,7 @@ function Horw() {
                     total: siswa.length + guru.length + karyawan.length,
                 });
 
-                setDataList(data); 
+                setDataList(data);
             } catch {
                 console.log("Gagal ambil data dari db.json");
             }
@@ -43,34 +43,34 @@ function Horw() {
         <div className="flex flex-col md:flex-row">
             <Dasbor />
 
-            <div className="flex-1 bg-gray-100 min-h-screen p-8 font-sans">
+            <div className="flex-1 bg-sky-200 min-h-screen p-8 font-sans">
                 <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">
                     Dashboard Sekolah
                 </h1>
 
                 <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
-                    <div className="bg-gray-800 text-white rounded-lg shadow-md p-6 text-center">
+                    <div className="bg-sky-500 text-white rounded-lg shadow-md p-6 text-center">
                         <h3 className="text-2xl font-semibold">Total</h3>
                         <p className="text-4xl font-bold my-3">{jumlah.total}</p>
                     </div>
 
-                    <div className="bg-gray-800 text-white rounded-lg shadow-md p-6 text-center">
+                    <div className="bg-sky-500 text-white rounded-lg shadow-md p-6 text-center">
                         <h3 className="text-2xl font-semibold">Siswa</h3>
                         <p className="text-4xl font-bold my-3">{jumlah.siswa}</p>
                     </div>
 
-                    <div className="bg-gray-800 text-white rounded-lg shadow-md p-6 text-center">
+                    <div className="bg-sky-500 text-white rounded-lg shadow-md p-6 text-center">
                         <h3 className="text-2xl font-semibold">Guru</h3>
                         <p className="text-4xl font-bold my-3">{jumlah.guru}</p>
                     </div>
 
-                    <div className="bg-gray-800 text-white rounded-lg shadow-md p-6 text-center">
+                    <div className="bg-sky-500 text-white rounded-lg shadow-md p-6 text-center">
                         <h3 className="text-2xl font-semibold">Karyawan</h3>
                         <p className="text-4xl font-bold my-3">{jumlah.karyawan}</p>
                     </div>
                 </div>
 
-                
+
                 <div className="overflow-auto mt-20">
                     <table className="border-collapse border border-gray-400 w-full bg-white">
                         <thead>
@@ -80,7 +80,7 @@ function Horw() {
                                 <th className="border px-4 py-2">Nama</th>
                                 <th className="border px-4 py-2">Nomer</th>
                                 <th className="border px-4 py-2">Email</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
@@ -91,7 +91,7 @@ function Horw() {
                                     <td className="border px-4 py-2">{data.nama}</td>
                                     <td className="text-center border px-4 py-2">{data.nomer}</td>
                                     <td className="border px-4 py-2">{data.email}</td>
-                                     
+
                                 </tr>
                             ))}
                         </tbody>

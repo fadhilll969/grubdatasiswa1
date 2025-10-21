@@ -36,7 +36,7 @@ function Login() {
       });
 
 
-      navigate('/h');
+      navigate('/w');
     } catch (error) {
       console.error('Error register:', error);
 
@@ -53,8 +53,8 @@ function Login() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-sky-600 bg-indigo-400">
-      <div className="bg-white p-8 rounded-lg shadow-md w-100 h-110 max-w-sm mt-5">
-        <h1 className="text-2x1 font-bold text-center mb-6">Login</h1>
+      <div className="bg-white p-8 rounded-lg shadow-md w-90 h-110 max-w-sm mt-5">
+        <h1 className="text-4xl font-bold text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit}>
 
           <div className="mb-4 mt-10">
@@ -65,7 +65,7 @@ function Login() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Masukkan teks"
+              placeholder="Masukkan Nama"
               required
             />
           </div>
@@ -77,7 +77,7 @@ function Login() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Masukkan teks"
+              placeholder="Masukkan Email"
               required
             />
           </div>
@@ -87,14 +87,14 @@ function Login() {
               type="submit"
               disabled={loading}
             >
-              {loading ? "Mengirim..." : "KIRIM"}
+              {loading ? "Mengirim..." : "Masuk"}
             </button>
           </div>
-          <div className="flex justify-between mt-5 ml-5">
+          <div className="flex justify-between mt-5 ml-3">
             <h1 className="">
-              beluim punya akun?
+              Beluim Punya Akun?
               <button >
-                <span className="font-bold text-sky-400 underline">
+                <span className="font-bold ml-1 text-sky-400 underline">
                   <Link to="/k">
                     Daftar Sekarang
                   </Link>

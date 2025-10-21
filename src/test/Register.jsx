@@ -14,9 +14,12 @@ function Register() {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true); // mulai loading
+
         const users = JSON.parse(localStorage.getItem("users")) || [];
         users.push({ ...formData, id: Date.now() });
         localStorage.setItem("users", JSON.stringify(users));
@@ -27,27 +30,29 @@ function Register() {
             text: "Akun kamu berhasil dibuat.",
             confirmButtonText: "Oke",
         }).then(() => {
-            navigate("/h");
+            setLoading(false); // selesai loading
+            navigate("/f");
         });
 
         setFormData({ name: "", email: "", password: "" });
     };
 
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-sky-600 bg-indigo-400">
             <form
                 onSubmit={handleSubmit}
-                className="bg-white p-6 rounded-lg shadow-md h-120 w-90 max-w-md"
+                className="bg-white p-6 rounded-lg shadow-md h-120 w-100 max-w-md"
             >
-                <h2 className="text-center text-xl font-bold mb-6">Daftar Akun</h2>
+                <h2 className="text-center text-3xl font-bold mb-6">Register</h2>
 
-                <label className="block mb-1 mt-10 font-medium">Username</label>
+                <label className="block mb-1 mt-10 font-medium">Nama</label>
                 <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Masukkan username"
+                    placeholder="Masukkan Nama"
                     className="w-full p-2 mb-3 border rounded"
                     required
                 />
@@ -58,7 +63,7 @@ function Register() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Masukkan email"
+                    placeholder="Masukkan Email"
                     className="w-full p-2 mb-3 border rounded"
                     required
                 />
@@ -69,26 +74,34 @@ function Register() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Masukkan password"
+                    placeholder="Masukkan Password"
                     className="w-full p-2 mb-6 border rounded"
                     required
                 />
-                <div className="mt-5">
-
+                <div className="flex justify-center mt-4">
                     <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-7 rounded"
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mb-3"
+                        disabled={loading}
                     >
-                        Daftar
-                    </button>
+                        {loading ? "Mengirim..." : "Daftar"}
 
-                    <button
-                        type="button"
-                        onClick={() => navigate(-1)}
-                        className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
-                    >
-                        Kembali
                     </button>
+                </div>
+                <div className="flex justify-center">
+
+                    <div className="flex justify-between mt-4">
+                        <h1 className="">
+                            Sudah Punya Akun?
+                            <button >
+                                <span className="font-bold ml-1 text-sky-400 underline">
+                                    <Link to="/f">
+                                        Login
+                                    </Link>
+                                </span>
+                            </button>
+                        </h1>
+                    </div>
                 </div>
             </form>
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Dasbor from './Dasbor';
+import { useNavigate } from 'react-router-dom';
 
 const Rodd = () => {
   const filterOptions = ['Siswa', 'Karyawan', 'Guru'];
@@ -15,6 +16,8 @@ const Rodd = () => {
   const [editId, setEditId] = useState(null);
 
   const API_URL = 'http://localhost:5000/doss';
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(API_URL)
@@ -103,7 +106,7 @@ const Rodd = () => {
     setEditId(data.id);
     setName(data.nama);
     setEmail(data.email);
-    setNomer(data.nomer || '');   
+    setNomer(data.nomer || '');
     setSelectedFilter(data.kategori);
   };
 
@@ -152,7 +155,7 @@ const Rodd = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-sky-200">
       <div className="flex">
         <Dasbor />
 
@@ -228,7 +231,7 @@ const Rodd = () => {
 
           <div className="mt-10">
             <h2 className="text-xl font-bold mb-5">Data Menu</h2>
-            <table className="border-collapse border border-gray-400 w-full">
+            <table className="border-collapse border border-gray-400 w-full bg-white">
               <thead>
                 <tr className="bg-sky-500">
                   <th className="border px-4 py-2">No</th>
@@ -243,17 +246,33 @@ const Rodd = () => {
                 {dataList.map((data, index) => (
                   <tr key={data.id}>
                     <td className="border px-4 py-2">{index + 1}</td>
-                    <td className="  border px-4 py-2">{data.kategori}</td>
-                    <td className=" border px-4 py-2">{data.nama}</td>
+                    <td className="border px-4 py-2">{data.kategori}</td>
+                    <td className="border px-4 py-2">{data.nama}</td>
                     <td className="text-center border px-4 py-2">{data.nomer}</td>
                     <td className="border px-4 py-2">{data.email}</td>
                     <td className="text-center border px-4 py-2 space-x-2">
                       <button
-                        className="bg-yellow-500 text-white px-2 py-1 rounded"
-                        onClick={() => handleEdit(data)}
+                        className="bg-sky-500 text-white px-3 py-1 rounded"
+                        onClick={() => {
+                          Swal.fire({
+                            title: 'Yakin Ingin Menguhahnya?',
+                            text: "Kamu akan diarahkan ke halaman edit.",
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonText: 'Ya, Edit',
+                            cancelButtonText: 'Batal',
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#e20e0eff',
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              navigate(`/edit/${data.id}`);
+                            }
+                          });
+                        }}
                       >
                         Edit
                       </button>
+
                       <button
                         className="bg-red-500 text-white px-2 py-1 rounded"
                         onClick={() => handleDelete(data.id)}

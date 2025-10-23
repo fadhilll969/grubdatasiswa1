@@ -65,7 +65,7 @@ function Login() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Masukkan Nama"
+              placeholder="Masukkan Email"
               required
             />
           </div>
@@ -77,7 +77,7 @@ function Login() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Masukkan Email"
+              placeholder="Masukkan Password"
               required
             />
           </div>

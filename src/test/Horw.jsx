@@ -4,6 +4,7 @@ import Dasbor from "./Dasbor";
 
 function Horw() {
     const nav = useNavigate();
+
     const [jumlah, setJumlah] = useState({
         total: 0,
         siswa: 0,
@@ -12,6 +13,11 @@ function Horw() {
     });
 
     const [dataList, setDataList] = useState([]);
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchCategory, setSearchCategory] = useState('Semua');
+
+    const filterOptions = ["Siswa", "Guru", "Karyawan"];
 
     useEffect(() => {
         const ambilData = async () => {
@@ -38,6 +44,13 @@ function Horw() {
 
         ambilData();
     }, []);
+
+    const filteredData = dataList.filter((data) => {
+        const matchName = data.nama.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchCategory =
+            searchCategory === "Semua" || data.kategori === searchCategory;
+        return matchName && matchCategory;
+    });
 
     return (
         <div className="flex flex-col md:flex-row">
@@ -70,31 +83,57 @@ function Horw() {
                     </div>
                 </div>
 
+                <div className="flex flex-col md:flex-row gap-3 items-center mb-5">
 
-                <div className="overflow-auto mt-20">
+
+                    <select
+                        className="p-2 border-2 rounded w-full md:w-60 bg-white focus:ring-2 focus:ring-sky-400"
+                        value={searchCategory}
+                        onChange={(e) => setSearchCategory(e.target.value)}
+                    >
+                        <option value="Semua">Semua Kategori</option>
+                        {filterOptions.map((option) => (
+                            <option key={option} value={option}>
+                                {option}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="overflow-auto mt-10">
                     <table className="border-collapse border border-gray-400 w-full bg-white">
                         <thead>
-                            <tr className="bg-sky-500 ">
+                            <tr className="bg-sky-500">
                                 <th className="border px-4 py-2">No</th>
                                 <th className="border px-4 py-2">Kategori</th>
                                 <th className="border px-4 py-2">Nama</th>
                                 <th className="border px-4 py-2">Nomer</th>
                                 <th className="border px-4 py-2">Email</th>
-
                             </tr>
                         </thead>
                         <tbody>
-                            {dataList.map((data, index) => (
-                                <tr key={data.id} className="hover:bg-gray-100">
-                                    <td className="border px-4 py-2">{index + 1}</td>
-                                    <td className="border px-4 py-2">{data.kategori}</td>
-                                    <td className="border px-4 py-2">{data.nama}</td>
-                                    <td className="text-center border px-4 py-2">{data.nomer}</td>
-                                    <td className="border px-4 py-2">{data.email}</td>
-
+                            {filteredData.length > 0 ? (
+                                filteredData.map((data, index) => (
+                                    <tr key={data.id} className="hover:bg-gray-100">
+                                        <td className="border px-4 py-2">{index + 1}</td>
+                                        <td className="border px-4 py-2">{data.kategori}</td>
+                                        <td className="border px-4 py-2">{data.nama}</td>
+                                        <td className="text-center border px-4 py-2">{data.nomer}</td>
+                                        <td className="border px-4 py-2">{data.email}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td
+                                        colSpan="5"
+                                        className="text-center p-4 text-gray-500 italic"
+                                    >
+                                        Tidak ada data ditemukan.
+                                    </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
+
                     </table>
                 </div>
             </div>

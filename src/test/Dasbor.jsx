@@ -41,7 +41,7 @@ function Dasbor() {
                     <div className="text-2xl">
                         <a
                             href="/w"
-                            className={`block py-2 px-3 rounded mt-2 hover:bg-blue-600 
+                            className={`block py-2 px-3 font-bold rounded mt-2 hover:bg-blue-600 
                                 ${location.pathname === "/w" ? "bg-blue-700 font-bold" : ""
                                 }`}
                         >
@@ -50,7 +50,7 @@ function Dasbor() {
 
                         <a
                             href="/h"
-                            className={`block py-2 px-3 rounded mt-10 hover:bg-blue-600 
+                            className={`block py-2 font-bold px-3 rounded mt-10 hover:bg-blue-600 
                                 ${location.pathname === "/h" ? "bg-blue-700 font-bold" : ""
                                 }`}
                         >
@@ -59,7 +59,7 @@ function Dasbor() {
 
                         <div
                             onClick={handleLogout}
-                            className="block bg-red-500 py-2 mt-75 px-3 rounded hover:bg-red-600"
+                            className="block font-bold bg-red-500 py-2 mt-75 px-3 rounded hover:bg-red-600"
                         >
                             Logout
                         </div>

@@ -1,35 +1,21 @@
 {
   "doss": [
     {
-      "nama": "herz im fine🥀",
-      "email": "herzzarey@gmail.com",
-      "nomer": "088123",
-      "kategori": "Karyawan",
-      "id": "0a19"
-    },
-    {
-      "nama": "sheyy are you okeyy",
-      "email": "gagitushey@gmail.com",
-      "nomer": "088123",
-      "kategori": "Siswa",
-      "id": "34d0"
-    },
-    {
-      "nama": "hoho",
+      "nama": "sheyy are you okayy🥀🥀",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
-      "kategori": "Karyawan",
+      "kategori": "Siswa",
       "id": "79f8"
     },
     {
-      "nama": "hohodwd",
+      "nama": "herz im fine🥀🥀🥀",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
       "kategori": "Siswa",
       "id": "91fd"
     },
     {
-      "nama": "hohodwd",
+      "nama": "gagituvann",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
       "kategori": "Guru",
@@ -47,13 +33,6 @@
       "nama": "herz im ",
       "email": "herzzarey@gmail.com",
       "nomer": "088123",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "d6ae",
-      "nama": "DVD",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "SADSA",
       "kategori": "Siswa"
     },
     {
@@ -90,6 +69,118 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
       "kategori": "Karyawan"
+    },
+    {
+      "id": "e09d",
+      "nama": "hohodwd",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Karyawan"
+    },
+    {
+      "id": "f634",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Karyawan"
+    },
+    {
+      "id": "af84",
+      "nama": "hohoerfqw3edq2frqwf",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Guru"
+    },
+    {
+      "id": "2182",
+      "nama": "hohodwd",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Guru"
+    },
+    {
+      "id": "c7b4",
+      "nama": "hohodwd",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "1241",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "bfbb",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "1186",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "014a",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "d076",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "nama": "ovvred selalu always🥀🥀",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Guru",
+      "id": "58c9"
+    },
+    {
+      "id": "5f8b",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "9f64",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "96cd",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "332f",
+      "nama": "hoho",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "0c91",
+      "nama": "POEFOEJWVOP",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "8928928",
+      "kategori": "Siswa"
     }
   ],
   "users": [
@@ -157,6 +248,11 @@
       "id": "3458",
       "email": "hysaiiyaa@gmail.com",
       "password": "qdd"
+    },
+    {
+      "id": "619a",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "uuy"
     }
   ]
 }

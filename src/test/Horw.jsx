@@ -115,7 +115,7 @@ function Horw() {
                             {filteredData.length > 0 ? (
                                 filteredData.map((data, index) => (
                                     <tr key={data.id} className="hover:bg-gray-100">
-                                        <td className="border px-4 py-2">{index + 1}</td>
+                                        <td className="border text-center px-4 py-2">{index + 1}</td>
                                         <td className="border px-4 py-2">{data.kategori}</td>
                                         <td className="border px-4 py-2">{data.nama}</td>
                                         <td className="text-center border px-4 py-2">{data.nomer}</td>

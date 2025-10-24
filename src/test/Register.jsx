@@ -18,7 +18,7 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setLoading(true); // mulai loading
+        setLoading(true);  
 
         const users = JSON.parse(localStorage.getItem("users")) || [];
         users.push({ ...formData, id: Date.now() });
@@ -30,7 +30,7 @@ function Register() {
             text: "Akun kamu berhasil dibuat.",
             confirmButtonText: "Oke",
         }).then(() => {
-            setLoading(false); // selesai loading
+            setLoading(false);  
             navigate("/f");
         });
 

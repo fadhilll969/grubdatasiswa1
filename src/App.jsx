@@ -5,7 +5,7 @@ import Login from "./test/Login"
 import Register from "./test/Register"
 import Horw from "./test/Horw"
 import Editjir from "./test/Editjir"
-
+import Tmbahdata from "./test/Tmbahdata"
 
 const App = () => {
   return (
@@ -15,6 +15,7 @@ const App = () => {
       <Route path="/f" element={<Login />} />
       <Route path="/k" element={<Register />} />
       <Route path="/w" element={<Horw />} />
+      <Route path="/t" element={<Tmbahdata />} />
       <Route path="/edit/:id" element={<Editjir />} />
 
     </Routes>

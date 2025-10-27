@@ -3,8 +3,8 @@
     {
       "nama": "sheyy are you okayy🥀🥀",
       "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa",
+      "nomer": "8787",
+      "kategori": "Karyawan",
       "id": "79f8"
     },
     {
@@ -15,10 +15,10 @@
       "id": "91fd"
     },
     {
-      "nama": "gagituvann",
+      "nama": "gauyho",
       "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Guru",
+      "nomer": "099",
+      "kategori": "Siswa",
       "id": "8a27"
     },
     {
@@ -33,13 +33,6 @@
       "nama": "herz im ",
       "email": "herzzarey@gmail.com",
       "nomer": "088123",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "414b",
-      "nama": "testjf",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
       "kategori": "Siswa"
     },
     {
@@ -181,6 +174,34 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8928928",
       "kategori": "Siswa"
+    },
+    {
+      "id": "69f7",
+      "nama": "efihuoehf selalu always🥀🥀",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "e682",
+      "nama": "efihuoehf selalu always🥀🥀",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "46e8",
+      "nama": "feqfqe",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "099787",
+      "kategori": "Guru"
+    },
+    {
+      "id": "0ce5",
+      "nama": "efsef",
+      "email": "aswd@gmail.com",
+      "nomer": "566",
+      "kategori": "Siswa"
     }
   ],
   "users": [
@@ -253,6 +274,71 @@
       "id": "619a",
       "email": "hysaiiyaa@gmail.com",
       "password": "uuy"
+    },
+    {
+      "id": "cf8c",
+      "email": "gagitushey@gmail.com",
+      "password": "mm"
+    },
+    {
+      "id": "ccd9",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "eee"
+    },
+    {
+      "id": "98bf",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "dsq"
+    },
+    {
+      "id": "53ee",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "hihi"
+    },
+    {
+      "id": "9fdf",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "sdsd"
+    },
+    {
+      "id": "3b9f",
+      "email": "gagitushey@gmail.com",
+      "password": "ss"
+    },
+    {
+      "id": "d50d",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "s"
+    },
+    {
+      "id": "146f",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "gb"
+    },
+    {
+      "id": "7ae3",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "qd"
+    },
+    {
+      "id": "50ed",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "kfhk"
+    },
+    {
+      "id": "fadf",
+      "email": "gagitushey@gmail.com",
+      "password": "kggjgk"
+    },
+    {
+      "id": "813b",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "qdd"
+    },
+    {
+      "id": "6234",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "eee"
     }
   ]
 }

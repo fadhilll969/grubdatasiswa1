@@ -90,15 +90,15 @@ function Login() {
               {loading ? "Mengirim..." : "Masuk"}
             </button>
           </div>
-          <div className="flex justify-between mt-5 ml-3">
+          <div className="flex justify-between mt-5 ml-5">
             <h1 className="">
-              Beluim Punya Akun?
+              Belum Punya Akun?
+              <span className="font-bold ml-1 text-sky-400 underline">
+                <Link to="/k">
+                  Daftar Sekarang
+                </Link>
+              </span>
               <button >
-                <span className="font-bold ml-1 text-sky-400 underline">
-                  <Link to="/k">
-                    Daftar Sekarang
-                  </Link>
-                </span>
               </button>
             </h1>
           </div>

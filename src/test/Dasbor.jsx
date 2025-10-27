@@ -39,13 +39,14 @@ function Dasbor() {
                 <div className="text-4xl mt-5 font-bold mb-8 text-center">MENU</div>
                 <nav className="mt-15">
                     <div className="text-2xl">
+
                         <a
                             href="/w"
                             className={`block py-2 px-3 font-bold rounded mt-2 hover:bg-blue-600 
                                 ${location.pathname === "/w" ? "bg-blue-700 font-bold" : ""
                                 }`}
                         >
-                            Dashboard
+                            <i className="ri-dashboard-line"></i> Dashboard
                         </a>
 
                         <a
@@ -54,15 +55,13 @@ function Dasbor() {
                                 ${location.pathname === "/h" ? "bg-blue-700 font-bold" : ""
                                 }`}
                         >
-                            Tabel
+                            <i className="ri-table-2"></i>  Tabel
                         </a>
-
-                        <div
+                        <a href=""
                             onClick={handleLogout}
-                            className="block font-bold bg-red-500 py-2 mt-75 px-3 rounded hover:bg-red-600"
-                        >
-                            Logout
-                        </div>
+                            className="block font-bold bg-red-500 py-2 mt-75 px-3 rounded hover:bg-red-600">
+                            <i className="ri-logout-box-line"></i> Logout
+                        </a>
                     </div>
                 </nav>
             </div>

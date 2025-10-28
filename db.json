@@ -4,7 +4,7 @@
       "nama": "sheyy are you okayy🥀🥀",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
-      "kategori": "Karyawan",
+      "kategori": "Siswa",
       "id": "79f8"
     },
     {
@@ -202,6 +202,20 @@
       "email": "aswd@gmail.com",
       "nomer": "566",
       "kategori": "Siswa"
+    },
+    {
+      "id": "ac0b",
+      "nama": "efsef",
+      "email": "aswd@gmail.com",
+      "nomer": "566",
+      "kategori": "Siswa"
+    },
+    {
+      "id": "5856",
+      "nama": "dicke selalu always🥀🥀",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "8787",
+      "kategori": "Karyawan"
     }
   ],
   "users": [
@@ -339,6 +353,11 @@
       "id": "6234",
       "email": "hysaiiyaa@gmail.com",
       "password": "eee"
+    },
+    {
+      "id": "fa9b",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "fiuygu"
     }
   ]
 }

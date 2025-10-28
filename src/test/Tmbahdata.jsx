@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Dasbor from "./Dasbor";
+import "remixicon/fonts/remixicon.css";  
 
 const Tmbhdata = () => {
   const navigate = useNavigate();
@@ -75,55 +76,69 @@ const Tmbhdata = () => {
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
+
       <div className="flex-1 flex justify-center items-center p-6">
-        <div className="bg-white rounded-lg shadow-md w-full max-w-xl p-6">
-          <h2 className="text-2xl font-semibold mb-5 text-center">
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
+           <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 flex items-center justify-center gap-2">
+            <i className="ri-user-add-line text-sky-600 text-3xl"></i>
             Tambah Data
           </h2>
 
-          <select
-            className="p-2 border rounded w-full mb-4 focus:ring-2 focus:ring-sky-400 focus:outline-none"
-            value={selectedFilter}
-            onChange={(e) => setSelectedFilter(e.target.value)}
-          >
-            <option value="Siswa">Siswa</option>
-            <option value="Karyawan">Karyawan</option>
-            <option value="Guru">Guru</option>
-          </select>
+           <div className="relative mb-4">
+            <i className="ri-group-line absolute left-3 top-3 text-gray-400"></i>
+            <select
+              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              value={selectedFilter}
+              onChange={(e) => setSelectedFilter(e.target.value)}
+            >
+              <option value="Siswa">Siswa</option>
+              <option value="Karyawan">Karyawan</option>
+              <option value="Guru">Guru</option>
+            </select>
+          </div>
 
-          <input
-            className="p-2 border rounded w-full mb-4 focus:ring-2 focus:ring-sky-400 focus:outline-none"
-            placeholder="Nama"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+           <div className="relative mb-4">
+            <i className="ri-user-3-line absolute left-3 top-3 text-gray-400"></i>
+            <input
+              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              placeholder="Nama"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-          <input
-            className="p-2 border rounded w-full mb-4 focus:ring-2 focus:ring-sky-400 focus:outline-none"
-            placeholder="Nomor Telepon"
-            value={nomer}
-            onChange={(e) => setNomer(e.target.value)}
-          />
+           <div className="relative mb-4">
+            <i className="ri-phone-line absolute left-3 top-3 text-gray-400"></i>
+            <input
+              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              placeholder="Nomor Telepon"
+              value={nomer}
+              onChange={(e) => setNomer(e.target.value)}
+            />
+          </div>
 
-          <input
-            className="p-2 border rounded w-full mb-6 focus:ring-2 focus:ring-sky-400 focus:outline-none"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+           <div className="relative mb-6">
+            <i className="ri-mail-line absolute left-3 top-3 text-gray-400"></i>
+            <input
+              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-          <button
-            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200"
+           <button
+            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
             onClick={handleAddData}
           >
-            Tambahkan Data
+            <i className="ri-save-3-line"></i> Tambahkan Data
           </button>
 
-          <button
-            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+           <button
+            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
             onClick={() => navigate("/h")}
           >
-            Kembali
+           <i className="ri-arrow-left-line"></i> Kembali
           </button>
         </div>
       </div>

@@ -36,13 +36,14 @@ function Dasbor() {
     return (
         <div className="w-60 min-h-screen">
             <div className="fixed top-1 h-full w-60 bg-indigo-800 text-white">
-                <div className="text-4xl mt-5 font-bold mb-8 text-center">MENU</div>
+                <div className="text-4xl mt-5 font-bold mb-8 text-center">
+                    <i className="ri-menu-2-line"></i> MENU</div>
                 <nav className="mt-15">
                     <div className="text-2xl">
 
                         <a
                             href="/w"
-                            className={`block py-2 px-3 font-bold rounded mt-2 hover:bg-blue-600 
+                            className={`block py-2 px-3 font-bold rounded mt-10 hover:bg-blue-600 
                                 ${location.pathname === "/w" ? "bg-blue-700 font-bold" : ""
                                 }`}
                         >

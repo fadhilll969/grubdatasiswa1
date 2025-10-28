@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Dasbor from './Dasbor';
+import "remixicon/fonts/remixicon.css";
 
 const Editjir = () => {
   const { id } = useParams();
@@ -115,7 +116,7 @@ const Editjir = () => {
       <div className="flex-1 flex justify-center items-center p-6">
         <div className="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
           <h2 className="text-2xl font-semibold mb-5 text-center text-gray-800">
-            Edit Data
+            <i className="ri-edit-2-line text-sky-600"></i> Edit Data
           </h2>
 
           <select
@@ -152,17 +153,17 @@ const Editjir = () => {
           />
 
           <button
-            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200"
+            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex justify-center items-center gap-2"
             onClick={handleSaveEdit}
           >
-            Simpan Perubahan
+            <i className="ri-save-3-line text-lg"></i> Simpan Perubahan
           </button>
 
           <button
-            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex justify-center items-center gap-2"
             onClick={() => navigate('/h')}
           >
-            Batal
+            <i className="ri-close-circle-line text-lg"></i> Batal
           </button>
         </div>
       </div>

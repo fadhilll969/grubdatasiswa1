@@ -22,13 +22,6 @@
       "id": "8a27"
     },
     {
-      "id": "ad82",
-      "nama": "andre kenawhyy you?",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "4354356",
-      "kategori": "Siswa"
-    },
-    {
       "id": "51b7",
       "nama": "herz im ",
       "email": "herzzarey@gmail.com",
@@ -36,22 +29,8 @@
       "kategori": "Siswa"
     },
     {
-      "id": "ecdb",
-      "nama": "fjyhkhykhy",
-      "email": "herzzarey@gmail.com",
-      "nomer": "088123",
-      "kategori": "Guru"
-    },
-    {
       "id": "046a",
       "nama": "testjftjfy",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "562a",
-      "nama": "pfioejpofjqwef",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
       "kategori": "Siswa"
@@ -365,6 +344,14 @@
       "id": "fa9b",
       "email": "hysaiiyaa@gmail.com",
       "password": "fiuygu"
+    },
+    {
+      "id": "9bb3",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "ssw"
     }
+  ],
+  "coco" : [
+    
   ]
 }

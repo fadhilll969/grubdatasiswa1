@@ -6,6 +6,10 @@ import Register from "./test/Register"
 import Horw from "./test/Horw"
 import Editjir from "./test/Editjir"
 import Tmbahdata from "./test/Tmbahdata"
+import Keuangan from "./test/Keuangan"
+import Tagihan from "./test/Tagihan"
+
+
 
 const App = () => {
   return (
@@ -17,6 +21,8 @@ const App = () => {
       <Route path="/w" element={<Horw />} />
       <Route path="/t" element={<Tmbahdata />} />
       <Route path="/edit/:id" element={<Editjir />} />
+      <Route path="/q" element={<Keuangan />} />
+      <Route path="/o" element={<Tagihan />} />
 
     </Routes>
 

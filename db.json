@@ -351,7 +351,20 @@
       "password": "ssw"
     }
   ],
-  "coco" : [
-    
+  "coco": [
+    {
+      "id": "7617",
+      "nama": "herz im fine🥀",
+      "jumlah": 436456,
+      "jenisTagihan": "uang gedung",
+      "status": "Belum Bayar"
+    },
+    {
+      "id": "fe9f",
+      "nama": "herz im fine🥀",
+      "jumlah": 3343,
+      "jenisTagihan": "uang gedung",
+      "status": "Sudah Bayar"
+    }
   ]
 }

@@ -8,8 +8,8 @@ import Editjir from "./test/Editjir"
 import Tmbahdata from "./test/Tmbahdata"
 import Keuangan from "./test/Keuangan"
 import Tagihan from "./test/Tagihan"
-
-
+import TmbhdataTgihan from "./test/TmbhdataTgihan"
+import EditTagihan from "./test/EditTagihan" 
 
 const App = () => {
   return (
@@ -23,7 +23,8 @@ const App = () => {
       <Route path="/edit/:id" element={<Editjir />} />
       <Route path="/q" element={<Keuangan />} />
       <Route path="/o" element={<Tagihan />} />
-
+      <Route path="/p" element={<TmbhdataTgihan />} />
+       <Route path="/ed/:id" element={<EditTagihan />} />
     </Routes>
 
   )

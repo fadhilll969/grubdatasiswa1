@@ -40,7 +40,6 @@ function Dasbor() {
                     <i className="ri-menu-2-line"></i> MENU</div>
                 <nav className="mt-15">
                     <div className="text-xl">
-<p>databes</p>
                         <a
                             href="/w"
                             className={`block py-2 px-3 font-bold rounded mt-5 hover:bg-blue-600 
@@ -49,6 +48,10 @@ function Dasbor() {
                         >
                             <i className="ri-dashboard-line"></i> Dashboard
                         </a>
+                        <div className="mt-3">
+
+                        <p>databes</p>
+                        </div>
 
                         <a
                             href="/h"
@@ -59,14 +62,14 @@ function Dasbor() {
                             <i className="ri-table-2"></i>  Tabel
                         </a>
                         <p className="mt-5">Keuangan</p>
-                            <a
-                                href="/o"
-                                className={`block py-2 font-bold px-3 rounded mt-2 hover:bg-blue-600 
+                        <a
+                            href="/o"
+                            className={`block py-2 font-bold px-3 rounded mt-2 hover:bg-blue-600 
                                     ${location.pathname === "/o" ? "bg-blue-700 font-bold" : ""
-                                    }`}
-                            >
-                               <i className="ri-wifi-off-fill"></i> Tagihanb
-                            </a>
+                                }`}
+                        >
+                         <i className="ri-bill-fill"></i> Tagihan
+                        </a>
                         <a
                             href="/q"
                             className={`block py-2 font-bold px-3 rounded mt-5 hover:bg-blue-600 
@@ -75,7 +78,7 @@ function Dasbor() {
                         >
                             <i className="ri-wifi-fill"></i> Daftar Tagihan
                         </a>
-                      
+
                         <a href=""
                             onClick={handleLogout}
                             className="block font-bold bg-red-500 py-2 mt-30 px-3 rounded hover:bg-red-600">

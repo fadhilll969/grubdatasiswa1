@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Dasbor from "./Dasbor";
-import "remixicon/fonts/remixicon.css";  
+import "remixicon/fonts/remixicon.css";
 
 const Tmbhdata = () => {
   const navigate = useNavigate();
@@ -12,10 +12,11 @@ const Tmbhdata = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [nomer, setNomer] = useState("");
-
+  const [kelas, setKelas] = useState("");
   const API_URL = "http://localhost:5000/doss";
 
   const handleAddData = async () => {
+
     if (!name || !email || !nomer) {
       Swal.fire({
         icon: "warning",
@@ -24,6 +25,7 @@ const Tmbhdata = () => {
       });
       return;
     }
+
 
     if (!/\S+@\S+\.\S+/.test(email)) {
       Swal.fire({
@@ -34,11 +36,22 @@ const Tmbhdata = () => {
       return;
     }
 
+
+    if (selectedFilter === "Siswa" && !kelas) {
+      Swal.fire({
+        icon: "warning",
+        title: "Kelas belum dipilih!",
+        text: "Pilih kelas untuk siswa.",
+      });
+      return;
+    }
+
     const newData = {
       nama: name,
       email,
       nomer,
       kategori: selectedFilter,
+      ...(selectedFilter === "Siswa" && { kelas }),
     };
 
     Swal.fire({
@@ -79,17 +92,21 @@ const Tmbhdata = () => {
 
       <div className="flex-1 flex justify-center items-center p-6">
         <div className="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
-           <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 flex items-center justify-center gap-2">
+          <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 flex items-center justify-center gap-2">
             <i className="ri-user-add-line text-sky-600 text-3xl"></i>
             Tambah Data
           </h2>
 
-           <div className="relative mb-4">
+
+          <div className="relative mb-4">
             <i className="ri-group-line absolute left-3 top-3 text-gray-400"></i>
             <select
               className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
               value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
+              onChange={(e) => {
+                setSelectedFilter(e.target.value);
+                setKelas("");
+              }}
             >
               <option value="Siswa">Siswa</option>
               <option value="Karyawan">Karyawan</option>
@@ -97,7 +114,9 @@ const Tmbhdata = () => {
             </select>
           </div>
 
-           <div className="relative mb-4">
+
+
+          <div className="relative mb-4">
             <i className="ri-user-3-line absolute left-3 top-3 text-gray-400"></i>
             <input
               className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
@@ -106,18 +125,39 @@ const Tmbhdata = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
+          {selectedFilter === "Siswa" && (
+            <div className="relative mb-4">
+              <i className="ri-building-2-line absolute left-3 top-3 text-gray-400"></i>
+              <select
+                className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+                value={kelas}
+                onChange={(e) => setKelas(e.target.value)}
+              >
+                <option value="">Pilih Kelas</option>
+                <option value="X">X</option>
+                <option value="XI">XI</option>
+                <option value="XII">XII</option>
+              </select>
+            </div>
+          )}
 
-           <div className="relative mb-4">
+
+          <div className="relative mb-4">
             <i className="ri-phone-line absolute left-3 top-3 text-gray-400"></i>
             <input
               className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
               placeholder="Nomor Telepon"
               value={nomer}
-              onChange={(e) => setNomer(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) {
+                  setNomer(value);
+                }
+              }}
             />
           </div>
 
-           <div className="relative mb-6">
+          <div className="relative mb-6">
             <i className="ri-mail-line absolute left-3 top-3 text-gray-400"></i>
             <input
               className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
@@ -127,18 +167,20 @@ const Tmbhdata = () => {
             />
           </div>
 
-           <button
+
+          <button
             className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
             onClick={handleAddData}
           >
             <i className="ri-save-3-line"></i> Tambahkan Data
           </button>
 
-           <button
+
+          <button
             className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
             onClick={() => navigate("/h")}
           >
-           <i className="ri-arrow-left-line"></i> Kembali
+            <i className="ri-arrow-left-line"></i> Kembali
           </button>
         </div>
       </div>

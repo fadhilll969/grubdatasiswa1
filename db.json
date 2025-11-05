@@ -5,6 +5,7 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
       "kategori": "Siswa",
+      "kelas": "X",
       "id": "79f8"
     },
     {
@@ -12,6 +13,7 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
       "kategori": "Siswa",
+      "kelas": "XII",
       "id": "91fd"
     },
     {
@@ -19,21 +21,24 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099",
       "kategori": "Siswa",
+      "kelas": "XI",
       "id": "8a27"
     },
     {
-      "id": "51b7",
       "nama": "herz im ",
       "email": "herzzarey@gmail.com",
       "nomer": "088123",
-      "kategori": "Siswa"
+      "kategori": "Siswa",
+      "kelas": "XI",
+      "id": "51b7"
     },
     {
-      "id": "046a",
       "nama": "testjftjfy",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
-      "kategori": "Siswa"
+      "kategori": "Siswa",
+      "kelas": "X",
+      "id": "046a"
     },
     {
       "id": "4471",
@@ -71,46 +76,28 @@
       "kategori": "Guru"
     },
     {
-      "id": "c7b4",
       "nama": "hohodwd",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
-      "kategori": "Siswa"
+      "kategori": "Siswa",
+      "kelas": "XII",
+      "id": "c7b4"
     },
     {
-      "id": "1241",
       "nama": "hoho",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
-      "kategori": "Siswa"
+      "kategori": "Siswa",
+      "kelas": "XII",
+      "id": "014a"
     },
     {
-      "id": "bfbb",
       "nama": "hoho",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "1186",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "014a",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "d076",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
+      "kategori": "Siswa",
+      "kelas": "XII",
+      "id": "d076"
     },
     {
       "nama": "ovvred selalu always🥀🥀",
@@ -120,74 +107,11 @@
       "id": "58c9"
     },
     {
-      "id": "5f8b",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "9f64",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "96cd",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "332f",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "0c91",
-      "nama": "POEFOEJWVOP",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "8928928",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "69f7",
-      "nama": "efihuoehf selalu always🥀🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "e682",
-      "nama": "efihuoehf selalu always🥀🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa"
-    },
-    {
       "id": "46e8",
       "nama": "feqfqe",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
       "kategori": "Guru"
-    },
-    {
-      "id": "0ce5",
-      "nama": "efsef",
-      "email": "aswd@gmail.com",
-      "nomer": "566",
-      "kategori": "Siswa"
-    },
-    {
-      "id": "ac0b",
-      "nama": "efsef",
-      "email": "aswd@gmail.com",
-      "nomer": "566",
-      "kategori": "Siswa"
     },
     {
       "id": "5856",
@@ -202,6 +126,14 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
       "kategori": "Karyawan"
+    },
+    {
+      "nama": "giehgliejge",
+      "email": "gt@gmail.com",
+      "nomer": "313121",
+      "kategori": "Siswa",
+      "kelas": "X",
+      "id": "5944"
     }
   ],
   "users": [
@@ -353,18 +285,38 @@
   ],
   "coco": [
     {
-      "id": "7617",
-      "nama": "herz im fine🥀",
-      "jumlah": 436456,
-      "jenisTagihan": "uang gedung",
+      "id": "fe9f",
+      "nama": "sheyy are you okeyy",
+      "jumlah": 5000000,
+      "jenisTagihan": "Amba",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "d458",
+      "nama": "Neaa",
+      "jumlah": "2000000",
+      "jenisTagihan": "Seragam",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "1c29",
+      "nama": "creyzz im fine🥀",
+      "jumlah": 45000000000000000000,
+      "jenisTagihan": "SPP",
       "status": "Belum Bayar"
     },
     {
-      "id": "fe9f",
-      "nama": "herz im fine🥀",
-      "jumlah": 3343,
-      "jenisTagihan": "uang gedung",
+      "id": "c138",
+      "nama": "rrq*reyz#232",
+      "jumlah": 500000,
+      "jenisTagihan": "Uang Gedung",
       "status": "Sudah Bayar"
+    },
+    {
+      "id": "19ca",
+      "nama": "rrq*didol\"969#",
+      "jumlah": 900000,
+      "jenisTagihan": "Seragam"
     }
   ]
 }

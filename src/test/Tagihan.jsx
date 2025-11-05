@@ -8,7 +8,7 @@ const Tagihan = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const filterOptions = ["SPP", "Seragam", "Uang Gedung"];
+  const filterOptions = ["Sudah Bayar", "Belum Bayar"];
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("Semua");
 
@@ -115,11 +115,9 @@ const Tagihan = () => {
   };
 
   const filteredData = data.filter((item) => {
-    const matchName = item.nama
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const matchName = item.nama.toLowerCase().includes(searchTerm.toLowerCase());
     const matchCategory =
-      searchCategory === "Semua" || item.jenisTagihan === searchCategory;
+      searchCategory === "Semua" || item.status === searchCategory;
     return matchName && matchCategory;
   });
 
@@ -131,9 +129,7 @@ const Tagihan = () => {
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="bg-sky-700 py-4 px-6 flex items-center justify-center gap-2">
               <i className="ri-wallet-3-line text-white text-2xl"></i>
-              <h3 className="text-2xl font-semibold text-white">
-                Manajemen Tagihan
-              </h3>
+              <h3 className="text-2xl font-semibold text-white">Manajemen Tagihan</h3>
             </div>
 
             <div className="p-5 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -153,7 +149,7 @@ const Tagihan = () => {
                 value={searchCategory}
                 onChange={(e) => setSearchCategory(e.target.value)}
               >
-                <option value="Semua">Semua Jenis Tagihan</option>
+                <option value="Semua">Semua</option>
                 {filterOptions.map((option) => (
                   <option key={option} value={option}>
                     {option}
@@ -180,7 +176,7 @@ const Tagihan = () => {
                   <tr>
                     <th className="py-3 px-4">No</th>
                     <th className="py-3 px-4">Nama</th>
-                    <th className="py-3 px-4">Jumlah (Rp)</th>
+                    <th className="py-3 px-4">Jumlah</th>
                     <th className="py-3 px-4">Jenis Tagihan</th>
                     <th className="py-3 px-4">Status</th>
                     <th className="py-3 px-4">Aksi</th>
@@ -191,9 +187,8 @@ const Tagihan = () => {
                     filteredData.map((item, index) => (
                       <tr
                         key={item.id}
-                        className={`${
-                          index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                        } hover:bg-sky-100 transition`}
+                        className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                          } hover:bg-sky-100 transition`}
                       >
                         <td className="py-3 text-center px-4">{index + 1}</td>
                         <td className="py-3 px-4">{item.nama}</td>
@@ -204,11 +199,10 @@ const Tagihan = () => {
                           {item.jenisTagihan}
                         </td>
                         <td
-                          className={`py-3 px-4 text-center font-semibold ${
-                            item.status === "Sudah Bayar"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
+                          className={`py-3 px-4 text-center font-semibold ${item.status === "Sudah Bayar"
+                            ? "text-green-600"
+                            : "text-red-600"
+                            }`}
                         >
                           {item.status || "Belum Bayar"}
                         </td>
@@ -243,7 +237,7 @@ const Tagihan = () => {
                               className="bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition flex items-center gap-1"
                               onClick={() => handleDelete(item.id)}
                             >
-                              <i className="ri-delete-bin-6-line text-sm"></i>{" "}
+                              <i className="ri-delete-bin-6-line text-sm"></i>
                               Hapus
                             </button>
                           </div>

@@ -21,7 +21,12 @@ const EditTagihan = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/coco/${id}`);
-        setFormData(res.data);
+        setFormData({
+          nama: res.data.nama || "",
+          jumlah: res.data.jumlah || "",
+          jenisTagihan: res.data.jenisTagihan || "",
+          status: res.data.status || "",
+        });
       } catch (error) {
         console.error("Gagal mengambil data:", error);
         Swal.fire("Error", "Gagal mengambil data tagihan", "error");
@@ -30,19 +35,41 @@ const EditTagihan = () => {
     fetchData();
   }, [id]);
 
+  // Fungsi format Rupiah untuk tampil di input
+  const formatRupiah = (angka) => {
+    if (!angka) return "";
+    return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    if (name === "jumlah") {
+      // Hanya simpan angka murni
+      const angka = value.replace(/\D/g, ""); // hapus semua bukan angka
+      setFormData((prev) => ({ ...prev, [name]: angka }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.nama.trim() || !formData.jumlah || !formData.jenisTagihan.trim()) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Data Belum Lengkap",
+        text: "Semua kolom wajib diisi sebelum menyimpan!",
+      });
+    }
+
     try {
       setLoading(true);
-      await axios.patch(`http://localhost:5000/coco/${id}`, formData);
+      await axios.patch(`http://localhost:5000/coco/${id}`, {
+        ...formData,
+        jumlah: Number(formData.jumlah), // pastikan jumlah dikirim sebagai number
+      });
       Swal.fire({
         title: "Berhasil!",
         text: "Data tagihan berhasil diperbarui.",
@@ -63,7 +90,7 @@ const EditTagihan = () => {
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
       <div className="flex-1 p-6">
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-white rounded-xl shadow-lg w-160 ml-45 mt-10 overflow-hidden">
           <div className="bg-sky-500 py-4 px-6 flex items-center justify-center gap-2">
             <i className="ri-edit-2-line text-white text-2xl"></i>
             <h3 className="text-2xl font-semibold text-white">Edit Tagihan</h3>
@@ -78,71 +105,59 @@ const EditTagihan = () => {
                 value={formData.nama}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
+                placeholder="Masukkan nama"
               />
             </div>
 
             <div>
               <label className="block text-gray-700 font-medium mb-1">Jumlah (Rp)</label>
               <input
-                type="number"
+                type="text"
                 name="jumlah"
-                value={formData.jumlah}
+                value={formatRupiah(formData.jumlah)}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
+                placeholder="Masukkan Jumlah Tagihan"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Jenis Tagihan</label>
-              <select
+              <label className="block text-gray-700 font-medium mb-1">
+                Jenis Tagihan
+              </label>
+              <input
+                type="text"
                 name="jenisTagihan"
                 value={formData.jenisTagihan}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
-              >
-                <option value="spp">SPP</option>
-                <option value="uang gedung">Uang Gedung</option>
-                <option value="seragam">Seragam</option>
-              </select>
+                placeholder="Masukkan jenis tagihan"
+              />
             </div>
 
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Status Pembayaran</label>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
-              >
-                <option value="Belum Bayar">Belum Bayar</option>
-                <option value="Sudah Bayar">Sudah Bayar</option>
-              </select>
-            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <>
+                  <i className="ri-loader-4-line animate-spin"></i> Menyimpan...
+                </>
+              ) : (
+                <>
+                  <i className="ri-save-3-line"></i> Simpan
+                </>
+              )}
+            </button>
 
-            <div className="flex justify-end gap-3 pt-4">
-              <button
-                type="button"
-                onClick={() => navigate("/o")}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-              >
-                Batal
-              </button>
-              <button
-                type="submit"
-                disabled={loading}
-                className="px-4 py-2 bg-sky-700 text-white rounded-lg hover:bg-sky-600 transition flex items-center gap-2"
-              >
-                {loading ? (
-                  <>
-                    <i className="ri-loader-4-line animate-spin"></i> Menyimpan...
-                  </>
-                ) : (
-                  <>
-                    <i className="ri-save-3-line"></i> Simpan Perubahan
-                  </>
-                )}
-              </button>
-            </div>
+            <button
+              type="button"
+              className="w-full p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
+              onClick={() => navigate("/o")}
+            >
+              <i className="ri-arrow-left-line"></i> Kembali
+            </button>
           </form>
         </div>
       </div>

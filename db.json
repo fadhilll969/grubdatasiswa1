@@ -114,23 +114,23 @@
       "kategori": "Guru"
     },
     {
-      "id": "5856",
       "nama": "dicke selalu always🥀🥀",
       "email": "hysaiiyaa@gmail.com",
-      "nomer": "8787",
-      "kategori": "Karyawan"
+      "nomer": "08787",
+      "kategori": "Karyawan",
+      "id": "5856"
     },
     {
-      "id": "2c9c",
       "nama": "ovvred selalu always🥀🥀",
       "email": "hysaiiyaa@gmail.com",
-      "nomer": "8787",
-      "kategori": "Karyawan"
+      "nomer": "08787",
+      "kategori": "Karyawan",
+      "id": "2c9c"
     },
     {
       "nama": "giehgliejge",
       "email": "gt@gmail.com",
-      "nomer": "313121",
+      "nomer": "013121",
       "kategori": "Siswa",
       "kelas": "X",
       "id": "5944"
@@ -289,34 +289,103 @@
       "nama": "sheyy are you okeyy",
       "jumlah": 5000000,
       "jenisTagihan": "Amba",
-      "status": "Sudah Bayar"
+      "status": "Belum Bayar",
+      "tanggal": "2025-11-06"
     },
     {
       "id": "d458",
       "nama": "Neaa",
-      "jumlah": "2000000",
+      "jumlah": 2000000,
       "jenisTagihan": "Seragam",
-      "status": "Sudah Bayar"
+      "status": "Sudah Bayar",
+      "tanggal": "2025-11-06"
     },
     {
       "id": "1c29",
       "nama": "creyzz im fine🥀",
-      "jumlah": 45000000000000000000,
+      "jumlah": 45000000000,
       "jenisTagihan": "SPP",
-      "status": "Belum Bayar"
+      "status": "Sudah Bayar",
+      "tanggal": "2025-11-06"
     },
     {
       "id": "c138",
       "nama": "rrq*reyz#232",
-      "jumlah": 500000,
+      "jumlah": 50000000000,
       "jenisTagihan": "Uang Gedung",
-      "status": "Sudah Bayar"
+      "status": "Belum Bayar",
+      "tanggal": "2025-11-06"
     },
     {
       "id": "19ca",
       "nama": "rrq*didol\"969#",
       "jumlah": 900000,
-      "jenisTagihan": "Seragam"
+      "jenisTagihan": "Seragam",
+      "status": "Belum Bayar",
+      "tanggal": "2025-11-07"
+    },
+    {
+      "id": "3a2f",
+      "nama": "herz im fine🥀",
+      "jumlah": 5000000000,
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-02-18",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "6e80",
+      "nama": "herz im fine🥀",
+      "jumlah": 500000000,
+      "jenisTagihan": "Ambao",
+      "tanggal": "2025-11-19",
+      "status": "Belum Bayar"
+    },
+    {
+      "id": "4d37",
+      "nama": "herz im fine🥀",
+      "jumlah": 500000000,
+      "jenisTagihan": "Uang Gedung",
+      "tanggal": "2025-11-06",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "592b",
+      "nama": "sheyy are you okeyy",
+      "jumlah": 50000000,
+      "jenisTagihan": "Uang Gedung",
+      "tanggal": "2025-11-09",
+      "status": "Belum Bayar"
+    },
+    {
+      "id": "1865",
+      "nama": "sheyy are you okeyy",
+      "jumlah": 50000000,
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-11-06",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "d331",
+      "nama": "sheyy are you okeyy",
+      "jumlah": 50000000,
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-11-06",
+      "status": "Belum Bayar"
+    },
+    {
+      "id": "8ff8",
+      "nama": "sheyy are you okeyy",
+      "jumlah": 500000000,
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-11-06",
+      "status": ""
+    },
+    {
+      "id": "0cf0",
+      "nama": "sheyy are you okeyy",
+      "jumlah": 50000000,
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-11-06"
     }
   ]
 }

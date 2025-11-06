@@ -11,22 +11,29 @@ const TmbhdataTgihan = () => {
     nama: "",
     jumlah: "",
     jenisTagihan: "",
+    tanggal: "",  
   });
+
 
   const [loading, setLoading] = useState(false);
 
-   const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "jumlah") {
-       const angka = value.replace(/\D/g, "");
+       
+      const angka = value.replace(/\D/g, "");
       setFormData((prev) => ({ ...prev, [name]: angka }));
+    } else if (name === "tanggal") {
+       
+      setFormData((prev) => ({ ...prev, [name]: value }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-   const formatRupiah = (angka) =>
+
+  const formatRupiah = (angka) =>
     angka ? "Rp " + angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "";
 
   const handleSubmit = async (e) => {
@@ -36,7 +43,8 @@ const TmbhdataTgihan = () => {
       !formData.nama.trim() ||
       !formData.jumlah ||
       Number(formData.jumlah) <= 0 ||
-      !formData.jenisTagihan.trim()
+      !formData.jenisTagihan.trim() ||
+      !formData.tanggal  
     ) {
       Swal.fire({
         icon: "warning",
@@ -47,13 +55,16 @@ const TmbhdataTgihan = () => {
       return;
     }
 
+
     try {
       setLoading(true);
       await axios.post("http://localhost:5000/coco", {
         nama: formData.nama.trim(),
         jumlah: Number(formData.jumlah),
         jenisTagihan: formData.jenisTagihan.trim(),
+        tanggal: formData.tanggal,  
       });
+
 
       Swal.fire({
         icon: "success",
@@ -85,7 +96,7 @@ const TmbhdataTgihan = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
-          
+
             <div>
               <label className="block text-gray-700 font-medium mb-1">Nama</label>
               <input
@@ -98,7 +109,7 @@ const TmbhdataTgihan = () => {
               />
             </div>
 
-             <div>
+            <div>
               <label className="block text-gray-700 font-medium mb-1">Jumlah</label>
               <input
                 type="text"
@@ -110,7 +121,7 @@ const TmbhdataTgihan = () => {
               />
             </div>
 
-             <div>
+            <div>
               <label className="block text-gray-700 font-medium mb-1">Jenis Tagihan</label>
               <input
                 type="text"
@@ -120,9 +131,18 @@ const TmbhdataTgihan = () => {
                 className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
                 placeholder="Masukkan Jenis Tagihan"
               />
-            </div>
 
-             <button
+            </div>
+            <input
+              type="date"
+              name="tanggal"
+              value={formData.tanggal}
+              onChange={handleChange}
+              className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
+            />
+
+
+            <button
               type="submit"
               disabled={loading}
               className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
@@ -138,7 +158,7 @@ const TmbhdataTgihan = () => {
               )}
             </button>
 
-             <button
+            <button
               type="button"
               className="w-full p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
               onClick={() => navigate("/o")}

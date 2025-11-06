@@ -172,13 +172,14 @@ const Tagihan = () => {
           ) : (
             <div className="mt-6 overflow-x-auto">
               <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
-                <thead className="bg-sky-700 text-center text-white">
+                <thead className="bg-sky-600 text-center text-white">
                   <tr>
                     <th className="py-3 px-4">No</th>
                     <th className="py-3 px-4">Nama</th>
                     <th className="py-3 px-4">Jumlah</th>
                     <th className="py-3 px-4">Jenis Tagihan</th>
                     <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4">Tanggal</th>
                     <th className="py-3 px-4">Aksi</th>
                   </tr>
                 </thead>
@@ -198,6 +199,7 @@ const Tagihan = () => {
                         <td className="py-3 px-4 text-center">
                           {item.jenisTagihan}
                         </td>
+                        
                         <td
                           className={`py-3 px-4 text-center font-semibold ${item.status === "Sudah Bayar"
                             ? "text-green-600"
@@ -206,6 +208,7 @@ const Tagihan = () => {
                         >
                           {item.status || "Belum Bayar"}
                         </td>
+                         <td className="py-3 px-4">{item.tanggal}</td>
                         <td className="py-3 px-4 text-center">
                           <div className="flex justify-center gap-2 flex-wrap">
                             {item.status === "Sudah Bayar" ? (
@@ -214,7 +217,7 @@ const Tagihan = () => {
                                 onClick={() => handleBatalkan(item.id)}
                               >
                                 <i className="ri-arrow-go-back-line text-sm"></i>
-                                Batalkan
+                                Batal
                               </button>
                             ) : (
                               <button
@@ -224,7 +227,7 @@ const Tagihan = () => {
                                 }
                               >
                                 <i className="ri-money-dollar-circle-line text-sm"></i>
-                                Tandai Lunas
+                                Lunas
                               </button>
                             )}
                             <button

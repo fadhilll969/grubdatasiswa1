@@ -6,7 +6,7 @@ import Register from "./test/Register"
 import Horw from "./test/Horw"
 import Editjir from "./test/Editjir"
 import Tmbahdata from "./test/Tmbahdata"
-import Keuangan from "./test/Keuangan"
+import DaftarTagihan from "./test/DaftarTagihan"
 import Tagihan from "./test/Tagihan"
 import TmbhdataTgihan from "./test/TmbhdataTgihan"
 import EditTagihan from "./test/EditTagihan" 
@@ -21,7 +21,7 @@ const App = () => {
       <Route path="/w" element={<Horw />} />
       <Route path="/t" element={<Tmbahdata />} />
       <Route path="/edit/:id" element={<Editjir />} />
-      <Route path="/q" element={<Keuangan />} />
+      <Route path="/q" element={<DaftarTagihan />} />
       <Route path="/o" element={<Tagihan />} />
       <Route path="/p" element={<TmbhdataTgihan />} />
        <Route path="/ed/:id" element={<EditTagihan />} />

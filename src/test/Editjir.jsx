@@ -16,9 +16,8 @@ const Editjir = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [nomer, setNomer] = useState("");
-  const [kelas, setKelas] = useState(""); // 🔹 Tambahan: untuk kelas siswa
-
-  // 🔹 Ambil data berdasarkan ID
+  const [kelas, setKelas] = useState(""); 
+  
   useEffect(() => {
     axios
       .get(`${API_URL}/${id}`)

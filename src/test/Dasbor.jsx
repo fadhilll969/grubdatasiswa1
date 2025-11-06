@@ -50,7 +50,7 @@ function Dasbor() {
                         </a>
                         <div className="mt-3">
 
-                        <p>databes</p>
+                        <p>database</p>
                         </div>
 
                         <a

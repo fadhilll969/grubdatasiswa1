@@ -10,12 +10,28 @@ const EditTagihan = () => {
 
   const [formData, setFormData] = useState({
     nama: "",
-    jumlah: "",
+    jumlah: "",        
     jenisTagihan: "",
     status: "",
+    tanggal: "",      
   });
 
   const [loading, setLoading] = useState(false);
+
+   const formatRupiah = (angka) => {
+    if (!angka) return "";
+    return "Rp " + Number(angka).toLocaleString("id-ID");
+  };
+
+   const formatTanggalInput = (tanggal) => {
+    if (!tanggal) return "";
+    const date = new Date(tanggal);
+    if (isNaN(date)) return "";
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +42,7 @@ const EditTagihan = () => {
           jumlah: res.data.jumlah || "",
           jenisTagihan: res.data.jenisTagihan || "",
           status: res.data.status || "",
+          tanggal: formatTanggalInput(res.data.tanggal),
         });
       } catch (error) {
         console.error("Gagal mengambil data:", error);
@@ -35,18 +52,11 @@ const EditTagihan = () => {
     fetchData();
   }, [id]);
 
-  // Fungsi format Rupiah untuk tampil di input
-  const formatRupiah = (angka) => {
-    if (!angka) return "";
-    return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "jumlah") {
-      // Hanya simpan angka murni
-      const angka = value.replace(/\D/g, ""); // hapus semua bukan angka
+       const angka = value.replace(/\D/g, "");
       setFormData((prev) => ({ ...prev, [name]: angka }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -56,7 +66,7 @@ const EditTagihan = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.nama.trim() || !formData.jumlah || !formData.jenisTagihan.trim()) {
+    if (!formData.nama.trim() || !formData.jumlah || !formData.jenisTagihan.trim() || !formData.tanggal) {
       return Swal.fire({
         icon: "warning",
         title: "Data Belum Lengkap",
@@ -68,7 +78,7 @@ const EditTagihan = () => {
       setLoading(true);
       await axios.patch(`http://localhost:5000/coco/${id}`, {
         ...formData,
-        jumlah: Number(formData.jumlah), // pastikan jumlah dikirim sebagai number
+        jumlah: Number(formData.jumlah),
       });
       Swal.fire({
         title: "Berhasil!",
@@ -110,7 +120,7 @@ const EditTagihan = () => {
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Jumlah (Rp)</label>
+              <label className="block text-gray-700 font-medium mb-1">Jumlah</label>
               <input
                 type="text"
                 name="jumlah"
@@ -122,9 +132,7 @@ const EditTagihan = () => {
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
-                Jenis Tagihan
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Jenis Tagihan</label>
               <input
                 type="text"
                 name="jenisTagihan"
@@ -132,6 +140,17 @@ const EditTagihan = () => {
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
                 placeholder="Masukkan jenis tagihan"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">Tanggal</label>
+              <input
+                type="date"
+                name="tanggal"
+                value={formData.tanggal}
+                onChange={handleChange}
+                className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
               />
             </div>
 

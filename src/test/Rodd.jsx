@@ -7,12 +7,11 @@ import "remixicon/fonts/remixicon.css";
 
 const Rodd = () => {
   const filterOptions = ["Siswa", "Karyawan", "Guru"];
-  const classOptions = ["X", "XI", "XII"]; // 🔹 Tambahan: daftar kelas
+  const classOptions = ["X", "XI", "XII"]; 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("Semua");
-  const [searchClass, setSearchClass] = useState("Semua"); // 🔹 State baru untuk filter kelas
-
+  const [searchClass, setSearchClass] = useState("Semua");  
   const API_URL = "http://localhost:5000/doss";
   const navigate = useNavigate();
 
@@ -71,8 +70,7 @@ const Rodd = () => {
     }
   };
 
-  // 🔹 Filter berdasarkan nama, kategori, dan kelas
-  const filteredData = dataList.filter((data) => {
+   const filteredData = dataList.filter((data) => {
     const matchName = data.nama
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -97,7 +95,6 @@ const Rodd = () => {
 
 
             <div className="p-5 flex flex-col md:flex-row items-center justify-between gap-4">
-
               <div className="relative w-full md:w-1/3">
                 <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
                 <input
@@ -108,8 +105,6 @@ const Rodd = () => {
                   className="p-2 pl-10 border-2 rounded-lg w-full bg-white focus:ring-2 focus:ring-sky-400"
                 />
               </div>
-
-
               <select
                 className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
                 value={searchCategory}
@@ -122,8 +117,6 @@ const Rodd = () => {
                   </option>
                 ))}
               </select>
-
-
               <select
                 className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
                 value={searchClass}
@@ -136,9 +129,6 @@ const Rodd = () => {
                   </option>
                 ))}
               </select>
-
-
-
             </div>
           </div>
           <div className="">

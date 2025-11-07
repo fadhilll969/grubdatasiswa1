@@ -206,7 +206,7 @@ function Horw() {
                         </p>
                     </div>
                 </div>
-                <h1 className="text-4xl mt-10">Data Siswa,Guru,dan Karyawan</h1>
+                <h1 className="text-4xl mt-10 font-bold">Data Siswa </h1>
                 <div className="flex flex-col md:flex-row gap-3 items-center mb-6 mt-5">
                     <div className="relative w-full md:w-1/3">
                         <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
@@ -293,7 +293,7 @@ function Horw() {
                         </tbody>
                     </table>
                 </div>
-                <h1 className="text-4xl mt-10">Daftar Tagihan</h1>
+                <h1 className="text-4xl mt-10 font-bold">Daftar Tagihan</h1>
                 <div className="flex flex-col rounded md:flex-row gap-3 items-center my-6">
                     <div className="relative w-full md:w-1/3">
                         <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
@@ -320,8 +320,7 @@ function Horw() {
                     </select>
                 </div>
 
-                {/* Tagihan table */}
-                <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
+                 <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
                     <table className="table-auto w-full text-gray-700">
                         <thead className="bg-sky-600 text-white text-center">
                             <tr>

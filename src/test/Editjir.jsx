@@ -8,28 +8,41 @@ import "remixicon/fonts/remixicon.css";
 const Editjir = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const API_URL = "http://localhost:5000/doss";
 
-  const filterOptions = ["Siswa", "Karyawan", "Guru"];
+  const API_URL_DATA = "http://localhost:5000/doss";
+  const API_URL_KATEGORI = "http://localhost:5000/clok";
 
-  const [selectedFilter, setSelectedFilter] = useState("Siswa");
+  const [kategoriList, setKategoriList] = useState([]);
+  const [selectedKategori, setSelectedKategori] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [nomer, setNomer] = useState("");
-  const [kelas, setKelas] = useState(""); 
-  
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/${id}`)
-      .then((res) => {
+  const [kelas, setKelas] = useState("");
+
+   useEffect(() => {
+    const fetchKategori = async () => {
+      try {
+        const res = await axios.get(API_URL_KATEGORI);
+        const aktifKategori = res.data.filter((kat) => kat.aktif);
+        setKategoriList(aktifKategori);
+      } catch (error) {
+        console.error("Gagal mengambil kategori:", error);
+      }
+    };
+    fetchKategori();
+  }, []);
+
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${API_URL_DATA}/${id}`);
         const data = res.data;
         setName(data.nama);
         setEmail(data.email);
         setNomer(data.nomer || "");
-        setSelectedFilter(data.kategori);
-        setKelas(data.kelas || "");  
-      })
-      .catch((error) => {
+        setSelectedKategori(data.kategori);
+        setKelas(data.kelas || "");
+      } catch (error) {
         console.error("Error fetching data:", error);
         Swal.fire({
           icon: "error",
@@ -37,16 +50,17 @@ const Editjir = () => {
           text: "Data tidak ditemukan.",
         });
         navigate("/h");
-      });
+      }
+    };
+    fetchData();
   }, [id, navigate]);
 
-   
   const handleSaveEdit = async () => {
-    if (!name || !email || !nomer) {
+    if (!name || !email || !nomer || !selectedKategori) {
       Swal.fire({
         icon: "warning",
         title: "Data tidak lengkap!",
-        text: "Nama, Nomer, dan Email harus diisi.",
+        text: "Nama, Nomor, Email, dan Kategori harus diisi.",
       });
       return;
     }
@@ -69,7 +83,7 @@ const Editjir = () => {
       return;
     }
 
-    if (selectedFilter === "Siswa" && !kelas) {
+    if (selectedKategori === "Siswa" && !kelas) {
       Swal.fire({
         icon: "warning",
         title: "Kelas belum dipilih!",
@@ -82,8 +96,8 @@ const Editjir = () => {
       nama: name,
       email,
       nomer,
-      kategori: selectedFilter,
-      ...(selectedFilter === "Siswa" && { kelas }),  
+      kategori: selectedKategori,
+      ...(selectedKategori === "Siswa" && { kelas }),
     };
 
     const result = await Swal.fire({
@@ -107,8 +121,7 @@ const Editjir = () => {
     });
 
     try {
-      await axios.put(`${API_URL}/${id}`, updatedData);
-
+      await axios.put(`${API_URL_DATA}/${id}`, updatedData);
       Swal.fire({
         icon: "success",
         title: "Berhasil!",
@@ -116,7 +129,6 @@ const Editjir = () => {
         timer: 1500,
         showConfirmButton: false,
       });
-
       navigate("/h");
     } catch (error) {
       Swal.fire({
@@ -133,33 +145,34 @@ const Editjir = () => {
 
       <div className="flex-1 flex justify-center items-center p-6">
         <div className="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
-          <h2 className="text-2xl font-semibold mb-5 text-center text-gray-800">
-            <i className="ri-edit-2-line text-sky-600"></i> Edit Data
+          <h2 className="text-2xl font-semibold mb-5 text-center text-gray-800 flex items-center justify-center gap-2">
+            <i className="ri-edit-2-line text-sky-600 text-3xl"></i> Edit Data
           </h2>
 
-
-          <select
+           <select
             className="p-2 border rounded w-full mb-4 focus:ring-2 focus:ring-sky-400 focus:outline-none"
-            value={selectedFilter}
+            value={selectedKategori}
             onChange={(e) => {
-              setSelectedFilter(e.target.value);
+              setSelectedKategori(e.target.value);
               if (e.target.value !== "Siswa") setKelas("");
             }}
           >
-            {filterOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+            <option value="">Pilih Kategori</option>
+            {kategoriList.map((kat) => (
+              <option key={kat.id} value={kat.kategori_nama}>
+                {kat.kategori_nama}
               </option>
             ))}
           </select>
-          <input
+
+           <input
             className="p-2 border rounded w-full mb-4 focus:ring-2 focus:ring-sky-400 focus:outline-none"
             placeholder="Nama"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
 
-          {selectedFilter === "Siswa" && (
+           {selectedKategori === "Siswa" && (
             <select
               className="p-2 border rounded w-full mb-4 focus:ring-2 focus:ring-sky-400 focus:outline-none"
               value={kelas}
@@ -172,35 +185,28 @@ const Editjir = () => {
             </select>
           )}
 
-
-
-
-
-          <input
+           <input
             className="p-2 border rounded w-full mb-4 focus:ring-2 focus:ring-sky-400 focus:outline-none"
             placeholder="Nomor Telepon"
             value={nomer}
             onChange={(e) => setNomer(e.target.value)}
           />
 
-
-          <input
+           <input
             className="p-2 border rounded w-full mb-6 focus:ring-2 focus:ring-sky-400 focus:outline-none"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
-
-          <button
+           <button
             className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex justify-center items-center gap-2"
             onClick={handleSaveEdit}
           >
             <i className="ri-save-3-line text-lg"></i> Simpan Perubahan
           </button>
 
-
-          <button
+           <button
             className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex justify-center items-center gap-2"
             onClick={() => navigate("/h")}
           >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -8,24 +8,41 @@ import "remixicon/fonts/remixicon.css";
 const Tmbhdata = () => {
   const navigate = useNavigate();
 
-  const [selectedFilter, setSelectedFilter] = useState("Siswa");
+  const [kategoriList, setKategoriList] = useState([]);
+  const [selectedKategori, setSelectedKategori] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [nomer, setNomer] = useState("");
   const [kelas, setKelas] = useState("");
-  const API_URL = "http://localhost:5000/doss";
+
+  const API_URL_DATA = "http://localhost:5000/doss"; // API untuk data
+  const API_URL_KATEGORI = "http://localhost:5000/clok"; // API kategori
+
+  // Fetch kategori dari server
+  useEffect(() => {
+    const fetchKategori = async () => {
+      try {
+        const res = await axios.get(API_URL_KATEGORI);
+        // hanya kategori yang aktif
+        const aktifKategori = res.data.filter((kat) => kat.aktif);
+        setKategoriList(aktifKategori);
+      } catch (error) {
+        console.error("Gagal mengambil kategori:", error);
+      }
+    };
+    fetchKategori();
+  }, []);
 
   const handleAddData = async () => {
-
-    if (!name || !email || !nomer) {
+    // validasi
+    if (!name || !email || !nomer || !selectedKategori) {
       Swal.fire({
         icon: "warning",
         title: "Data tidak lengkap!",
-        text: "Nama, Nomor, dan Email harus diisi.",
+        text: "Nama, Nomor, Email, dan Kategori harus diisi.",
       });
       return;
     }
-
 
     if (!/\S+@\S+\.\S+/.test(email)) {
       Swal.fire({
@@ -36,8 +53,8 @@ const Tmbhdata = () => {
       return;
     }
 
-
-    if (selectedFilter === "Siswa" && !kelas) {
+    // jika kategori Siswa, wajib pilih kelas
+    if (selectedKategori === "Siswa" && !kelas) {
       Swal.fire({
         icon: "warning",
         title: "Kelas belum dipilih!",
@@ -50,8 +67,8 @@ const Tmbhdata = () => {
       nama: name,
       email,
       nomer,
-      kategori: selectedFilter,
-      ...(selectedFilter === "Siswa" && { kelas }),
+      kategori: selectedKategori,
+      ...(selectedKategori === "Siswa" && { kelas }),
     };
 
     Swal.fire({
@@ -66,7 +83,7 @@ const Tmbhdata = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.post(API_URL, newData);
+          await axios.post(API_URL_DATA, newData);
           Swal.fire({
             icon: "success",
             title: "Berhasil!",
@@ -97,25 +114,27 @@ const Tmbhdata = () => {
             Tambah Data
           </h2>
 
-
+          {/* Pilih Kategori */}
           <div className="relative mb-4">
-            <i className="ri-group-line absolute left-3 top-3 text-gray-400"></i>
+            <i className="ri-database-2-line absolute left-3 top-3 text-gray-400"></i>
             <select
               className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
-              value={selectedFilter}
+              value={selectedKategori}
               onChange={(e) => {
-                setSelectedFilter(e.target.value);
-                setKelas("");
+                setSelectedKategori(e.target.value);
+                setKelas(""); // reset kelas
               }}
             >
-              <option value="Siswa">Siswa</option>
-              <option value="Karyawan">Karyawan</option>
-              <option value="Guru">Guru</option>
+              <option value="">Pilih Kategori</option>
+              {kategoriList.map((kat) => (
+                <option key={kat.id} value={kat.kategori_nama}>
+                  {kat.kategori_nama}
+                </option>
+              ))}
             </select>
           </div>
 
-
-
+          {/* Nama */}
           <div className="relative mb-4">
             <i className="ri-user-3-line absolute left-3 top-3 text-gray-400"></i>
             <input
@@ -125,7 +144,9 @@ const Tmbhdata = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          {selectedFilter === "Siswa" && (
+
+          {/* Kelas hanya untuk Siswa */}
+          {selectedKategori === "Siswa" && (
             <div className="relative mb-4">
               <i className="ri-building-2-line absolute left-3 top-3 text-gray-400"></i>
               <select
@@ -141,7 +162,7 @@ const Tmbhdata = () => {
             </div>
           )}
 
-
+          {/* Nomor */}
           <div className="relative mb-4">
             <i className="ri-phone-line absolute left-3 top-3 text-gray-400"></i>
             <input
@@ -150,13 +171,12 @@ const Tmbhdata = () => {
               value={nomer}
               onChange={(e) => {
                 const value = e.target.value;
-                if (/^\d*$/.test(value)) {
-                  setNomer(value);
-                }
+                if (/^\d*$/.test(value)) setNomer(value);
               }}
             />
           </div>
 
+          {/* Email */}
           <div className="relative mb-6">
             <i className="ri-mail-line absolute left-3 top-3 text-gray-400"></i>
             <input
@@ -167,7 +187,7 @@ const Tmbhdata = () => {
             />
           </div>
 
-
+          {/* Tombol Tambah */}
           <button
             className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
             onClick={handleAddData}
@@ -175,7 +195,7 @@ const Tmbhdata = () => {
             <i className="ri-save-3-line"></i> Tambahkan Data
           </button>
 
-
+          {/* Tombol Kembali */}
           <button
             className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
             onClick={() => navigate("/h")}

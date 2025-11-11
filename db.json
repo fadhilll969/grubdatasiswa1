@@ -5,7 +5,7 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
       "kategori": "Siswa",
-      "kelas": "X",
+      "kelas": "XII",
       "id": "79f8"
     },
     {
@@ -136,261 +136,89 @@
       "id": "5944"
     }
   ],
-  "users": [
-    {
-      "id": "11b4",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "7i7"
-    },
-    {
-      "id": "b6ba",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "eff"
-    },
-    {
-      "id": "2cfd",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "rty"
-    },
-    {
-      "id": "0a27",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "eee"
-    },
-    {
-      "id": "c00a",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "hhh"
-    },
-    {
-      "id": "6ee0",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "jj"
-    },
-    {
-      "id": "70e9",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "wdwd"
-    },
-    {
-      "id": "53ed",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "dqew"
-    },
-    {
-      "id": "9419",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "7io7o"
-    },
-    {
-      "id": "b1b3",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "tghert"
-    },
-    {
-      "id": "a9e7",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "q2eded"
-    },
-    {
-      "id": "c39f",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "e2we"
-    },
-    {
-      "id": "3458",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "qdd"
-    },
-    {
-      "id": "619a",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "uuy"
-    },
-    {
-      "id": "cf8c",
-      "email": "gagitushey@gmail.com",
-      "password": "mm"
-    },
-    {
-      "id": "ccd9",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "eee"
-    },
-    {
-      "id": "98bf",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "dsq"
-    },
-    {
-      "id": "53ee",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "hihi"
-    },
-    {
-      "id": "9fdf",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "sdsd"
-    },
-    {
-      "id": "3b9f",
-      "email": "gagitushey@gmail.com",
-      "password": "ss"
-    },
-    {
-      "id": "d50d",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "s"
-    },
-    {
-      "id": "146f",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "gb"
-    },
-    {
-      "id": "7ae3",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "qd"
-    },
-    {
-      "id": "50ed",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "kfhk"
-    },
-    {
-      "id": "fadf",
-      "email": "gagitushey@gmail.com",
-      "password": "kggjgk"
-    },
-    {
-      "id": "813b",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "qdd"
-    },
-    {
-      "id": "6234",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "eee"
-    },
-    {
-      "id": "fa9b",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "fiuygu"
-    },
-    {
-      "id": "9bb3",
-      "email": "hysaiiyaa@gmail.com",
-      "password": "ssw"
-    },
-    {
-      "id": "4272",
-      "email": "herzzarey@gmail.com",
-      "password": "sdd"
-    }
-  ],
+  "users": [],
   "coco": [
     {
-      "id": "fe9f",
-      "nama": "sheyy are you okeyy",
-      "jumlah": 5000000,
-      "jenisTagihan": "Amba",
-      "status": "Belum Bayar",
-      "tanggal": "2025-11-06"
-    },
-    {
-      "id": "d458",
-      "nama": "Neaa",
-      "jumlah": 2000000,
-      "jenisTagihan": "Seragam",
-      "status": "Sudah Bayar",
-      "tanggal": "2025-11-06"
-    },
-    {
-      "id": "1c29",
-      "nama": "creyzz im fine🥀",
-      "jumlah": 45000000000,
-      "jenisTagihan": "SPP",
-      "status": "Sudah Bayar",
-      "tanggal": "2025-11-06"
-    },
-    {
-      "id": "c138",
-      "nama": "rrq*reyz#232",
-      "jumlah": 50000000000,
-      "jenisTagihan": "Uang Gedung",
-      "status": "Belum Bayar",
-      "tanggal": "2025-11-06"
-    },
-    {
-      "id": "19ca",
-      "nama": "rrq*didol\"969#",
-      "jumlah": 900000,
-      "jenisTagihan": "Seragam",
-      "status": "Belum Bayar",
-      "tanggal": "2025-11-07"
-    },
-    {
-      "id": "3a2f",
+      "id": "147a",
       "nama": "herz im fine🥀",
-      "jumlah": 5000000000,
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-02-18",
+      "jumlah": 50000000,
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-11-11",
       "status": "Sudah Bayar"
     },
     {
-      "id": "6e80",
-      "nama": "herz im fine🥀",
-      "jumlah": 500000000,
-      "jenisTagihan": "Ambao",
-      "tanggal": "2025-11-19",
+      "id": "6646",
+      "nama": "opop🥀",
+      "jumlah": 50000000,
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-11-11",
       "status": "Belum Bayar"
     },
     {
-      "id": "4d37",
-      "nama": "herz im fine🥀",
-      "jumlah": 500000000,
-      "jenisTagihan": "Uang Gedung",
-      "tanggal": "2025-11-06",
-      "status": "Sudah Bayar"
-    },
-    {
-      "id": "592b",
-      "nama": "sheyy are you okeyy",
+      "id": "e477",
+      "nama": "reyy are you okeyy?🥀",
       "jumlah": 50000000,
-      "jenisTagihan": "Uang Gedung",
-      "tanggal": "2025-11-09",
-      "status": "Belum Bayar"
-    },
-    {
-      "id": "1865",
-      "nama": "sheyy are you okeyy",
-      "jumlah": 50000000,
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-06",
-      "status": "Sudah Bayar"
-    },
-    {
-      "id": "d331",
-      "nama": "sheyy are you okeyy",
-      "jumlah": 50000000,
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-06",
-      "status": "Belum Bayar"
-    },
-    {
-      "id": "8ff8",
-      "nama": "sheyy are you okeyy",
-      "jumlah": 500000000,
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-06",
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-11-11",
       "status": ""
     },
     {
-      "id": "0cf0",
-      "nama": "sheyy are you okeyy",
+      "id": "0a3b",
+      "nama": "sheyz im fine🥀",
       "jumlah": 50000000,
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-06"
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-11-11",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "0405",
+      "nama": "rinee",
+      "jumlah": 50000000,
+      "jenisTagihan": "Uang Gedung",
+      "tanggal": "2025-11-11"
+    }
+  ],
+  "kategori-data": [
+    {
+      "id": "55eb",
+      "nama_kategori": "SPP Bulanan",
+      "keterangan": "Bayar uang sekolah per bulan",
+      "aktif": true
+    },
+    {
+      "id": "3315",
+      "nama_kategori": "Seragam",
+      "keterangan": "Pakaian sekolah",
+      "aktif": true
+    },
+    {
+      "id": "5c1d",
+      "nama_kategori": "Uang Gedung",
+      "keterangan": "Bayar uang gedung",
+      "aktif": true
+    },
+    {
+      "id": "4040",
+      "nama_kategori": "test",
+      "keterangan": "wfwffw",
+      "aktif": false
+    }
+  ],
+  "clok": [
+    {
+      "kategori_nama": "Siswa",
+      "aktif": true,
+      "id": "37fb"
+    },
+    {
+      "kategori_nama": "Guru",
+      "aktif": true,
+      "id": "0265"
+    },
+    {
+      "id": "18c6",
+      "kategori_nama": "Karyawan",
+      "aktif": true
     }
   ]
 }

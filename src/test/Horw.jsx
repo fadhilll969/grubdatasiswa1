@@ -28,14 +28,17 @@ function Horw() {
         belumBayarAmount: 0,
     });
 
+    // Search states
     const [searchTermUser, setSearchTermUser] = useState("");
     const [searchCategoryUser, setSearchCategoryUser] = useState("Semua");
     const [searchClass, setSearchClass] = useState("Semua");
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [searchTermTagihan, setSearchTermTagihan] = useState("");
     const [searchStatusTagihan, setSearchStatusTagihan] = useState("Semua");
 
     const [classOptions, setClassOptions] = useState([]);
+
     const filterOptionsUser = ["Siswa", "Guru", "Karyawan"];
     const filterOptionsTagihan = ["Sudah Bayar", "Belum Bayar"];
 
@@ -48,28 +51,21 @@ function Horw() {
             const hasil = response.data;
             setDataTagihan(hasil);
 
+            const totalAmount = hasil.reduce((sum, i) => sum + i.jumlah, 0);
             const sudahBayar = hasil.filter((i) => i.status === "Sudah Bayar");
-            const belumBayar = hasil.filter((i) => i.status === "Belum Bayar");
-
-            const totalAmount = hasil.reduce(
-                (sum, i) => sum + Number(i.jumlah || 0),
-                0
-            );
             const sudahBayarAmount = sudahBayar.reduce(
-                (sum, i) => sum + Number(i.jumlah || 0),
+                (sum, i) => sum + i.jumlah,
                 0
             );
-            const belumBayarAmount = belumBayar.reduce(
-                (sum, i) => sum + Number(i.jumlah || 0),
-                0
-            );
+            const belumBayarCount = hasil.length - sudahBayar.length;
+            const belumBayarAmount = totalAmount - sudahBayarAmount;
 
             setSummary({
                 totalCount: hasil.length,
                 totalAmount,
                 sudahBayarCount: sudahBayar.length,
                 sudahBayarAmount,
-                belumBayarCount: belumBayar.length,
+                belumBayarCount,
                 belumBayarAmount,
             });
         } catch (error) {
@@ -88,7 +84,9 @@ function Horw() {
 
                 const siswa = data.filter((item) => item.kategori === "Siswa");
                 const guru = data.filter((item) => item.kategori === "Guru");
-                const karyawan = data.filter((item) => item.kategori === "Karyawan");
+                const karyawan = data.filter(
+                    (item) => item.kategori === "Karyawan"
+                );
 
                 setJumlah({
                     siswa: siswa.length,
@@ -100,7 +98,7 @@ function Horw() {
                 setDataList(data);
                 setClassOptions([...new Set(siswa.map((s) => s.kelas))]);
             } catch (error) {
-                console.log("Gagal ambil data dari db.json", error);
+                console.log("Gagal ambil data dari server", error);
             }
         };
 
@@ -113,7 +111,8 @@ function Horw() {
             .toLowerCase()
             .includes(searchTermUser.toLowerCase());
         const matchCategory =
-            searchCategoryUser === "Semua" || data.kategori === searchCategoryUser;
+            searchCategoryUser === "Semua" ||
+            data.kategori === searchCategoryUser;
         const matchClass = searchClass === "Semua" || data.kelas === searchClass;
         return matchName && matchCategory && matchClass;
     });
@@ -123,18 +122,23 @@ function Horw() {
             ?.toLowerCase()
             .includes(searchTermTagihan.toLowerCase());
         const matchStatus =
-            searchStatusTagihan === "Semua" || item.status === searchStatusTagihan;
+            searchStatusTagihan === "Semua" ||
+            item.status === searchStatusTagihan;
         return matchName && matchStatus;
     });
 
     const getCategoryIcon = (kategori) => {
         switch (kategori) {
             case "Siswa":
-                return <i className="ri-graduation-cap-line text-sky-600 mr-1"></i>;
+                return (
+                    <i className="ri-graduation-cap-line text-sky-600 mr-1"></i>
+                );
             case "Guru":
                 return <i className="ri-book-2-line text-green-600 mr-1"></i>;
             case "Karyawan":
-                return <i className="ri-briefcase-3-line text-yellow-600 mr-1"></i>;
+                return (
+                    <i className="ri-briefcase-3-line text-yellow-600 mr-1"></i>
+                );
             default:
                 return <i className="ri-user-line text-gray-500 mr-1"></i>;
         }
@@ -149,6 +153,7 @@ function Horw() {
                     <i className="ri-dashboard-line text-sky-600"></i> Dashboard Sekolah
                 </h1>
 
+                {/* --- Kartu Jumlah User --- */}
                 <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
                     <div className="bg-white border-t-4 border-sky-600 rounded-lg shadow-md p-6 text-center">
                         <i className="ri-database-2-line text-3xl text-sky-600"></i>
@@ -172,15 +177,19 @@ function Horw() {
                     </div>
                 </div>
 
+                {/* --- Kartu Tagihan --- */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
                     <div className="bg-white border-t-4 border-sky-600 rounded-lg shadow-md p-6 text-center">
                         <i className="ri-database-2-line text-3xl text-sky-600"></i>
-                        <h3 className="text-xl font-semibold mt-2 text-gray-700">Total</h3>
+                        <h3 className="text-xl font-semibold mt-2 text-gray-700">
+                            Total Tagihan
+                        </h3>
                         <p className="text-3xl font-bold my-1">{summary.totalCount}</p>
                         <p className="text-lg text-gray-600 font-semibold">
                             {formatRupiah(summary.totalAmount)}
                         </p>
                     </div>
+
                     <div className="bg-white border-t-4 border-green-500 rounded-lg shadow-md p-6 text-center">
                         <i className="ri-check-double-line text-3xl text-green-500"></i>
                         <h3 className="text-xl font-semibold mt-2 text-gray-700">
@@ -193,6 +202,7 @@ function Horw() {
                             {formatRupiah(summary.sudahBayarAmount)}
                         </p>
                     </div>
+
                     <div className="bg-white border-t-4 border-red-500 rounded-lg shadow-md p-6 text-center">
                         <i className="ri-close-circle-line text-3xl text-red-500"></i>
                         <h3 className="text-xl font-semibold mt-2 text-gray-700">
@@ -206,6 +216,8 @@ function Horw() {
                         </p>
                     </div>
                 </div>
+
+                {/* --- Filter User --- */}
                 <h1 className="text-4xl mt-10 font-bold">Data Siswa </h1>
                 <div className="flex flex-col md:flex-row gap-3 items-center mb-6 mt-5">
                     <div className="relative w-full md:w-1/3">
@@ -252,6 +264,7 @@ function Horw() {
                     )}
                 </div>
 
+                {/* --- Tabel User --- */}
                 <div className="overflow-x-auto bg-white rounded-lg shadow-md">
                     <table className="table-auto w-full text-gray-700">
                         <thead className="bg-sky-600 text-white text-center">
@@ -260,7 +273,7 @@ function Horw() {
                                 <th className="py-3 px-4">Kategori</th>
                                 <th className="py-3 px-4">Nama</th>
                                 <th className="py-3 px-4">Kelas</th>
-                                <th className="py-3 px-4">nomer</th>
+                                <th className="py-3 px-4">Nomer</th>
                                 <th className="py-3 px-4">Email</th>
                             </tr>
                         </thead>
@@ -269,23 +282,37 @@ function Horw() {
                                 filteredDataUser.map((user, index) => (
                                     <tr
                                         key={user.id}
-                                        className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                                            } hover:bg-sky-100 transition`}
+                                        className={`${
+                                            index % 2 === 0
+                                                ? "bg-white"
+                                                : "bg-sky-50"
+                                        } hover:bg-sky-100 transition`}
                                     >
-                                        <td className="py-3 text-center px-4">{index + 1}</td>
+                                        <td className="py-3 text-center px-4">
+                                            {index + 1}
+                                        </td>
                                         <td className="py-3 px-4 ">
                                             {getCategoryIcon(user.kategori)}
                                             {user.kategori}
                                         </td>
                                         <td className="py-3 px-4">{user.nama}</td>
-                                        <td className="py-3 px-4 text-center">{user.kelas || "-"}</td>
-                                        <td className="py-3 px-4 text-center">{user.nomer}</td>
-                                        <td className="py-3 px-4 text-right">{user.email}</td>
+                                        <td className="py-3 px-4 text-center">
+                                            {user.kelas || "-"}
+                                        </td>
+                                        <td className="py-3 px-4 text-center">
+                                            {user.nomer}
+                                        </td>
+                                        <td className="py-3 px-4 text-right">
+                                            {user.email}
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-5 text-gray-500 italic">
+                                    <td
+                                        colSpan="6"
+                                        className="text-center py-5 text-gray-500 italic"
+                                    >
                                         Tidak terdapat data user.
                                     </td>
                                 </tr>
@@ -293,8 +320,10 @@ function Horw() {
                         </tbody>
                     </table>
                 </div>
+
+                {/* --- Daftar Tagihan --- */}
                 <h1 className="text-4xl mt-10 font-bold">Daftar Tagihan</h1>
-                <div className="flex flex-col rounded md:flex-row gap-3 items-center my-6">
+                <div className="flex flex-col md:flex-row gap-3 items-center my-6">
                     <div className="relative w-full md:w-1/3">
                         <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
                         <input
@@ -320,16 +349,17 @@ function Horw() {
                     </select>
                 </div>
 
-                 <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
+                {/* --- Tabel Tagihan --- */}
+                <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
                     <table className="table-auto w-full text-gray-700">
                         <thead className="bg-sky-600 text-white text-center">
                             <tr>
                                 <th className="py-3 px-4 ">No</th>
                                 <th className="py-3 px-4">Nama</th>
-                                <th className="py-3 px-4  ">Jumlah</th>
-                                <th className="py-3 px-4 ">Jenis Tagihan</th>
-                                <th className="py-3 px-4 ">Status</th>
-                                <th className="py-3 px-4 ">Tanggal</th>
+                                <th className="py-3 px-4">Jumlah</th>
+                                <th className="py-3 px-4">Jenis Tagihan</th>
+                                <th className="py-3 px-4">Status</th>
+                                <th className="py-3 px-4">Tanggal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -337,25 +367,42 @@ function Horw() {
                                 filteredDataTagihan.map((item, index) => (
                                     <tr
                                         key={item.id}
-                                        className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                                            } hover:bg-sky-100 transition`}
+                                        className={`${
+                                            index % 2 === 0
+                                                ? "bg-white"
+                                                : "bg-sky-50"
+                                        } hover:bg-sky-100 transition`}
                                     >
-                                        <td className="py-3 text-center px-4">{index + 1}</td>
+                                        <td className="py-3 text-center px-4">
+                                            {index + 1}
+                                        </td>
                                         <td className="py-3 px-4">{item.nama}</td>
-                                        <td className="py-3 px-4 text-right">{formatRupiah(item.jumlah)}</td>
-                                        <td className="py-3 px-4 text-center">{item.jenisTagihan}</td>
+                                        <td className="py-3 px-4 text-right">
+                                            {formatRupiah(item.jumlah)}
+                                        </td>
+                                        <td className="py-3 px-4 text-center">
+                                            {item.jenisTagihan}
+                                        </td>
                                         <td
-                                            className={`py-3 px-4 text-center font-semibold ${item.status === "Sudah Bayar" ? "text-green-600" : "text-red-600"
-                                                }`}
+                                            className={`py-3 px-4 text-center font-semibold ${
+                                                item.status === "Sudah Bayar"
+                                                    ? "text-green-600"
+                                                    : "text-red-600"
+                                            }`}
                                         >
                                             {item.status || "Belum Bayar"}
                                         </td>
-                                        <td className="py-3 px-4 text-center">{item.tanggal || "-"}</td>
+                                        <td className="py-3 px-4 text-center">
+                                            {item.tanggal || "-"}
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="text-center py-5 text-gray-500 italic">
+                                    <td
+                                        colSpan="6"
+                                        className="text-center py-5 text-gray-500 italic"
+                                    >
                                         Tidak terdapat data tagihan.
                                     </td>
                                 </tr>

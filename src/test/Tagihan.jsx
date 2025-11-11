@@ -162,7 +162,7 @@ const Tagihan = () => {
                 onClick={() => navigate("/p")}
               >
                 <i className="ri-add-circle-line text-lg"></i>
-                Tambah Tagihan Baru
+                Tambah Tagihan
               </button>
             </div>
           </div>

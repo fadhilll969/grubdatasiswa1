@@ -10,20 +10,21 @@ const EditTagihan = () => {
 
   const [formData, setFormData] = useState({
     nama: "",
-    jumlah: "",        
+    jumlah: "",
     jenisTagihan: "",
     status: "",
-    tanggal: "",      
+    tanggal: "",
   });
 
+  const [kategoriList, setKategoriList] = useState([]);
   const [loading, setLoading] = useState(false);
 
-   const formatRupiah = (angka) => {
+  const formatRupiah = (angka) => {
     if (!angka) return "";
     return "Rp " + Number(angka).toLocaleString("id-ID");
   };
 
-   const formatTanggalInput = (tanggal) => {
+  const formatTanggalInput = (tanggal) => {
     if (!tanggal) return "";
     const date = new Date(tanggal);
     if (isNaN(date)) return "";
@@ -33,8 +34,9 @@ const EditTagihan = () => {
     return `${yyyy}-${mm}-${dd}`;
   };
 
+  // Ambil data tagihan
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchTagihan = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/coco/${id}`);
         setFormData({
@@ -49,14 +51,27 @@ const EditTagihan = () => {
         Swal.fire("Error", "Gagal mengambil data tagihan", "error");
       }
     };
-    fetchData();
+    fetchTagihan();
   }, [id]);
+
+   useEffect(() => {
+    const fetchKategori = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/kategori-data");
+        const aktifKategori = res.data.filter((item) => item.aktif);
+        setKategoriList(aktifKategori);
+      } catch (error) {
+        console.error("Gagal mengambil kategori:", error);
+      }
+    };
+    fetchKategori();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "jumlah") {
-       const angka = value.replace(/\D/g, "");
+      const angka = value.replace(/\D/g, "");
       setFormData((prev) => ({ ...prev, [name]: angka }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -66,7 +81,12 @@ const EditTagihan = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.nama.trim() || !formData.jumlah || !formData.jenisTagihan.trim() || !formData.tanggal) {
+    if (
+      !formData.nama.trim() ||
+      !formData.jumlah ||
+      !formData.jenisTagihan.trim() ||
+      !formData.tanggal
+    ) {
       return Swal.fire({
         icon: "warning",
         title: "Data Belum Lengkap",
@@ -85,9 +105,7 @@ const EditTagihan = () => {
         text: "Data tagihan berhasil diperbarui.",
         icon: "success",
         confirmButtonText: "OK",
-      }).then(() => {
-        navigate("/o");
-      });
+      }).then(() => navigate("/o"));
     } catch (error) {
       console.error("Gagal memperbarui data:", error);
       Swal.fire("Gagal", "Terjadi kesalahan saat memperbarui data", "error");
@@ -133,14 +151,19 @@ const EditTagihan = () => {
 
             <div>
               <label className="block text-gray-700 font-medium mb-1">Jenis Tagihan</label>
-              <input
-                type="text"
+              <select
                 name="jenisTagihan"
                 value={formData.jenisTagihan}
                 onChange={handleChange}
                 className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
-                placeholder="Masukkan jenis tagihan"
-              />
+              >
+                <option value="">-- Pilih Kategori --</option>
+                {kategoriList.map((kategori) => (
+                  <option key={kategori.id} value={kategori.nama_kategori}>
+                    {kategori.nama_kategori}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>

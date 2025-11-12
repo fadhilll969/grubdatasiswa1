@@ -153,8 +153,7 @@ function Horw() {
                     <i className="ri-dashboard-line text-sky-600"></i> Dashboard Sekolah
                 </h1>
 
-                {/* --- Kartu Jumlah User --- */}
-                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
+                 <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
                     <div className="bg-white border-t-4 border-sky-600 rounded-lg shadow-md p-6 text-center">
                         <i className="ri-database-2-line text-3xl text-sky-600"></i>
                         <h3 className="text-xl font-semibold mt-2">Total</h3>
@@ -177,8 +176,7 @@ function Horw() {
                     </div>
                 </div>
 
-                {/* --- Kartu Tagihan --- */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
+                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
                     <div className="bg-white border-t-4 border-sky-600 rounded-lg shadow-md p-6 text-center">
                         <i className="ri-database-2-line text-3xl text-sky-600"></i>
                         <h3 className="text-xl font-semibold mt-2 text-gray-700">
@@ -217,8 +215,7 @@ function Horw() {
                     </div>
                 </div>
 
-                {/* --- Filter User --- */}
-                <h1 className="text-4xl mt-10 font-bold">Data Siswa </h1>
+                 <h1 className="text-4xl mt-10 font-bold">Data Siswa </h1>
                 <div className="flex flex-col md:flex-row gap-3 items-center mb-6 mt-5">
                     <div className="relative w-full md:w-1/3">
                         <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
@@ -264,8 +261,7 @@ function Horw() {
                     )}
                 </div>
 
-                {/* --- Tabel User --- */}
-                <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+                 <div className="overflow-x-auto bg-white rounded-lg shadow-md">
                     <table className="table-auto w-full text-gray-700">
                         <thead className="bg-sky-600 text-white text-center">
                             <tr>
@@ -321,8 +317,7 @@ function Horw() {
                     </table>
                 </div>
 
-                {/* --- Daftar Tagihan --- */}
-                <h1 className="text-4xl mt-10 font-bold">Daftar Tagihan</h1>
+                 <h1 className="text-4xl mt-10 font-bold">Daftar Tagihan</h1>
                 <div className="flex flex-col md:flex-row gap-3 items-center my-6">
                     <div className="relative w-full md:w-1/3">
                         <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
@@ -349,8 +344,7 @@ function Horw() {
                     </select>
                 </div>
 
-                {/* --- Tabel Tagihan --- */}
-                <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
+                 <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
                     <table className="table-auto w-full text-gray-700">
                         <thead className="bg-sky-600 text-white text-center">
                             <tr>

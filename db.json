@@ -219,6 +219,11 @@
       "id": "18c6",
       "kategori_nama": "Karyawan",
       "aktif": true
+    },
+    {
+      "id": "c2bd",
+      "kategori_nama": "test",
+      "aktif": false
     }
   ]
 }

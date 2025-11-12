@@ -102,7 +102,7 @@ const Kategoridata = () => {
                 </div>
 
                  <div className="mt-6 overflow-x-auto">
-                    <h1 className="text-2xl mb-3">Daftar Jenis Tagihan</h1>
+                    <h1 className="text-3xl mb-3 font-bold">Daftar Jenis Tagihan</h1>
                     <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
                         <thead className="bg-sky-600 text-center text-white">
                             <tr>

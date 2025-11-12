@@ -1,120 +1,89 @@
-import Swal from 'sweetalert2';
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
-
-
+ import "remixicon/fonts/remixicon.css";  
+import Swal from "sweetalert2";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 function Dasbor() {
-    const nav = useNavigate();
-    const handleLogout = (e) => {
-        e.preventDefault();
+  const nav = useNavigate();
+  const location = useLocation();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Yakin ingin logout?",
+      text: "Kamu akan kembali ke halaman login.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Logout",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#1e3a8a",
+      cancelButtonColor: "#dc2626",
+    }).then((r) => {
+      if (r.isConfirmed) {
         Swal.fire({
-            title: "Yakin ingin logout?",
-            text: "Kamu akan kembali ke halaman login.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Ya, Logout",
-            cancelButtonText: "Batal",
-            confirmButtonColor: "#1e3a8a",
-            cancelButtonColor: "#dc2626",
-        }).then((r) => {
-            if (r.isConfirmed) {
-                Swal.fire({
-                    title: "Berhasil Logout!",
-                    icon: "success",
-                    timer: 1500,
-                    showConfirmButton: false,
-                });
-                setTimeout(() => nav("/f"), 1500);
-            }
+          title: "Berhasil Logout!",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
         });
-    };
-    const location = useLocation();
+        setTimeout(() => nav("/f"), 1500);
+      }
+    });
+  };
 
-    return (
-        <div className="w-60 min-h-screen">
-            <div className="fixed top-1 h-full w-60 bg-indigo-800 text-white">
-                <div className="text-4xl mt-2 font-bold mb-8 text-center">
-                    <i className="ri-menu-2-line"></i> MENU</div>
-                <nav className="mt-15">
-                    <div className="text-xl">
-                        <a
-                            href="/w"
-                            className={`block py-2 px-3 font-bold rounded hover:bg-blue-600 
-                                ${location.pathname === "/w" ? "bg-blue-700 font-bold" : ""
-                                }`}
-                        >
-                            <i className="ri-dashboard-line"></i> Dashboard
-                        </a>
-                        <div className="mt-3">
+  const menuItems = [
+    { path: "/w", icon: "ri-dashboard-line", label: "Dashboard" },
+    { isSection: true, label: "Database" },
+    { path: "/datakategori", icon: "ri-folder-2-line", label: "Kategori Data" },
+    { path: "/z", icon: "ri-team-line", label: "Kelas" },
+    { path: "/h", icon: "ri-database-2-line", label: "Master Data" },
+    { isSection: true, label: "Keuangan" },
+    { path: "/a", icon: "ri-price-tag-3-line", label: "Kategori Tagihan" },
+    { path: "/o", icon: "ri-bill-line", label: "Tagihan" },
+    { path: "/q", icon: "ri-file-list-3-line", label: "Rekap Tagihan" },
+  ];
 
-                        <p>database</p>
-                        </div>
-
-                       
-                        <a
-                            href="datakategori"
-                            className={`block py-2 font-bold mt-3 px-3 rounded hover:bg-blue-600 
-                                ${location.pathname === "datakategori" ? "bg-blue-700 font-bold" : ""
-                                }`}
-                        >
-                            <i className="ri-table-2"></i>  Kategori Data
-                        </a>
-                       
-                        <a
-                            href="/z"
-                            className={`block py-2 font-bold px-3 rounded hover:bg-blue-600 
-                                ${location.pathname === "/z" ? "bg-blue-700 font-bold" : ""
-                                }`}
-                        >
-                            <i className="ri-table-2"></i>  Kelas
-                        </a>
-                        <a
-                            href="/h"
-                            className={`block py-2 font-bold px-3  rounded hover:bg-blue-600 
-                                ${location.pathname === "/h" ? "bg-blue-700 font-bold" : ""
-                                }`}
-                        >
-                            <i className="ri-table-2"></i>  Master Data
-                        </a>
-                        <p className="mt-5">Keuangan</p>
-                        <a
-                            href="/o"
-                            className={`block py-2 font-bold px-3 rounded mt-3 hover:bg-blue-600 
-                                    ${location.pathname === "/o" ? "bg-blue-700 font-bold" : ""
-                                }`}
-                        >
-                         <i className="ri-bill-fill"></i> Tagihan
-                        </a>
-                        <a
-                            href="/a"
-                            className={`block py-2 font-bold px-3 rounded hover:bg-blue-600 
-                                    ${location.pathname === "/a" ? "bg-blue-700 font-bold" : ""
-                                }`}
-                        >
-                         <i className="ri-bill-fill"></i> Kategori Tagihan
-                        </a>
-                        <a
-                            href="/q"
-                            className={`block py-2 font-bold px-3 rounded  hover:bg-blue-600 
-                                ${location.pathname === "/q" ? "bg-blue-700 font-bold" : ""
-                                }`}
-                        >
-                          <i className="ri-bill-fill"></i>   Rekap Tagihan
-                        </a>
-
-                        <a href=""
-                            onClick={handleLogout}
-                            className="block font-bold bg-red-500 py-2 mt-10 px-3 rounded hover:bg-red-600">
-                            <i className="ri-logout-box-line"></i> Logout
-                        </a>
-                    </div>
-                </nav>
-            </div>
+  return (
+    <div className="w-60 min-h-screen">
+      <div className="fixed top-0 left-0 h-full w-60 bg-indigo-800 text-white shadow-lg">
+        <div className="text-3xl mt-4 font-bold mb-8 text-center flex items-center justify-center gap-2">
+          <i className="ri-menu-2-line"></i> MENU
         </div>
-    );
+
+        <nav className="px-3">
+          <div className="text-lg">
+            {menuItems.map((item, index) =>
+              item.isSection ? (
+                <p
+                  key={index}
+                  className="mt-5 mb-2 text-sm uppercase tracking-wide text-indigo-300 font-semibold"
+                >
+                  {item.label}
+                </p>
+              ) : (
+                <Link
+                  key={index}
+                  to={item.path}
+                  className={`flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200
+                    hover:bg-blue-600 hover:translate-x-1
+                    ${location.pathname === item.path ? "bg-blue-700 font-bold" : ""}`}
+                >
+                  <i className={item.icon}></i>
+                  {item.label}
+                </Link>
+              )
+            )}
+
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-start gap-2 py-2 px-3 mt-10 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
+            >
+              <i className="ri-logout-box-line"></i> Logout
+            </button>
+          </div>
+        </nav>
+      </div>
+    </div>
+  );
 }
 
 export default Dasbor;

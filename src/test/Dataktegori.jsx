@@ -100,7 +100,7 @@ const Dataktegori = () => {
                     </div>
                 </div>
                 <div className="mt-6 overflow-x-auto">
-                    <h1 className="text-2xl mb-3">Daftar Kategori Data</h1>
+                    <h1 className="text-3xl font-bold mb-3 mt-10">Daftar Kategori Data</h1>
                     <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
                         <thead className="bg-sky-600 text-center text-white">
                             <tr>

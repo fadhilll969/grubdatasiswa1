@@ -134,6 +134,14 @@
       "kategori": "Siswa",
       "kelas": "X",
       "id": "5944"
+    },
+    {
+      "id": "c7f2",
+      "nama": "rinee",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "8787",
+      "kategori": "Siswa",
+      "kelas": "X"
     }
   ],
   "users": [],
@@ -219,11 +227,23 @@
       "id": "18c6",
       "kategori_nama": "Karyawan",
       "aktif": true
+    }
+  ],
+  "kls": [
+    {
+      "kelas": "XI",
+      "jurusan": "tkjvv",
+      "id": "2e2c"
     },
     {
-      "id": "c2bd",
-      "kategori_nama": "test",
-      "aktif": false
+      "id": "3788",
+      "kelas": "X",
+      "jurusan": "tkj"
+    },
+    {
+      "kelas": "XII",
+      "jurusan": "tkj",
+      "id": "370f"
     }
   ]
 }

@@ -34,7 +34,7 @@ function Dasbor() {
     { path: "/w", icon: "ri-dashboard-line", label: "Dashboard" },
     { isSection: true, label: "Database" },
     { path: "/datakategori", icon: "ri-folder-2-line", label: "Kategori Data" },
-    { path: "/z", icon: "ri-team-line", label: "Kelas" },
+    { path: "/kelas", icon: "ri-team-line", label: "Kelas" },
     { path: "/h", icon: "ri-database-2-line", label: "Master Data" },
     { isSection: true, label: "Keuangan" },
     { path: "/a", icon: "ri-price-tag-3-line", label: "Kategori Tagihan" },

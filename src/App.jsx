@@ -17,6 +17,11 @@ import Editkategori from "./test/Editkategori"
 import Dataktegori from "./test/Dataktegori"
 import Tmbhdataclok from "./test/Tmbhdataclok"
 import Editclok from "./test/Editclok"
+import Tmbhkls from "./test/Tmbhkls"
+import Editkelas from "./test/Editkelas"
+
+
+
 
 const App = () => {
   return (
@@ -32,14 +37,15 @@ const App = () => {
       <Route path="/o" element={<Tagihan />} />
       <Route path="/p" element={<TmbhdataTgihan />} />
       <Route path="/ed/:id" element={<EditTagihan />} />
-      <Route path="/z" element={<Kelas />} />
       <Route path="/a" element={<Kategoridata />} />
       <Route path="/tmbh" element={<Tmabahkategori />} />
       <Route path="/datakategori" element={<Dataktegori />} />
       <Route path="/tambah" element={<Tmbhdataclok />} />
       <Route path="/editclok/:id" element={<Editclok />} />
       <Route path="/kategori/edit/:id" element={<Editkategori />} />
-
+      <Route path="/kelas" element={<Kelas />} />
+      <Route path="/tambahkelas/:kelas?" element={<Tmbhkls />} />
+      <Route path="/editkelas/:id" element={<Editkelas />} />
     </Routes>
 
   )

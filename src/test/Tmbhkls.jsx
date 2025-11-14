@@ -81,9 +81,9 @@ const Tmbhkls = () => {
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
               >
-                <option value="X">Kelas X</option>
-                <option value="XI">Kelas XI</option>
-                <option value="XII">Kelas XII</option>
+                <option value="X"> X</option>
+                <option value="XI"> XI</option>
+                <option value="XII"> XII</option>
               </select>
             </div>
 
@@ -104,7 +104,7 @@ const Tmbhkls = () => {
               <button
                 type="button"
                 onClick={() => navigate("/kelas")} // perbaiki navigasi
-                className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition"
+                className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition"
               >
                 Batal
               </button>

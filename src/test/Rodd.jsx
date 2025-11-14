@@ -150,6 +150,7 @@ const Rodd = () => {
                   <th className="py-3 px-4">Kategori</th>
                   <th className="py-3 px-4">Nama</th>
                   <th className="py-3 px-4">Kelas</th>
+                  <th className="py-3 px-4">Jurusan</th>
                   <th className="py-3 px-4">Nomer</th>
                   <th className="py-3 px-4">Email</th>
                   <th className="py-3 px-4">Aksi</th>
@@ -171,6 +172,7 @@ const Rodd = () => {
                       <td className="py-3 text-center px-4">
                         {data.kelas || "-"}
                       </td>
+                      <td className="py-3 text-center px-4">{data.jurusan}</td>
                       <td className="py-3 text-center px-4">{data.nomer}</td>
                       <td className="py-3 text-right px-4">{data.email}</td>
                       <td className="py-3 px-4 text-center">

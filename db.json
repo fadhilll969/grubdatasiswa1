@@ -231,19 +231,24 @@
   ],
   "kls": [
     {
-      "kelas": "XI",
+      "kelas": "X",
       "jurusan": "tkjvv",
       "id": "2e2c"
     },
     {
-      "id": "3788",
-      "kelas": "X",
-      "jurusan": "tkj"
+      "kelas": "XI",
+      "jurusan": "tkj",
+      "id": "3788"
     },
     {
       "kelas": "XII",
       "jurusan": "tkj",
       "id": "370f"
+    },
+    {
+      "id": "0361",
+      "kelas": "X",
+      "jurusan": "8kiykyut"
     }
   ]
 }

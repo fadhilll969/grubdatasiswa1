@@ -9,32 +9,47 @@ const Tmbhdata = () => {
   const navigate = useNavigate();
 
   const [kategoriList, setKategoriList] = useState([]);
+  const [kelasList, setKelasList] = useState([]);
+
   const [selectedKategori, setSelectedKategori] = useState("");
+  const [selectedKelas, setSelectedKelas] = useState("");
+  const [selectedJurusan, setSelectedJurusan] = useState("");
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [nomer, setNomer] = useState("");
-  const [kelas, setKelas] = useState("");
 
-  const API_URL_DATA = "http://localhost:5000/doss"; // API untuk data
-  const API_URL_KATEGORI = "http://localhost:5000/clok"; // API kategori
+  const API_URL_DATA = "http://localhost:5000/doss"; 
+  const API_URL_KATEGORI = "http://localhost:5000/clok";
+  const API_URL_KELAS = "http://localhost:5000/kls";
 
-  // Fetch kategori dari server
+  // Fetch kategori + kelas
   useEffect(() => {
     const fetchKategori = async () => {
       try {
         const res = await axios.get(API_URL_KATEGORI);
-        // hanya kategori yang aktif
         const aktifKategori = res.data.filter((kat) => kat.aktif);
         setKategoriList(aktifKategori);
       } catch (error) {
         console.error("Gagal mengambil kategori:", error);
       }
     };
+
+    const fetchKelas = async () => {
+      try {
+        const res = await axios.get(API_URL_KELAS);
+        setKelasList(res.data);
+      } catch (error) {
+        console.error("Gagal mengambil kelas:", error);
+      }
+    };
+
     fetchKategori();
+    fetchKelas();
   }, []);
 
+  // Submit data
   const handleAddData = async () => {
-    // validasi
     if (!name || !email || !nomer || !selectedKategori) {
       Swal.fire({
         icon: "warning",
@@ -48,17 +63,16 @@ const Tmbhdata = () => {
       Swal.fire({
         icon: "warning",
         title: "Email tidak valid!",
-        text: "Masukkan email yang benar.",
+        text: "Masukkan format email yang benar.",
       });
       return;
     }
 
-    // jika kategori Siswa, wajib pilih kelas
-    if (selectedKategori === "Siswa" && !kelas) {
+    if (selectedKategori === "Siswa" && !selectedKelas) {
       Swal.fire({
         icon: "warning",
         title: "Kelas belum dipilih!",
-        text: "Pilih kelas untuk siswa.",
+        text: "Harap pilih kelas siswa.",
       });
       return;
     }
@@ -68,26 +82,25 @@ const Tmbhdata = () => {
       email,
       nomer,
       kategori: selectedKategori,
-      ...(selectedKategori === "Siswa" && { kelas }),
+      ...(selectedKategori === "Siswa" && {
+        kelas: selectedKelas,
+        jurusan: selectedJurusan,
+      }),
     };
 
     Swal.fire({
-      title: "Yakin ingin menambahkan data?",
-      text: "Pastikan semua data sudah benar.",
+      title: "Ingin menambahkan data?",
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "Ya, Tambahkan",
+      confirmButtonText: "Ya",
       cancelButtonText: "Batal",
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#e20e0e",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await axios.post(API_URL_DATA, newData);
           Swal.fire({
             icon: "success",
-            title: "Berhasil!",
-            text: "Data berhasil ditambahkan.",
+            title: "Berhasil menambah!",
             timer: 1500,
             showConfirmButton: false,
           });
@@ -96,7 +109,7 @@ const Tmbhdata = () => {
           Swal.fire({
             icon: "error",
             title: "Gagal!",
-            text: "Tidak dapat menambahkan data ke server.",
+            text: "Tidak dapat mengirim data ke server.",
           });
         }
       }
@@ -114,15 +127,16 @@ const Tmbhdata = () => {
             Tambah Data
           </h2>
 
-          {/* Pilih Kategori */}
+          {/* PILIH KATEGORI */}
           <div className="relative mb-4">
             <i className="ri-database-2-line absolute left-3 top-3 text-gray-400"></i>
             <select
-              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              className="p-2 pl-10 border rounded w-full"
               value={selectedKategori}
               onChange={(e) => {
                 setSelectedKategori(e.target.value);
-                setKelas(""); // reset kelas
+                setSelectedKelas("");
+                setSelectedJurusan("");
               }}
             >
               <option value="">Pilih Kategori</option>
@@ -134,44 +148,65 @@ const Tmbhdata = () => {
             </select>
           </div>
 
+          {/* KELAS & JURUSAN (UNTUK SISWA SAJA) */}
+          {selectedKategori === "Siswa" && (
+            <>
+              {/* Kelas */}
+              <div className="relative mb-4">
+                <i className="ri-building-2-line absolute left-3 top-3 text-gray-400"></i>
+                <select
+                  className="p-2 pl-10 border rounded w-full"
+                  value={selectedKelas}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setSelectedKelas(val);
+
+                    const jur = kelasList.find((k) => k.kelas === val)?.jurusan || "";
+                    setSelectedJurusan(jur);
+                  }}
+                >
+                  <option value="">Pilih Kelas</option>
+                  {kelasList.map((k) => (
+                    <option key={k.id} value={k.kelas}>
+                      {k.kelas}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Jurusan otomatis */}
+              <div className="relative mb-4">
+                <i className="ri-book-2-line absolute left-3 top-3 text-gray-400"></i>
+                <input
+                  className="p-2 pl-10 border rounded w-full bg-gray-100"
+                  value={selectedJurusan}
+                  readOnly
+                  placeholder="Jurusan otomatis"
+                />
+              </div>
+            </>
+          )}
+
           {/* Nama */}
           <div className="relative mb-4">
             <i className="ri-user-3-line absolute left-3 top-3 text-gray-400"></i>
             <input
-              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              className="p-2 pl-10 border rounded w-full"
               placeholder="Nama"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
 
-          {/* Kelas hanya untuk Siswa */}
-          {selectedKategori === "Siswa" && (
-            <div className="relative mb-4">
-              <i className="ri-building-2-line absolute left-3 top-3 text-gray-400"></i>
-              <select
-                className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
-                value={kelas}
-                onChange={(e) => setKelas(e.target.value)}
-              >
-                <option value="">Pilih Kelas</option>
-                <option value="X">X</option>
-                <option value="XI">XI</option>
-                <option value="XII">XII</option>
-              </select>
-            </div>
-          )}
-
           {/* Nomor */}
           <div className="relative mb-4">
             <i className="ri-phone-line absolute left-3 top-3 text-gray-400"></i>
             <input
-              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              className="p-2 pl-10 border rounded w-full"
               placeholder="Nomor Telepon"
               value={nomer}
               onChange={(e) => {
-                const value = e.target.value;
-                if (/^\d*$/.test(value)) setNomer(value);
+                if (/^\d*$/.test(e.target.value)) setNomer(e.target.value);
               }}
             />
           </div>
@@ -180,16 +215,16 @@ const Tmbhdata = () => {
           <div className="relative mb-6">
             <i className="ri-mail-line absolute left-3 top-3 text-gray-400"></i>
             <input
-              className="p-2 pl-10 border rounded w-full focus:ring-2 focus:ring-sky-400 focus:outline-none"
+              className="p-2 pl-10 border rounded w-full"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
-          {/* Tombol Tambah */}
+          {/* Tombol Simpan */}
           <button
-            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
+            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700"
             onClick={handleAddData}
           >
             <i className="ri-save-3-line"></i> Tambahkan Data
@@ -197,7 +232,7 @@ const Tmbhdata = () => {
 
           {/* Tombol Kembali */}
           <button
-            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
+            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600"
             onClick={() => navigate("/h")}
           >
             <i className="ri-arrow-left-line"></i> Kembali

@@ -10,20 +10,19 @@ const Tmbhdata = () => {
 
   const [kategoriList, setKategoriList] = useState([]);
   const [kelasList, setKelasList] = useState([]);
-
   const [selectedKategori, setSelectedKategori] = useState("");
   const [selectedKelas, setSelectedKelas] = useState("");
   const [selectedJurusan, setSelectedJurusan] = useState("");
+  const [jurusanOptions, setJurusanOptions] = useState([]);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [nomer, setNomer] = useState("");
+  const [mapel, setMapel] = useState("");
 
-  const API_URL_DATA = "http://localhost:5000/doss"; 
+  const API_URL_DATA = "http://localhost:5000/doss";
   const API_URL_KATEGORI = "http://localhost:5000/clok";
-  const API_URL_KELAS = "http://localhost:5000/kls";
-
-  // Fetch kategori + kelas
+  const API_URL_KELAS = "http://localhost:5000/kls"; 
   useEffect(() => {
     const fetchKategori = async () => {
       try {
@@ -48,7 +47,21 @@ const Tmbhdata = () => {
     fetchKelas();
   }, []);
 
-  // Submit data
+  useEffect(() => {
+    if (selectedKelas) {
+      // Filter jurusan sesuai kelas yang dipilih
+      const jurusans = kelasList
+        .filter((k) => k.kelas === selectedKelas)
+        .map((k) => k.jurusan);
+
+      setJurusanOptions(jurusans);
+      setSelectedJurusan("");
+    } else {
+      setJurusanOptions([]);
+      setSelectedJurusan("");
+    }
+  }, [selectedKelas, kelasList]);
+
   const handleAddData = async () => {
     if (!name || !email || !nomer || !selectedKategori) {
       Swal.fire({
@@ -68,11 +81,11 @@ const Tmbhdata = () => {
       return;
     }
 
-    if (selectedKategori === "Siswa" && !selectedKelas) {
+    if (selectedKategori === "Siswa" && (!selectedKelas || !selectedJurusan)) {
       Swal.fire({
         icon: "warning",
-        title: "Kelas belum dipilih!",
-        text: "Harap pilih kelas siswa.",
+        title: "Kelas dan Jurusan belum dipilih!",
+        text: "Harap pilih kelas dan jurusan siswa.",
       });
       return;
     }
@@ -86,6 +99,7 @@ const Tmbhdata = () => {
         kelas: selectedKelas,
         jurusan: selectedJurusan,
       }),
+      ...(selectedKategori === "Guru" && { mapel }),
     };
 
     Swal.fire({
@@ -127,7 +141,6 @@ const Tmbhdata = () => {
             Tambah Data
           </h2>
 
-          {/* PILIH KATEGORI */}
           <div className="relative mb-4">
             <i className="ri-database-2-line absolute left-3 top-3 text-gray-400"></i>
             <select
@@ -137,6 +150,7 @@ const Tmbhdata = () => {
                 setSelectedKategori(e.target.value);
                 setSelectedKelas("");
                 setSelectedJurusan("");
+                setMapel("");
               }}
             >
               <option value="">Pilih Kategori</option>
@@ -148,46 +162,57 @@ const Tmbhdata = () => {
             </select>
           </div>
 
-          {/* KELAS & JURUSAN (UNTUK SISWA SAJA) */}
           {selectedKategori === "Siswa" && (
             <>
-              {/* Kelas */}
               <div className="relative mb-4">
                 <i className="ri-building-2-line absolute left-3 top-3 text-gray-400"></i>
                 <select
                   className="p-2 pl-10 border rounded w-full"
                   value={selectedKelas}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setSelectedKelas(val);
-
-                    const jur = kelasList.find((k) => k.kelas === val)?.jurusan || "";
-                    setSelectedJurusan(jur);
-                  }}
+                  onChange={(e) => setSelectedKelas(e.target.value)}
                 >
                   <option value="">Pilih Kelas</option>
-                  {kelasList.map((k) => (
-                    <option key={k.id} value={k.kelas}>
-                      {k.kelas}
+                  {[...new Set(kelasList.map((k) => k.kelas))].map(
+                    (kelasUnik) => (
+                      <option key={kelasUnik} value={kelasUnik}>
+                        {kelasUnik}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+
+              <div className="relative mb-4">
+                <i className="ri-book-2-line absolute left-3 top-3 text-gray-400"></i>
+                <select
+                  className="p-2 pl-10 border rounded w-full"
+                  value={selectedJurusan}
+                  onChange={(e) => setSelectedJurusan(e.target.value)}
+                  disabled={jurusanOptions.length === 0}
+                >
+                  <option value="">Pilih Jurusan</option>
+                  {jurusanOptions.map((jurusan, i) => (
+                    <option key={i} value={jurusan}>
+                      {jurusan.toUpperCase()}
                     </option>
                   ))}
                 </select>
               </div>
-
-              {/* Jurusan otomatis */}
-              <div className="relative mb-4">
-                <i className="ri-book-2-line absolute left-3 top-3 text-gray-400"></i>
-                <input
-                  className="p-2 pl-10 border rounded w-full bg-gray-100"
-                  value={selectedJurusan}
-                  readOnly
-                  placeholder="Jurusan otomatis"
-                />
-              </div>
             </>
           )}
 
-          {/* Nama */}
+          {selectedKategori === "Guru" && (
+            <div className="relative mb-4">
+              <i className="ri-book-line absolute left-3 top-3 text-gray-400"></i>
+              <input
+                className="p-2 pl-10 border rounded w-full"
+                placeholder="Mata Pelajaran"
+                value={mapel}
+                onChange={(e) => setMapel(e.target.value)}
+              />
+            </div>
+          )}
+
           <div className="relative mb-4">
             <i className="ri-user-3-line absolute left-3 top-3 text-gray-400"></i>
             <input
@@ -198,7 +223,6 @@ const Tmbhdata = () => {
             />
           </div>
 
-          {/* Nomor */}
           <div className="relative mb-4">
             <i className="ri-phone-line absolute left-3 top-3 text-gray-400"></i>
             <input
@@ -211,7 +235,6 @@ const Tmbhdata = () => {
             />
           </div>
 
-          {/* Email */}
           <div className="relative mb-6">
             <i className="ri-mail-line absolute left-3 top-3 text-gray-400"></i>
             <input
@@ -222,7 +245,6 @@ const Tmbhdata = () => {
             />
           </div>
 
-          {/* Tombol Simpan */}
           <button
             className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700"
             onClick={handleAddData}
@@ -230,7 +252,6 @@ const Tmbhdata = () => {
             <i className="ri-save-3-line"></i> Tambahkan Data
           </button>
 
-          {/* Tombol Kembali */}
           <button
             className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600"
             onClick={() => navigate("/h")}

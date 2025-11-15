@@ -6,6 +6,7 @@
       "nomer": "8787",
       "kategori": "Siswa",
       "kelas": "XII",
+      "jurusan": "TKJ",
       "id": "79f8"
     },
     {
@@ -14,14 +15,15 @@
       "nomer": "099787",
       "kategori": "Siswa",
       "kelas": "XII",
+      "jurusan": "TSM",
       "id": "91fd"
     },
     {
       "nama": "gauyho",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099",
-      "kategori": "Siswa",
-      "kelas": "XI",
+      "kategori": "Guru",
+      "mapel": "COCO",
       "id": "8a27"
     },
     {
@@ -30,6 +32,7 @@
       "nomer": "088123",
       "kategori": "Siswa",
       "kelas": "XI",
+      "jurusan": "TSM",
       "id": "51b7"
     },
     {
@@ -38,6 +41,7 @@
       "nomer": "099787",
       "kategori": "Siswa",
       "kelas": "X",
+      "jurusan": "TKJ",
       "id": "046a"
     },
     {
@@ -62,18 +66,20 @@
       "kategori": "Karyawan"
     },
     {
-      "id": "af84",
       "nama": "hohoerfqw3edq2frqwf",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
-      "kategori": "Guru"
+      "kategori": "Guru",
+      "mapel": "IPS",
+      "id": "af84"
     },
     {
-      "id": "2182",
       "nama": "hohodwd",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
-      "kategori": "Guru"
+      "kategori": "Guru",
+      "mapel": "MTK",
+      "id": "2182"
     },
     {
       "nama": "hohodwd",
@@ -81,6 +87,7 @@
       "nomer": "099787",
       "kategori": "Siswa",
       "kelas": "XII",
+      "jurusan": "TKJ",
       "id": "c7b4"
     },
     {
@@ -89,6 +96,7 @@
       "nomer": "099787",
       "kategori": "Siswa",
       "kelas": "XII",
+      "jurusan": "TSM",
       "id": "014a"
     },
     {
@@ -97,21 +105,8 @@
       "nomer": "099787",
       "kategori": "Siswa",
       "kelas": "XII",
+      "jurusan": "TSM",
       "id": "d076"
-    },
-    {
-      "nama": "ovvred selalu always🥀🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Guru",
-      "id": "58c9"
-    },
-    {
-      "id": "46e8",
-      "nama": "feqfqe",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Guru"
     },
     {
       "nama": "dicke selalu always🥀🥀",
@@ -133,15 +128,43 @@
       "nomer": "013121",
       "kategori": "Siswa",
       "kelas": "X",
+      "jurusan": "TKJ",
       "id": "5944"
     },
     {
-      "id": "c7f2",
-      "nama": "rinee",
+      "nama": "deedf",
+      "email": "gt@gmail.com",
+      "nomer": "65366",
+      "kategori": "Siswa",
+      "kelas": "X",
+      "jurusan": "TSM",
+      "id": "1a25"
+    },
+    {
+      "nama": "sheyy are you okayy🥀🥀",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "8787",
+      "kategori": "Guru",
+      "mapel": "IPA",
+      "id": "5b9e"
+    },
+    {
+      "nama": "sheyy are you okayy🥀🥀",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
       "kategori": "Siswa",
-      "kelas": "X"
+      "kelas": "XI",
+      "jurusan": "TSM",
+      "id": "2893"
+    },
+    {
+      "nama": "D3D",
+      "email": "hysaiiyaa@gmail.com",
+      "nomer": "8787",
+      "kategori": "Siswa",
+      "kelas": "X",
+      "jurusan": "TKJ",
+      "id": "92f1"
     }
   ],
   "users": [],
@@ -232,23 +255,33 @@
   "kls": [
     {
       "kelas": "X",
-      "jurusan": "tkjvv",
-      "id": "2e2c"
+      "jurusan": "TKJ",
+      "id": "5918"
+    },
+    {
+      "kelas": "X",
+      "jurusan": "TSM",
+      "id": "8ef2"
     },
     {
       "kelas": "XI",
-      "jurusan": "tkj",
-      "id": "3788"
+      "jurusan": "TSM",
+      "id": "a334"
+    },
+    {
+      "kelas": "XI",
+      "jurusan": "TKJ",
+      "id": "0d45"
     },
     {
       "kelas": "XII",
-      "jurusan": "tkj",
-      "id": "370f"
+      "jurusan": "TSM",
+      "id": "ba6c"
     },
     {
-      "id": "0361",
-      "kelas": "X",
-      "jurusan": "8kiykyut"
+      "kelas": "XII",
+      "jurusan": "TKJ",
+      "id": "2ed2"
     }
   ]
 }

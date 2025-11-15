@@ -31,7 +31,7 @@ const Kelas = () => {
         setLoading(false);
       }
     };
-
+    
     fetchKelas();
   }, [kelasParam]);
 

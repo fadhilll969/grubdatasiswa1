@@ -47,18 +47,17 @@ const Editkelas = () => {
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl mx-auto mt-10">
           <h2 className="text-2xl font-bold mb-6 text-sky-700 text-center">Edit Kelas</h2>
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block font-semibold mb-2">Kelas</label>
-              <select
+             <div>
+              <label className="block font-semibold mb-2">kelas</label>
+              <input
+                type="text"
                 name="kelas"
                 value={formData.kelas}
                 onChange={handleChange}
+                required
                 className="w-full border border-gray-300 rounded-lg px-4 py-2"
-              >
-                <option value="X">X</option>
-                <option value="XI">XI</option>
-                <option value="XII">XII</option>
-              </select>
+                placeholder="Masukkan kelas"
+              />
             </div>
             <div>
               <label className="block font-semibold mb-2">Jurusan</label>

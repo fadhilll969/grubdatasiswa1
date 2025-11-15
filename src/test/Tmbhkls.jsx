@@ -10,7 +10,7 @@ const Tmbhkls = () => {
   const navigate = useNavigate();
   const { kelas: paramKelas, id } = useParams(); 
   const [formData, setFormData] = useState({
-    kelas: paramKelas || "X",
+    kelas:  "",
     jurusan: "",
   });
 
@@ -74,18 +74,18 @@ const Tmbhkls = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block font-semibold mb-2">Kelas</label>
-              <select
+              <label className="block font-semibold mb-2">kelas</label>
+              <input
+                type="text"
                 name="kelas"
                 value={formData.kelas}
                 onChange={handleChange}
+                required
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
-              >
-                <option value="X"> X</option>
-                <option value="XI"> XI</option>
-                <option value="XII"> XII</option>
-              </select>
+                placeholder="Masukkan kelas"
+              />
             </div>
+
 
             <div>
               <label className="block font-semibold mb-2">Jurusan</label>

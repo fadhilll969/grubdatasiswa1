@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Dasbor from "./Dasbor";
+import "remixicon/fonts/remixicon.css";
 
 const API_URL = "http://localhost:5000/kategori-data";
 
@@ -20,21 +21,20 @@ const Editkategori = () => {
         const fetchKategori = async () => {
             try {
                 const res = await axios.get(`${API_URL}/${id}`);
-                const data = {
-                    ...res.data,
-                    aktif: res.data.aktif !== undefined ? res.data.aktif : false,
-                };
-                setKategori(data);
+                setKategori({
+                    nama_kategori: res.data.nama_kategori || "",
+                    keterangan: res.data.keterangan || "",
+                    aktif: res.data.aktif ?? false,
+                });
                 setLoading(false);
             } catch (error) {
-                console.error("Gagal mengambil data kategori:", error);
+                console.error("Gagal mengambil kategori:", error);
                 Swal.fire({
                     icon: "error",
                     title: "Error",
                     text: "Data kategori tidak ditemukan",
                 });
                 navigate("/a");
-
             }
         };
 
@@ -81,60 +81,63 @@ const Editkategori = () => {
         }
     };
 
-
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className="p-10 text-lg">Loading...</div>;
 
     return (
         <div className="min-h-screen bg-sky-200 flex">
             <Dasbor />
-            <div className="flex-1 p-6">
-                <div className="bg-white h-115 w-200 ml-27 mt-10 rounded-xl shadow-lg overflow-hidden">
 
-                    <div className="bg-sky-600 py-4 px-6 flex items-center justify-center gap-2">
-                        <i className="ri-edit-2-line text-white text-2xl"></i>
-                        <h3 className="text-2xl font-semibold text-white">Edit Kategori</h3>
-                    </div>
+            <div className="flex-1 p-8">
+                <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 mt-20">
+                    <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
+                        Edit Kategori
+                    </h2>
 
-                    <form onSubmit={handleSubmit} className="p-6 space-y-5">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
-                            <label className="block text-gray-700 font-medium mb-1">Nama Kategori</label>
+                            <label className="block font-semibold text-gray-700 mb-1">
+                                Nama Kategori
+                            </label>
                             <input
                                 type="text"
                                 name="nama_kategori"
                                 value={kategori.nama_kategori}
                                 onChange={handleChange}
-                                className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
                                 placeholder="Masukkan Nama Kategori"
-                                required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-gray-700 font-medium mb-1">Keterangan</label>
-                            <textarea
+                            <label className="block font-semibold text-gray-700 mb-1">
+                                Keterangan
+                            </label>
+                            <input
                                 name="keterangan"
                                 value={kategori.keterangan}
                                 onChange={handleChange}
-                                className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
-                                rows="3"
-                                placeholder="Masukkan Keterangan"
-                            />
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
+                                placeholder="Masukkan keterangan kategori"
+                            ></input>
                         </div>
+ 
 
-                        <button
-                            type="submit"
-                            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
-                        >
-                            <i className="ri-save-3-line"></i> Simpan
-                        </button>
+                        <div className="flex justify-end gap-3 pt-4">
+                            <button
+                                type="button"
+                                className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+                                onClick={() => navigate("/a")}
+                            >
+                                <i className="ri-arrow-left-line"></i> Kembali
+                            </button>
 
-                        <button
-                            type="button"
-                            className="w-full p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
-                            onClick={() => navigate("/a")}
-                        >
-                            <i className="ri-arrow-left-line"></i> Batal
-                        </button>
+                            <button
+                                type="submit"
+                                className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
+                            >
+                                <i className="ri-save-3-line"></i> Simpan
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

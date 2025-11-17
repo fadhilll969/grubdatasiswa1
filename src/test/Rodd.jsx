@@ -18,14 +18,12 @@ const Rodd = () => {
   const API_URL = "http://localhost:5000/doss";
   const navigate = useNavigate();
 
-  // Fetch data
   useEffect(() => {
     axios
       .get(API_URL)
       .then((res) => {
         setDataList(res.data);
 
-        // Ambil jurusan unik dari siswa
         const siswa = res.data.filter((item) => item.kategori === "Siswa");
         const jurusanUnik = [...new Set(siswa.map((s) => s.jurusan))];
         setJurusanOptions(jurusanUnik);
@@ -33,7 +31,6 @@ const Rodd = () => {
       .catch((err) => console.error("Gagal ambil data:", err));
   }, []);
 
-  // Delete handler
   const handleDelete = (id) => {
     Swal.fire({
       title: "Yakin ingin menghapus data ini?",
@@ -194,16 +191,16 @@ const Rodd = () => {
 
           <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
-              <thead className="bg-sky-600 text-center text-white">
+              <thead className="bg-sky-600 text-white">
                 <tr>
-                  <th className="py-3 px-4">No</th>
-                  <th className="py-3 px-4">Kategori</th>
-                  <th className="py-3 px-4">Nama</th>
-                  <th className="py-3 px-4">Kelas</th>
-                  <th className="py-3 px-4">Jurusan/Mapel</th>
-                  <th className="py-3 px-4">Nomer</th>
-                  <th className="py-3 px-4">Email</th>
-                  <th className="py-3 px-4">Aksi</th>
+                  <th className="py-3 px-4 text-left">No</th>
+                  <th className="py-3 px-4 text-left">Kategori</th>
+                  <th className="py-3 px-4 text-left">Nama</th>
+                  <th className="py-3 px-4 text-left">Kelas</th>
+                  <th className="py-3 px-4 text-left">Jurusan/Mapel</th>
+                  <th className="py-3 px-4 text-left">Nomer</th>
+                  <th className="py-3 px-4 text-left">Email</th>
+                  <th className="py-3 px-4 text-left">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -213,23 +210,23 @@ const Rodd = () => {
                       key={data.id}
                       className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
                     >
-                      <td className="py-3 text-center px-4">{index + 1}</td>
-                      <td className="py-3 px-4 flex items-center">
+                      <td className="py-3 px-4 text-left">{index + 1}</td>
+                      <td className="py-3 px-4 text-left">
                         {getCategoryIcon(data.kategori)} {data.kategori}
                       </td>
-                      <td className="py-3 px-4">{data.nama}</td>
-                      <td className="py-3 text-center px-4">{data.kelas || "-"}</td>
-                      <td className="py-3 text-center px-4">
+                      <td className="py-3 px-4 text-left">{data.nama}</td>
+                      <td className="py-3 px-4 text-left">{data.kelas || "-"}</td>
+                      <td className="py-3 px-4 text-left">
                         {data.kategori === "Siswa"
                           ? data.jurusan
                           : data.kategori === "Guru"
                           ? data.mapel
                           : "-"}
                       </td>
-                      <td className="py-3 text-center px-4">{data.nomer}</td>
-                      <td className="py-3 text-right px-4">{data.email}</td>
-                      <td className="py-3 px-4 text-center">
-                        <div className="flex justify-center gap-2">
+                      <td className="py-3 px-4 text-left">{data.nomer}</td>
+                      <td className="py-3 px-4 text-left">{data.email}</td>
+                      <td className="py-3 px-4 text-left">
+                        <div className="flex gap-2">
                           <button
                             className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition flex items-center gap-1"
                             onClick={() => navigate(`/edit/${data.id}`)}
@@ -248,7 +245,7 @@ const Rodd = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8" className="text-center py-5 text-gray-500 italic">
+                    <td colSpan="8" className="text-left py-5 text-gray-500 italic">
                       Tidak ada data yang cocok.
                     </td>
                   </tr>

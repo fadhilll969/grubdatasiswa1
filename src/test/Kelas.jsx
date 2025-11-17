@@ -3,12 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Dasbor from "./Dasbor";
+import "remixicon/fonts/remixicon.css";
 
 const API_URL = "http://localhost:5000/kls";
 
 const Kelas = () => {
   const navigate = useNavigate();
-  const { kelas: kelasParam } = useParams();  
+  const { kelas: kelasParam } = useParams();
   const [kelasList, setKelasList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,7 +20,7 @@ const Kelas = () => {
         const res = await axios.get(API_URL);
         let data = res.data;
 
-         if (kelasParam) {
+        if (kelasParam) {
           data = data.filter(item => item.kelas === kelasParam);
         }
 
@@ -31,7 +32,7 @@ const Kelas = () => {
         setLoading(false);
       }
     };
-    
+
     fetchKelas();
   }, [kelasParam]);
 
@@ -73,12 +74,13 @@ const Kelas = () => {
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
               onClick={() => navigate("/tambahkelas")}
             >
+              <i className="ri-add-circle-line text-lg"></i>
               Tambah Kelas
             </button>
           </div>
         </div>
 
-        <div className="mt-6 overflow-x-auto">
+        <div className="rounded-xl mt-6 overflow-x-auto">
           {loading ? (
             <div className="text-center py-4">Memuat data...</div>
           ) : (
@@ -104,16 +106,16 @@ const Kelas = () => {
                       <td className="py-3 px-4">{item.jurusan}</td>
                       <td className="py-3 px-4 flex justify-center gap-2">
                         <button
-                          className="bg-sky-500 text-white px-3 py-1 rounded hover:bg-sky-600"
+                          className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition flex items-center gap-1"
                           onClick={() => navigate(`/editkelas/${item.id}`)}
                         >
-                          Edit
+                          <i className="ri-edit-2-line text-sm"></i> Edit
                         </button>
                         <button
-                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                          className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition flex items-center gap-1"
                           onClick={() => handleDelete(item.id)}
                         >
-                          Hapus
+                          <i className="ri-delete-bin-6-line text-sm"></i> Hapus
                         </button>
                       </td>
                     </tr>

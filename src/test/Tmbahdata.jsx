@@ -22,13 +22,13 @@ const Tmbhdata = () => {
 
   const API_URL_DATA = "http://localhost:5000/doss";
   const API_URL_KATEGORI = "http://localhost:5000/clok";
-  const API_URL_KELAS = "http://localhost:5000/kls"; 
+  const API_URL_KELAS = "http://localhost:5000/kls";
+
   useEffect(() => {
     const fetchKategori = async () => {
       try {
         const res = await axios.get(API_URL_KATEGORI);
-        const aktifKategori = res.data.filter((kat) => kat.aktif);
-        setKategoriList(aktifKategori);
+        setKategoriList(res.data.filter((k) => k.aktif));
       } catch (error) {
         console.error("Gagal mengambil kategori:", error);
       }
@@ -49,12 +49,11 @@ const Tmbhdata = () => {
 
   useEffect(() => {
     if (selectedKelas) {
-      // Filter jurusan sesuai kelas yang dipilih
-      const jurusans = kelasList
+      const jurusan = kelasList
         .filter((k) => k.kelas === selectedKelas)
         .map((k) => k.jurusan);
 
-      setJurusanOptions(jurusans);
+      setJurusanOptions(jurusan);
       setSelectedJurusan("");
     } else {
       setJurusanOptions([]);
@@ -134,17 +133,17 @@ const Tmbhdata = () => {
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
 
-      <div className="flex-1 flex justify-center items-center p-6">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
-          <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 flex items-center justify-center gap-2">
-            <i className="ri-user-add-line text-sky-600 text-3xl"></i>
+      <div className="flex-1 p-8">
+        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52">
+
+          <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
             Tambah Data
           </h2>
 
-          <div className="relative mb-4">
-            <i className="ri-database-2-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-4">
+            <label className="block font-semibold mb-1">Kategori</label>
             <select
-              className="p-2 pl-10 border rounded w-full"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
               value={selectedKategori}
               onChange={(e) => {
                 setSelectedKategori(e.target.value);
@@ -164,36 +163,33 @@ const Tmbhdata = () => {
 
           {selectedKategori === "Siswa" && (
             <>
-              <div className="relative mb-4">
-                <i className="ri-building-2-line absolute left-3 top-3 text-gray-400"></i>
+              <div className="mb-4">
+                <label className="block font-semibold mb-1">Kelas</label>
                 <select
-                  className="p-2 pl-10 border rounded w-full"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                   value={selectedKelas}
                   onChange={(e) => setSelectedKelas(e.target.value)}
                 >
                   <option value="">Pilih Kelas</option>
-                  {[...new Set(kelasList.map((k) => k.kelas))].map(
-                    (kelasUnik) => (
-                      <option key={kelasUnik} value={kelasUnik}>
-                        {kelasUnik}
-                      </option>
-                    )
-                  )}
+                  {[...new Set(kelasList.map((k) => k.kelas))].map((kls) => (
+                    <option key={kls} value={kls}>
+                      {kls}
+                    </option>
+                  ))}
                 </select>
               </div>
 
-              <div className="relative mb-4">
-                <i className="ri-book-2-line absolute left-3 top-3 text-gray-400"></i>
+              <div className="mb-4">
+                <label className="block font-semibold mb-1">Jurusan</label>
                 <select
-                  className="p-2 pl-10 border rounded w-full"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                   value={selectedJurusan}
                   onChange={(e) => setSelectedJurusan(e.target.value)}
-                  disabled={jurusanOptions.length === 0}
                 >
                   <option value="">Pilih Jurusan</option>
-                  {jurusanOptions.map((jurusan, i) => (
-                    <option key={i} value={jurusan}>
-                      {jurusan.toUpperCase()}
+                  {jurusanOptions.map((j, i) => (
+                    <option key={i} value={j}>
+                      {j.toUpperCase()}
                     </option>
                   ))}
                 </select>
@@ -202,62 +198,63 @@ const Tmbhdata = () => {
           )}
 
           {selectedKategori === "Guru" && (
-            <div className="relative mb-4">
-              <i className="ri-book-line absolute left-3 top-3 text-gray-400"></i>
+            <div className="mb-4">
+              <label className="block font-semibold mb-1">Mata Pelajaran</label>
               <input
-                className="p-2 pl-10 border rounded w-full"
-                placeholder="Mata Pelajaran"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                placeholder="Masukkan mapel"
                 value={mapel}
                 onChange={(e) => setMapel(e.target.value)}
               />
             </div>
           )}
 
-          <div className="relative mb-4">
-            <i className="ri-user-3-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-4">
+            <label className="block font-semibold mb-1">Nama</label>
             <input
-              className="p-2 pl-10 border rounded w-full"
-              placeholder="Nama"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="Nama lengkap"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
 
-          <div className="relative mb-4">
-            <i className="ri-phone-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-4">
+            <label className="block font-semibold mb-1">Nomor Telepon</label>
             <input
-              className="p-2 pl-10 border rounded w-full"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
               placeholder="Nomor Telepon"
               value={nomer}
-              onChange={(e) => {
-                if (/^\d*$/.test(e.target.value)) setNomer(e.target.value);
-              }}
+              onChange={(e) => /^\d*$/.test(e.target.value) && setNomer(e.target.value)}
             />
           </div>
 
-          <div className="relative mb-6">
-            <i className="ri-mail-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-6">
+            <label className="block font-semibold mb-1">Email</label>
             <input
-              className="p-2 pl-10 border rounded w-full"
-              placeholder="Email"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="Alamat Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
-          <button
-            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700"
-            onClick={handleAddData}
-          >
-            <i className="ri-save-3-line"></i> Tambahkan Data
-          </button>
+          <div className="flex justify-end gap-3">
+            <button
+              className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+              onClick={() => navigate("/h")}
+            >
+              <i className="ri-arrow-left-line"></i> Kembali
+            </button>
 
-          <button
-            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600"
-            onClick={() => navigate("/h")}
-          >
-            <i className="ri-arrow-left-line"></i> Kembali
-          </button>
+            <button
+              className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
+              onClick={handleAddData}
+            >
+              <i className="ri-save-3-line"></i> Simpan
+            </button>
+          </div>
+
         </div>
       </div>
     </div>

@@ -12,15 +12,17 @@ const Editjir = () => {
   const [kategoriList, setKategoriList] = useState([]);
   const [kelasList, setKelasList] = useState([]);
   const [jurusanList, setJurusanList] = useState([]);
+
   const [selectedKategori, setSelectedKategori] = useState("");
   const [selectedKelas, setSelectedKelas] = useState("");
   const [selectedJurusan, setSelectedJurusan] = useState("");
+
   const [mapel, setMapel] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [nomer, setNomer] = useState("");
 
-  const API_URL_DATA = "http://localhost:5000/doss"; 
+  const API_URL_DATA = "http://localhost:5000/doss";
   const API_URL_KATEGORI = "http://localhost:5000/clok";
   const API_URL_KELAS = "http://localhost:5000/kls";
 
@@ -28,8 +30,7 @@ const Editjir = () => {
     const fetchKategori = async () => {
       try {
         const res = await axios.get(API_URL_KATEGORI);
-        const aktifKategori = res.data.filter((kat) => kat.aktif);
-        setKategoriList(aktifKategori);
+        setKategoriList(res.data.filter((kat) => kat.aktif));
       } catch (error) {
         console.error("Gagal mengambil kategori:", error);
       }
@@ -48,10 +49,12 @@ const Editjir = () => {
       try {
         const res = await axios.get(`${API_URL_DATA}/${id}`);
         const data = res.data;
+
         setName(data.nama || "");
         setEmail(data.email || "");
         setNomer(data.nomer || "");
         setSelectedKategori(data.kategori || "");
+
         if (data.kategori === "Siswa") {
           setSelectedKelas(data.kelas || "");
           setSelectedJurusan(data.jurusan || "");
@@ -69,12 +72,13 @@ const Editjir = () => {
   }, [id]);
 
   useEffect(() => {
-    // Update daftar jurusan saat kelas berubah
     if (selectedKelas) {
       const jurusanOptions = kelasList
         .filter((k) => k.kelas === selectedKelas)
         .map((k) => k.jurusan);
+
       setJurusanList(jurusanOptions);
+
       if (!jurusanOptions.includes(selectedJurusan)) {
         setSelectedJurusan(jurusanOptions[0] || "");
       }
@@ -86,30 +90,27 @@ const Editjir = () => {
 
   const handleUpdateData = async () => {
     if (!name || !email || !nomer || !selectedKategori) {
-      Swal.fire({
+      return Swal.fire({
         icon: "warning",
         title: "Data tidak lengkap!",
         text: "Nama, Nomor, Email, dan Kategori harus diisi.",
       });
-      return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      Swal.fire({
+      return Swal.fire({
         icon: "warning",
         title: "Email tidak valid!",
         text: "Masukkan format email yang benar.",
       });
-      return;
     }
 
     if (selectedKategori === "Siswa" && (!selectedKelas || !selectedJurusan)) {
-      Swal.fire({
+      return Swal.fire({
         icon: "warning",
         title: "Kelas dan Jurusan belum dipilih!",
         text: "Harap pilih kelas dan jurusan siswa.",
       });
-      return;
     }
 
     const updatedData = {
@@ -136,7 +137,7 @@ const Editjir = () => {
           await axios.put(`${API_URL_DATA}/${id}`, updatedData);
           Swal.fire({
             icon: "success",
-            title: "Berhasil diperbarui!",
+            title: "Perubahan disimpan!",
             timer: 1500,
             showConfirmButton: false,
           });
@@ -145,7 +146,7 @@ const Editjir = () => {
           Swal.fire({
             icon: "error",
             title: "Gagal!",
-            text: "Tidak dapat mengirim data ke server.",
+            text: "Tidak dapat menyimpan perubahan.",
           });
         }
       }
@@ -155,17 +156,15 @@ const Editjir = () => {
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
-      <div className="flex-1 flex justify-center items-center p-6">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
-          <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800 flex items-center justify-center gap-2">
-            <i className="ri-edit-2-line text-sky-600 text-3xl"></i>
+
+      <div className="flex-1 p-8">
+        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 ">
+          <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
             Edit Data
           </h2>
-
-          <div className="relative mb-4">
-            <i className="ri-database-2-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-2">
+            <label className="font-semibold block mb-1">Kategori</label>
             <select
-              className="p-2 pl-10 border rounded w-full"
               value={selectedKategori}
               onChange={(e) => {
                 setSelectedKategori(e.target.value);
@@ -173,6 +172,7 @@ const Editjir = () => {
                 setSelectedJurusan("");
                 setMapel("");
               }}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
             >
               <option value="">Pilih Kategori</option>
               {kategoriList.map((kat) => (
@@ -185,12 +185,12 @@ const Editjir = () => {
 
           {selectedKategori === "Siswa" && (
             <>
-              <div className="relative mb-4">
-                <i className="ri-building-2-line absolute left-3 top-3 text-gray-400"></i>
+              <div className="mb-2">
+                <label className="font-semibold block mb-1">Kelas</label>
                 <select
-                  className="p-2 pl-10 border rounded w-full"
                   value={selectedKelas}
                   onChange={(e) => setSelectedKelas(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 >
                   <option value="">Pilih Kelas</option>
                   {[...new Set(kelasList.map((k) => k.kelas))].map((kelas) => (
@@ -201,17 +201,17 @@ const Editjir = () => {
                 </select>
               </div>
 
-              <div className="relative mb-4">
-                <i className="ri-book-2-line absolute left-3 top-3 text-gray-400"></i>
+              <div className="mb-2">
+                <label className="font-semibold block mb-1">Jurusan</label>
                 <select
-                  className="p-2 pl-10 border rounded w-full"
                   value={selectedJurusan}
                   onChange={(e) => setSelectedJurusan(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 >
                   <option value="">Pilih Jurusan</option>
                   {jurusanList.map((jur) => (
                     <option key={jur} value={jur}>
-                      {jur}
+                      {jur.toUpperCase()}
                     </option>
                   ))}
                 </select>
@@ -220,62 +220,62 @@ const Editjir = () => {
           )}
 
           {selectedKategori === "Guru" && (
-            <div className="relative mb-4">
-              <i className="ri-book-line absolute left-3 top-3 text-gray-400"></i>
+            <div className="mb-2">
+              <label className="font-semibold block mb-1">Mata Pelajaran</label>
               <input
-                className="p-2 pl-10 border rounded w-full"
-                placeholder="Mata Pelajaran"
                 value={mapel}
                 onChange={(e) => setMapel(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                placeholder="Mata Pelajaran"
               />
             </div>
           )}
 
-          <div className="relative mb-4">
-            <i className="ri-user-3-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-2">
+            <label className="font-semibold block mb-1">Nama</label>
             <input
-              className="p-2 pl-10 border rounded w-full"
-              placeholder="Nama"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="Nama"
             />
           </div>
 
-          <div className="relative mb-4">
-            <i className="ri-phone-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-2">
+            <label className="font-semibold block mb-1">Nomor Telepon</label>
             <input
-              className="p-2 pl-10 border rounded w-full"
-              placeholder="Nomor Telepon"
               value={nomer}
-              onChange={(e) => {
-                if (/^\d*$/.test(e.target.value)) setNomer(e.target.value);
-              }}
+              onChange={(e) => /^\d*$/.test(e.target.value) && setNomer(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="Nomor Telepon"
             />
           </div>
 
-          <div className="relative mb-6">
-            <i className="ri-mail-line absolute left-3 top-3 text-gray-400"></i>
+          <div className="mb-2">
+            <label className="font-semibold block mb-1">Email</label>
             <input
-              className="p-2 pl-10 border rounded w-full"
-              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="Email"
             />
           </div>
 
-          <button
-            className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700"
-            onClick={handleUpdateData}
-          >
-            <i className="ri-save-3-line"></i> Simpan Perubahan
-          </button>
+          <div className="flex justify-end gap-3">
+            <button
+              className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+              onClick={() => navigate("/h")}
+            >
+              <i className="ri-arrow-left-line"></i> Kembali
+            </button>
 
-          <button
-            className="w-full mt-3 p-2 bg-red-500 text-white rounded hover:bg-red-600"
-            onClick={() => navigate("/h")}
-          >
-            <i className="ri-arrow-left-line"></i> Kembali
-          </button>
+            <button
+              className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
+              onClick={handleUpdateData}
+            >
+              <i className="ri-save-3-line"></i> Simpan
+            </button>
+          </div>
         </div>
       </div>
     </div>

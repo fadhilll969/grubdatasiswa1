@@ -3,19 +3,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Dasbor from "./Dasbor";
+import "remixicon/fonts/remixicon.css";
 
 const API_URL = "http://localhost:5000/kls";
 
 const Tmbhkls = () => {
   const navigate = useNavigate();
-  const { kelas: paramKelas, id } = useParams(); 
+  const { kelas: paramKelas, id } = useParams();
   const [formData, setFormData] = useState({
-    kelas:  "",
+    kelas: "",
     jurusan: "",
   });
 
   useEffect(() => {
-     if (id) {
+    if (id) {
       axios.get(`${API_URL}/${id}`)
         .then(res => setFormData({
           kelas: res.data.kelas,
@@ -34,7 +35,7 @@ const Tmbhkls = () => {
     e.preventDefault();
     try {
       if (id) {
-         await axios.put(`${API_URL}/${id}`, formData);
+        await axios.put(`${API_URL}/${id}`, formData);
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
@@ -43,7 +44,7 @@ const Tmbhkls = () => {
           showConfirmButton: false,
         });
       } else {
-         await axios.post(API_URL, formData);
+        await axios.post(API_URL, formData);
         Swal.fire({
           icon: "success",
           title: "Berhasil!",
@@ -52,7 +53,7 @@ const Tmbhkls = () => {
           showConfirmButton: false,
         });
       }
-      navigate("/kelas"); 
+      navigate("/kelas");
     } catch (error) {
       console.error("Gagal menyimpan data:", error);
       Swal.fire({
@@ -67,7 +68,7 @@ const Tmbhkls = () => {
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
       <div className="flex-1 p-8">
-        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl mx-auto mt-10">
+        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 mt-20">
           <h2 className="text-2xl font-bold mb-6 text-sky-700 text-center">
             {id ? "Edit" : "Tambah"} Data Kelas
           </h2>
@@ -106,13 +107,13 @@ const Tmbhkls = () => {
                 onClick={() => navigate("/kelas")} // perbaiki navigasi
                 className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition"
               >
-                Batal
+                <i className="ri-arrow-left-line"></i> Kembali
               </button>
               <button
                 type="submit"
                 className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg transition"
               >
-                Simpan
+                <i className="ri-save-3-line"></i> Simpan
               </button>
             </div>
           </form>

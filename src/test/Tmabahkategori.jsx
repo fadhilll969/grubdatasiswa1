@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Dasbor from "./Dasbor";
 import Swal from "sweetalert2";
+import Dasbor from "./Dasbor";
+import "remixicon/fonts/remixicon.css";
+
 
 const Tmbahkategori = () => {
   const navigate = useNavigate();
@@ -37,8 +39,8 @@ const Tmbahkategori = () => {
         title: "Berhasil!",
         text: "Kategori baru berhasil disimpan!",
       }).then(() => navigate("/a"));
-    } catch (error) {
-      console.error("Gagal menyimpan kategori:", error);
+    } catch (err) {
+      console.error("Gagal menyimpan kategori:", err);
       Swal.fire({
         icon: "error",
         title: "Gagal Menyimpan",
@@ -51,51 +53,56 @@ const Tmbahkategori = () => {
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
 
-      <div className="flex-1 p-6">
-        <div className="bg-white rounded-xl shadow-lg max-w-3xl mx-auto mt-10 overflow-hidden">
-          <div className="bg-sky-600 py-4 px-6 flex items-center justify-center gap-2">
-            <i className="ri-add-circle-line text-white text-2xl"></i>
-            <h3 className="text-2xl font-semibold text-white">Tambah Kategori</h3>
-          </div>
+      <div className="flex-1 p-8">
+        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 mt-20">
+          <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
+            Tambah Kategori
+          </h2>
 
-          <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Nama Kategori</label>
+              <label className="block font-semibold text-gray-700 mb-1">
+                Nama Kategori
+              </label>
               <input
                 type="text"
                 name="nama_kategori"
                 value={formData.nama_kategori}
                 onChange={handleChange}
-                className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
                 placeholder="Masukkan nama kategori"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Keterangan</label>
-              <textarea
+              <label className="block font-semibold text-gray-700 mb-1">
+                Keterangan
+              </label>
+              <input
                 name="keterangan"
                 value={formData.keterangan}
                 onChange={handleChange}
-                className="w-full p-2 border-2 rounded-lg focus:ring-2 focus:ring-sky-400"
-                placeholder="Masukkan keterangan kategori"
-              />
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
+                placeholder="Masukkan keterangan kategori">
+              </input>
             </div>
 
-            <button
-              type="submit"
-              className="w-full p-2 bg-sky-600 text-white rounded hover:bg-sky-700 transition duration-200 flex items-center justify-center gap-2"
-            >
-              <i className="ri-save-3-line"></i> Simpan
-            </button>
+            <div className="flex justify-end gap-3 pt-4">
+              <button
+                type="button"
+                className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+                onClick={() => navigate("/a")}
+              >
+                <i className="ri-arrow-left-line"></i> Kembali
+              </button>
 
-            <button
-              type="button"
-              className="w-full p-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 flex items-center justify-center gap-2"
-              onClick={() => navigate("/a")}
-            >
-              <i className="ri-arrow-left-line"></i> Kembali
-            </button>
+              <button
+                type="submit"
+                className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
+              >
+                <i className="ri-save-3-line"></i> Simpan
+              </button>
+            </div>
           </form>
         </div>
       </div>

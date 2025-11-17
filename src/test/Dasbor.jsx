@@ -45,7 +45,7 @@ function Dasbor() {
   return (
     <div className="w-60 min-h-screen">
       <div className="fixed top-0 left-0 h-full w-60 bg-indigo-800 text-white shadow-lg">
-        <div className="text-3xl mt-4 font-bold mb-8 text-center flex items-center justify-center gap-2">
+        <div className="text-3xl mt-6 font-bold mb-8 text-center flex items-center justify-center gap-2">
           <i className="ri-menu-2-line"></i> MENU
         </div>
 
@@ -75,7 +75,7 @@ function Dasbor() {
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-start gap-2 py-2 px-3 mt-10 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
+              className="w-full flex items-center justify-start gap-2 py-2 px-3 mt-23 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
             >
               <i className="ri-logout-box-line"></i> Logout
             </button>

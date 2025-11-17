@@ -1,7 +1,7 @@
 {
   "doss": [
     {
-      "nama": "sheyy are you okayy🥀🥀",
+      "nama": "sheyy are you okayy",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
       "kategori": "Siswa",
@@ -10,7 +10,7 @@
       "id": "79f8"
     },
     {
-      "nama": "herz im fine🥀🥀🥀",
+      "nama": "herz im fine🥀",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099787",
       "kategori": "Siswa",
@@ -23,12 +23,12 @@
       "email": "hysaiiyaa@gmail.com",
       "nomer": "099",
       "kategori": "Guru",
-      "mapel": "COCO",
+      "mapel": "MTK",
       "id": "8a27"
     },
     {
       "nama": "herz im ",
-      "email": "herzzarey@gmail.com",
+      "email": "herzzddarey@gmail.com",
       "nomer": "088123",
       "kategori": "Siswa",
       "kelas": "XI",
@@ -52,122 +52,26 @@
       "kategori": "Karyawan"
     },
     {
-      "id": "e09d",
-      "nama": "hohodwd",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Karyawan"
-    },
-    {
-      "id": "f634",
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Karyawan"
-    },
-    {
-      "nama": "hohoerfqw3edq2frqwf",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Guru",
-      "mapel": "IPS",
-      "id": "af84"
-    },
-    {
-      "nama": "hohodwd",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Guru",
-      "mapel": "MTK",
-      "id": "2182"
-    },
-    {
-      "nama": "hohodwd",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa",
-      "kelas": "XII",
-      "jurusan": "TKJ",
-      "id": "c7b4"
-    },
-    {
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa",
-      "kelas": "XII",
-      "jurusan": "TSM",
-      "id": "014a"
-    },
-    {
-      "nama": "hoho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa",
-      "kelas": "XII",
-      "jurusan": "TSM",
-      "id": "d076"
-    },
-    {
-      "nama": "dicke selalu always🥀🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "08787",
-      "kategori": "Karyawan",
-      "id": "5856"
-    },
-    {
-      "nama": "ovvred selalu always🥀🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "08787",
-      "kategori": "Karyawan",
-      "id": "2c9c"
-    },
-    {
-      "nama": "giehgliejge",
-      "email": "gt@gmail.com",
-      "nomer": "013121",
-      "kategori": "Siswa",
-      "kelas": "X",
-      "jurusan": "TKJ",
-      "id": "5944"
-    },
-    {
-      "nama": "deedf",
-      "email": "gt@gmail.com",
-      "nomer": "65366",
-      "kategori": "Siswa",
-      "kelas": "X",
-      "jurusan": "TSM",
-      "id": "1a25"
-    },
-    {
       "nama": "sheyy are you okayy🥀🥀",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
       "kategori": "Guru",
       "mapel": "IPA",
       "id": "5b9e"
-    },
-    {
-      "nama": "sheyy are you okayy🥀🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "8787",
-      "kategori": "Siswa",
-      "kelas": "XI",
-      "jurusan": "TSM",
-      "id": "2893"
-    },
-    {
-      "nama": "D3D",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "8787",
-      "kategori": "Siswa",
-      "kelas": "X",
-      "jurusan": "TKJ",
-      "id": "92f1"
     }
   ],
-  "users": [],
+  "users": [
+    {
+      "id": "faac",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "ww"
+    },
+    {
+      "id": "8e8d",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "jj"
+    }
+  ],
   "coco": [
     {
       "id": "147a",
@@ -202,19 +106,27 @@
       "status": "Sudah Bayar"
     },
     {
-      "id": "0405",
-      "nama": "rinee",
+      "id": "5d4b",
+      "nama": "Vyyla",
       "jumlah": 50000000,
-      "jenisTagihan": "Uang Gedung",
+      "jenisTagihan": "Seragam",
       "tanggal": "2025-11-11"
+    },
+    {
+      "id": "dfc4",
+      "nama": "tiot",
+      "jumlah": 500000000,
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-11-17",
+      "status": "Sudah Bayar"
     }
   ],
   "kategori-data": [
     {
-      "id": "55eb",
       "nama_kategori": "SPP Bulanan",
-      "keterangan": "Bayar uang sekolah per bulan",
-      "aktif": true
+      "keterangan": "Bayar uang sekolah perbulan",
+      "aktif": true,
+      "id": "55eb"
     },
     {
       "id": "3315",
@@ -265,22 +177,22 @@
     },
     {
       "kelas": "XI",
-      "jurusan": "TSM",
+      "jurusan": "TKJ",
       "id": "a334"
     },
     {
       "kelas": "XI",
-      "jurusan": "TKJ",
+      "jurusan": "TSM",
       "id": "0d45"
     },
     {
       "kelas": "XII",
-      "jurusan": "TSM",
+      "jurusan": "TKJ",
       "id": "ba6c"
     },
     {
       "kelas": "XII",
-      "jurusan": "TKJ",
+      "jurusan": "TSM",
       "id": "2ed2"
     }
   ]

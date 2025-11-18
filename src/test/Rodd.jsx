@@ -107,7 +107,7 @@ const Rodd = () => {
               <h3 className="text-2xl font-semibold text-white">Data</h3>
             </div>
 
-            <div className="p-5 flex flex-col md:flex-row items-center gap-4">
+            <div className="p-5 flex flex-col md:flex-row  items-center gap-4">
               <div className="relative w-full md:w-1/3">
                 <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
                 <input
@@ -137,57 +137,22 @@ const Rodd = () => {
                 ))}
               </select>
 
-              {searchCategory === "Siswa" && (
-                <>
-                  <select
-                    className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
-                    value={searchClass}
-                    onChange={(e) => setSearchClass(e.target.value)}
-                  >
-                    <option value="Semua">Semua Kelas</option>
-                    {classOptions.map((kelas) => (
-                      <option key={kelas} value={kelas}>
-                        {kelas}
-                      </option>
-                    ))}
-                  </select>
+              
 
-                  <select
-                    className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
-                    value={searchJurusan}
-                    onChange={(e) => setSearchJurusan(e.target.value)}
-                  >
-                    <option value="Semua">Semua Jurusan</option>
-                    {jurusanOptions.map((jurusan) => (
-                      <option key={jurusan} value={jurusan}>
-                        {jurusan}
-                      </option>
-                    ))}
-                  </select>
-                </>
-              )}
-
-              {searchCategory === "Guru" && (
-                <input
-                  type="text"
-                  placeholder="Cari Mapel..."
-                  value={searchMapel}
-                  onChange={(e) => setSearchMapel(e.target.value)}
-                  className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
-                />
-              )}
+              
+             
+              <div>
+                <button
+                  className="p-2 px-4 mb-5 bg-blue-600 ml-55 items-center text-white rounded-lg hover:bg-blue-700 transition duration-200 w-full md:w-auto flex items-center gap-2"
+                  onClick={() => navigate("/t")}
+                >
+                  <i className="ri-add-circle-line text-lg"></i>
+                  Tambah Data
+                </button>
+              </div>
             </div>
           </div>
 
-          <div>
-            <button
-              className="p-2 px-4 mb-5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 w-full md:w-auto flex items-center gap-2"
-              onClick={() => navigate("/t")}
-            >
-              <i className="ri-add-circle-line text-lg"></i>
-              Tambah Data
-            </button>
-          </div>
 
           <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
@@ -210,21 +175,21 @@ const Rodd = () => {
                       key={data.id}
                       className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
                     >
-                      <td className="py-3 px-4 text-left">{index + 1}</td>
-                      <td className="py-3 px-4 text-left">
+                      <td className="py-3 px-4 text-center">{index + 1}</td>
+                      <td className="py-3 px-4  ">
                         {getCategoryIcon(data.kategori)} {data.kategori}
                       </td>
                       <td className="py-3 px-4 text-left">{data.nama}</td>
-                      <td className="py-3 px-4 text-left">{data.kelas || "-"}</td>
-                      <td className="py-3 px-4 text-left">
+                      <td className="py-3 px-4 text-center">{data.kelas || "-"}</td>
+                      <td className="py-3 px-4 text-center">
                         {data.kategori === "Siswa"
                           ? data.jurusan
                           : data.kategori === "Guru"
-                          ? data.mapel
-                          : "-"}
+                            ? data.mapel
+                            : "-"}
                       </td>
                       <td className="py-3 px-4 text-left">{data.nomer}</td>
-                      <td className="py-3 px-4 text-left">{data.email}</td>
+                      <td className="py-3 px-4 text-right">{data.email}</td>
                       <td className="py-3 px-4 text-left">
                         <div className="flex gap-2">
                           <button

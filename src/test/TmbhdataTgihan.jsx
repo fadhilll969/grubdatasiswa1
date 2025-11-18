@@ -10,12 +10,14 @@ const TmbhdataTgihan = () => {
 
   const [formData, setFormData] = useState({
     nama: "",
+    email: "",
     jumlah: "",
     jenisTagihan: "",
     tanggal: "",
   });
 
   const [kategoriList, setKategoriList] = useState([]);
+  const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,17 @@ const TmbhdataTgihan = () => {
       }
     };
 
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/doss");
+        setUserList(res.data.filter((u) => u.kategori === "Siswa")); // 🔥 hanya Siswa
+      } catch (error) {
+        console.error("Gagal mengambil user:", error);
+      }
+    };
+
     fetchKategori();
+    fetchUsers();
   }, []);
 
   const handleChange = (e) => {
@@ -66,12 +78,7 @@ const TmbhdataTgihan = () => {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/coco", {
-        nama: formData.nama.trim(),
-        jumlah: Number(formData.jumlah),
-        jenisTagihan: formData.jenisTagihan.trim(),
-        tanggal: formData.tanggal,
-      });
+      await axios.post("http://localhost:5000/coco", formData);
 
       Swal.fire({
         icon: "success",
@@ -96,46 +103,73 @@ const TmbhdataTgihan = () => {
 
       <div className="flex-1 p-8">
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 mt-8">
-          
           <h2 className="text-2xl font-bold mb-6 text-sky-700 text-center">
-            Tambah Data Tagihan
+            Tambah Data Tagihan (Siswa)
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
              <div>
-              <label className="block font-semibold mb-2">Nama</label>
-              <input
-                type="text"
+              <label className="block font-semibold mb-2">Nama Siswa</label>
+              <select
                 name="nama"
                 value={formData.nama}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
-                placeholder="Masukkan Nama"
-              />
+                onChange={(e) => {
+                  const selectedName = e.target.value;
+                  const selectedUser = userList.find(
+                    (u) => u.nama === selectedName
+                  );
+
+                  setFormData((prev) => ({
+                    ...prev,
+                    nama: selectedName,
+                    email: selectedUser?.email || "",
+                  }));
+                }}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2"
+              >
+                <option value="">-- Pilih Nama Siswa --</option>
+                {userList.map((user) => (
+                  <option key={user.id} value={user.nama}>
+                    {user.nama}
+                  </option>
+                ))}
+              </select>
             </div>
 
              <div>
+              <label className="block font-semibold mb-2">Email</label>
+              <input
+                type="text"
+                name="email"
+                value={formData.email}
+                readOnly
+                className="w-full border border-gray-300 bg-gray-100 rounded-lg px-4 py-2"
+              />
+            </div>
+
+     
+            <div>
               <label className="block font-semibold mb-2">Jumlah</label>
               <input
                 type="text"
                 name="jumlah"
                 value={formatRupiah(formData.jumlah)}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2"
                 placeholder="Masukkan Jumlah Tagihan"
               />
             </div>
 
-             <div>
+     
+            <div>
               <label className="block font-semibold mb-2">Jenis Tagihan</label>
               <select
                 name="jenisTagihan"
                 value={formData.jenisTagihan}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2"
               >
-                <option value="">-- Pilih Kategori --</option>
+                <option value="">-- Pilih Jenis Tagihan --</option>
                 {kategoriList.map((kategori) => (
                   <option key={kategori.id} value={kategori.nama_kategori}>
                     {kategori.nama_kategori}
@@ -143,15 +177,15 @@ const TmbhdataTgihan = () => {
                 ))}
               </select>
             </div>
-
-             <div>
+ 
+            <div>
               <label className="block font-semibold mb-2">Tanggal</label>
               <input
                 type="date"
                 name="tanggal"
                 value={formData.tanggal}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2"
               />
             </div>
 
@@ -161,7 +195,7 @@ const TmbhdataTgihan = () => {
                 onClick={() => navigate("/o")}
                 className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition"
               >
-              <i className="ri-arrow-left-line"></i> Kembali
+                <i className="ri-arrow-left-line"></i> Kembali
               </button>
 
               <button
@@ -180,7 +214,6 @@ const TmbhdataTgihan = () => {
                 )}
               </button>
             </div>
-
           </form>
         </div>
       </div>

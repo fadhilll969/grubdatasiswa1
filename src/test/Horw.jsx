@@ -47,7 +47,7 @@ function Horw() {
   const formatRupiah = (num) =>
     "Rp " + Number(num || 0).toLocaleString("id-ID");
 
-   const fetchDataTagihan = async () => {
+  const fetchDataTagihan = async () => {
     try {
       const response = await axios.get("http://localhost:5000/coco");
       const hasil = response.data || [];
@@ -83,7 +83,7 @@ function Horw() {
     }
   };
 
-   
+
   useEffect(() => {
     const ambilDataUser = async () => {
       try {
@@ -114,7 +114,7 @@ function Horw() {
     fetchDataTagihan();
   }, []);
 
-   const filteredDataUser = dataList.filter((data) => {
+  const filteredDataUser = dataList.filter((data) => {
     const matchName = data.nama?.toLowerCase().includes(searchTermUser.toLowerCase());
     const matchCategory =
       searchCategoryUser === "Semua" || data.kategori === searchCategoryUser;
@@ -131,7 +131,7 @@ function Horw() {
     return matchName && matchCategory && matchClass && matchJurusan && matchMapel;
   });
 
-   const filteredDataTagihan = dataTagihan.filter((item) => {
+  const filteredDataTagihan = dataTagihan.filter((item) => {
     const nameMatch = item.nama?.toLowerCase().includes(searchTermTagihan.toLowerCase());
     const statusItem = item.status?.trim() !== "" ? item.status : "Belum Bayar";
     const statusMatch =
@@ -139,7 +139,7 @@ function Horw() {
     return nameMatch && statusMatch;
   });
 
-   const getCategoryIcon = (kategori) => {
+  const getCategoryIcon = (kategori) => {
     switch (kategori) {
       case "Siswa":
         return <i className="ri-graduation-cap-line text-sky-600 mr-1"></i>;
@@ -159,17 +159,29 @@ function Horw() {
       </div>
     );
   }
+  const formatTanggal = (tanggal) => {
+    if (!tanggal) return "-";
+
+    const date = new Date(tanggal);
+    if (isNaN(date)) return tanggal; // jika format tidak valid, tampilkan apa adanya
+
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const yyyy = date.getFullYear();
+
+    return `${dd}/${mm}/${yyyy}`;
+  };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-sky-200">
       <Dasbor />
 
       <div className="flex-1 p-8 font-sans">
-         <h1 className="text-4xl font-bold text-center text-gray-800 mb-10 flex items-center justify-center gap-2">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-10 flex items-center justify-center gap-2">
           <i className="ri-dashboard-line text-sky-600"></i> Dashboard Sekolah
         </h1>
 
-         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
           {["total", "siswa", "guru", "karyawan"].map((cat, idx) => {
             const colors = {
               total: "sky",
@@ -196,7 +208,7 @@ function Horw() {
           })}
         </div>
 
-         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
           {[
             { title: "Total Tagihan", value: summary.totalCount, amount: summary.totalAmount, color: "sky", icon: "ri-database-2-line" },
             { title: "Sudah Lunas", value: summary.sudahBayarCount, amount: summary.sudahBayarAmount, color: "green", icon: "ri-check-double-line" },
@@ -215,9 +227,9 @@ function Horw() {
           ))}
         </div>
 
-         <h1 className="text-4xl mt-10 font-bold">Data Siswa / Guru / Karyawan</h1>
+        <h1 className="text-4xl mt-10 font-bold">Data Siswa / Guru / Karyawan</h1>
         <div className="flex flex-col md:flex-row gap-3 items-center mb-6 mt-5 flex-wrap">
-           <div className="relative w-full md:w-1/3">
+          <div className="relative w-full md:w-1/3">
             <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
             <input
               type="text"
@@ -282,7 +294,7 @@ function Horw() {
           )}
         </div>
 
-         <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+        <div className="overflow-x-auto bg-white rounded-lg shadow-md">
           <table className="table-auto w-full text-gray-700">
             <thead className="bg-sky-600 text-white text-left">
               <tr>
@@ -326,7 +338,7 @@ function Horw() {
           </table>
         </div>
 
-         <h1 className="text-4xl mt-10 font-bold">Daftar Tagihan</h1>
+        <h1 className="text-4xl mt-10 font-bold">Daftar Tagihan</h1>
 
         <div className="flex flex-col md:flex-row gap-3 items-center my-6">
           <div className="relative w-full md:w-1/3">
@@ -354,10 +366,11 @@ function Horw() {
 
         <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
           <table className="table-auto w-full text-gray-700">
-            <thead className="bg-sky-600 text-white text-center">
+            <thead className="bg-sky-600 text-white text-left">
               <tr>
                 <th className="py-3 px-4">No</th>
                 <th className="py-3 px-4">Nama</th>
+                <th className="py-3 px-4">email</th>
                 <th className="py-3 px-4">Jumlah</th>
                 <th className="py-3 px-4">Jenis Tagihan</th>
                 <th className="py-3 px-4">Status</th>
@@ -374,12 +387,13 @@ function Horw() {
                   >
                     <td className="py-3 text-center px-4">{index + 1}</td>
                     <td className="py-3 px-4">{item.nama || "-"}</td>
+                    <td className="py-3 text-right">{item.email || "-"}</td>
                     <td className="py-3 px-4 text-right">{formatRupiah(item.jumlah)}</td>
                     <td className="py-3 px-4 text-center">{item.jenisTagihan || "-"}</td>
                     <td className={`py-3 px-4 text-center font-semibold ${item.status === "Sudah Bayar" ? "text-green-600" : "text-red-600"}`}>
                       {item.status || "Belum Bayar"}
                     </td>
-                    <td className="py-3 px-4 text-center">{item.tanggal || "-"}</td>
+                    <td className="py-3 px-4 text-right">{formatTanggal(item.tanggal)}</td>
                   </tr>
                 ))
               ) : (

@@ -1,7 +1,7 @@
 {
   "doss": [
     {
-      "nama": "sheyy are you okayy",
+      "nama": "sheyy are ",
       "email": "hysaiiyaa@gmail.com",
       "nomer": "8787",
       "kategori": "Siswa",
@@ -58,6 +58,24 @@
       "kategori": "Guru",
       "mapel": "IPA",
       "id": "5b9e"
+    },
+    {
+      "id": "4b5c",
+      "nama": "sheyzz",
+      "email": "hysaiiyadda@gmail.com",
+      "nomer": "873387",
+      "kategori": "Siswa",
+      "kelas": "X",
+      "jurusan": "TKJ"
+    },
+    {
+      "id": "3709",
+      "nama": "andresuki",
+      "email": "herzzddarey@gmail.com",
+      "nomer": "54765476578",
+      "kategori": "Siswa",
+      "kelas": "X",
+      "jurusan": "TKJ"
     }
   ],
   "users": [
@@ -74,77 +92,60 @@
   ],
   "coco": [
     {
-      "id": "147a",
-      "nama": "herz im fine🥀",
+      "id": "001e",
+      "nama": "sheyy are ",
+      "email": "hysaiiyaa@gmail.com",
       "jumlah": 50000000,
       "jenisTagihan": "SPP Bulanan",
-      "tanggal": "2025-11-11",
-      "status": "Sudah Bayar"
-    },
-    {
-      "id": "6646",
-      "nama": "opop🥀",
-      "jumlah": 50000000,
-      "jenisTagihan": "SPP Bulanan",
-      "tanggal": "2025-11-11",
+      "tanggal": "2025-11-18",
       "status": "Belum Bayar"
     },
     {
-      "id": "e477",
-      "nama": "reyy are you okeyy?🥀",
-      "jumlah": 50000000,
+      "id": "fbed",
+      "nama": "sheyy are ",
+      "email": "hysaiiyaa@gmail.com",
+      "jumlah": 5000000000,
       "jenisTagihan": "SPP Bulanan",
-      "tanggal": "2025-11-11",
-      "status": ""
-    },
-    {
-      "id": "0a3b",
-      "nama": "sheyz im fine🥀",
-      "jumlah": 50000000,
-      "jenisTagihan": "SPP Bulanan",
-      "tanggal": "2025-11-11",
+      "tanggal": "2025-11-18",
       "status": "Sudah Bayar"
     },
     {
-      "id": "5d4b",
-      "nama": "Vyyla",
+      "id": "6bd4",
+      "nama": "herz im fine🥀",
+      "email": "hysaiiyaa@gmail.com",
       "jumlah": 50000000,
       "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-11"
+      "tanggal": "2025-11-18",
+      "status": "Belum Bayar"
     },
     {
-      "id": "dfc4",
-      "nama": "tiot",
-      "jumlah": 500000000,
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-17",
+      "id": "644f",
+      "nama": "andresuki",
+      "email": "herzzddarey@gmail.com",
+      "jumlah": "50000000000",
+      "jenisTagihan": "Uang Gedung",
+      "tanggal": "2025-11-18",
       "status": "Sudah Bayar"
     }
   ],
   "kategori-data": [
     {
+      "id": "0662",
       "nama_kategori": "SPP Bulanan",
       "keterangan": "Bayar uang sekolah perbulan",
-      "aktif": true,
-      "id": "55eb"
+      "aktif": true
     },
     {
-      "id": "3315",
+      "id": "518b",
       "nama_kategori": "Seragam",
-      "keterangan": "Pakaian sekolah",
+      "keterangan": " Seragam Sekolah ",
       "aktif": true
     },
     {
-      "id": "5c1d",
+      "id": "a31a",
       "nama_kategori": "Uang Gedung",
-      "keterangan": "Bayar uang gedung",
+      "keterangan": "Bayar uang sekolah perbulan",
       "aktif": true
-    },
-    {
-      "id": "4040",
-      "nama_kategori": "test",
-      "keterangan": "wfwffw",
-      "aktif": false
     }
   ],
   "clok": [

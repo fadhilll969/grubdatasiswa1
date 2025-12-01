@@ -107,7 +107,7 @@ const Rodd = () => {
               <h3 className="text-2xl font-semibold text-white">Data</h3>
             </div>
 
-            <div className="p-5 flex flex-col md:flex-row  items-center gap-4">
+            <div className="p-5 flex flex-col md:flex-row items-center gap-4">
               <div className="relative w-full md:w-1/3">
                 <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
                 <input
@@ -118,7 +118,6 @@ const Rodd = () => {
                   className="p-2 pl-10 border-2 rounded-lg w-full bg-white focus:ring-2 focus:ring-sky-400"
                 />
               </div>
-
               <select
                 className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
                 value={searchCategory}
@@ -137,19 +136,14 @@ const Rodd = () => {
                 ))}
               </select>
 
-              
+              <button
+                className="p-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 w-full md:w-auto flex gap-2 items-center ml-59"
+                onClick={() => navigate("/t")}
+              >
+                <i className="ri-add-circle-line text-lg"></i>
+                Tambah Data
+              </button>
 
-              
-             
-              <div>
-                <button
-                  className="p-2 px-4 mb-5 bg-blue-600 ml-55 items-center text-white rounded-lg hover:bg-blue-700 transition duration-200 w-full md:w-auto flex items-center gap-2"
-                  onClick={() => navigate("/t")}
-                >
-                  <i className="ri-add-circle-line text-lg"></i>
-                  Tambah Data
-                </button>
-              </div>
             </div>
           </div>
 
@@ -163,34 +157,44 @@ const Rodd = () => {
                   <th className="py-3 px-4 text-left">Nama</th>
                   <th className="py-3 px-4 text-left">Kelas</th>
                   <th className="py-3 px-4 text-left">Jurusan/Mapel</th>
-                  <th className="py-3 px-4 text-left">Nomer</th>
+                  <th className="py-3 px-4 text-left">Nomor</th>
                   <th className="py-3 px-4 text-left">Email</th>
                   <th className="py-3 px-4 text-left">Aksi</th>
                 </tr>
               </thead>
+
               <tbody>
                 {filteredData.length > 0 ? (
                   filteredData.map((data, index) => (
                     <tr
                       key={data.id}
-                      className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
+                      className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                        } hover:bg-sky-100 transition`}
                     >
                       <td className="py-3 px-4 text-center">{index + 1}</td>
-                      <td className="py-3 px-4  ">
+
+                      <td className="py-3 px-4 flex items-center gap-1">
                         {getCategoryIcon(data.kategori)} {data.kategori}
                       </td>
-                      <td className="py-3 px-4 text-left">{data.nama}</td>
-                      <td className="py-3 px-4 text-center">{data.kelas || "-"}</td>
+
+                      <td className="py-3 px-4">{data.nama}</td>
+
                       <td className="py-3 px-4 text-center">
+                        {data.kategori === "Siswa" ? data.kelas : "-"}
+                      </td>
+
+                      <td className="py-3 text-center px-4">
                         {data.kategori === "Siswa"
                           ? data.jurusan
                           : data.kategori === "Guru"
                             ? data.mapel
                             : "-"}
                       </td>
-                      <td className="py-3 px-4 text-left">{data.nomer}</td>
-                      <td className="py-3 px-4 text-right">{data.email}</td>
-                      <td className="py-3 px-4 text-left">
+
+                      <td className="py-3 px-4">{data.nomer}</td>
+                      <td className="py-3 text-right px-4">{data.email}</td>
+
+                      <td className="py-3  px-4">
                         <div className="flex gap-2">
                           <button
                             className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition flex items-center gap-1"
@@ -198,6 +202,7 @@ const Rodd = () => {
                           >
                             <i className="ri-edit-2-line text-sm"></i> Edit
                           </button>
+
                           <button
                             className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition flex items-center gap-1"
                             onClick={() => handleDelete(data.id)}
@@ -210,7 +215,10 @@ const Rodd = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8" className="text-left py-5 text-gray-500 italic">
+                    <td
+                      colSpan="8"
+                      className="text-center py-5 text-gray-500 italic"
+                    >
                       Tidak ada data yang cocok.
                     </td>
                   </tr>
@@ -218,6 +226,7 @@ const Rodd = () => {
               </tbody>
             </table>
           </div>
+
         </div>
       </div>
     </div>

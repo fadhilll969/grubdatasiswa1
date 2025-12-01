@@ -49,7 +49,7 @@ const Editkelas = () => {
           <h2 className="text-2xl font-bold mb-6 text-sky-700 text-center">Edit Kelas</h2>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block font-semibold mb-2">kelas</label>
+              <label className="block font-semibold mb-2">Kelas</label>
               <input
                 type="text"
                 name="kelas"

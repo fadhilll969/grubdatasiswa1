@@ -34,7 +34,7 @@ const TmbhdataTgihan = () => {
     const fetchUsers = async () => {
       try {
         const res = await axios.get("http://localhost:5000/doss");
-        setUserList(res.data.filter((u) => u.kategori === "Siswa")); // 🔥 hanya Siswa
+        setUserList(res.data.filter((u) => u.kategori === "Siswa")); 
       } catch (error) {
         console.error("Gagal mengambil user:", error);
       }

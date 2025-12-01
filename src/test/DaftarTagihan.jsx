@@ -30,12 +30,12 @@ const DaftarTagihan = () => {
       const response = await axios.get("http://localhost:5000/coco");
       const hasil = response.data.map((item) => ({
         ...item,
-        status: item.status || "Belum Bayar", 
-        jumlah: safeNumber(item.jumlah),  
+        status: item.status || "Belum Bayar",
+        jumlah: safeNumber(item.jumlah),
       }));
       setData(hasil);
 
-       const totalAmount = hasil.reduce((sum, i) => sum + i.jumlah, 0);
+      const totalAmount = hasil.reduce((sum, i) => sum + i.jumlah, 0);
       const sudahBayar = hasil.filter((i) => i.status === "Sudah Bayar");
       const sudahBayarAmount = sudahBayar.reduce((sum, i) => sum + i.jumlah, 0);
       const belumBayarCount = hasil.length - sudahBayar.length;
@@ -69,13 +69,24 @@ const DaftarTagihan = () => {
   });
 
   const formatRupiah = (num) => "Rp " + Number(num || 0).toLocaleString("id-ID");
+  const formatTanggal = (tanggal) => {
+    if (!tanggal) return "-";
 
+    const date = new Date(tanggal);
+    if (isNaN(date)) return tanggal; // jika format tidak valid, tampilkan apa adanya
+
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const yyyy = date.getFullYear();
+
+    return `${dd}/${mm}/${yyyy}`;
+  };
   return (
     <div className="min-h-screen bg-sky-200">
       <div className="flex">
         <Dasbor />
         <div className="flex-1 p-6">
-           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
             <div className="bg-white border-t-4 border-sky-600 rounded-lg shadow-md p-6 text-center">
               <i className="ri-database-2-line text-3xl text-sky-600"></i>
               <h3 className="text-xl font-semibold mt-2 text-gray-700">
@@ -90,7 +101,7 @@ const DaftarTagihan = () => {
             <div className="bg-white border-t-4 border-green-500 rounded-lg shadow-md p-6 text-center">
               <i className="ri-check-double-line text-3xl text-green-500"></i>
               <h3 className="text-xl font-semibold mt-2 text-gray-700">
-                Sudah Lunas
+                Sudah Bayar
               </h3>
               <p className="text-3xl font-bold my-1 text-green-600">
                 {summary.sudahBayarCount}
@@ -103,7 +114,7 @@ const DaftarTagihan = () => {
             <div className="bg-white border-t-4 border-red-500 rounded-lg shadow-md p-6 text-center">
               <i className="ri-close-circle-line text-3xl text-red-500"></i>
               <h3 className="text-xl font-semibold mt-2 text-gray-700">
-                Belum Lunas
+                Belum Bayar
               </h3>
               <p className="text-3xl font-bold my-1 text-red-600">
                 {summary.belumBayarCount}
@@ -114,7 +125,7 @@ const DaftarTagihan = () => {
             </div>
           </div>
 
-           <div className="rounded-xl mt-10 overflow-hidden">
+          <div className="rounded-xl mt-10 overflow-hidden">
             <div className="p-5 flex flex-col md:flex-row gap-4">
               <div className="relative w-full md:w-1/3">
                 <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
@@ -142,15 +153,16 @@ const DaftarTagihan = () => {
             </div>
           </div>
 
-           {loading ? (
+          {loading ? (
             <p className="text-center mt-6 text-gray-700">Memuat data tagihan...</p>
           ) : (
             <div className="mt-6 overflow-x-auto">
               <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
-                <thead className="bg-sky-600 text-center text-white">
+                <thead className="bg-sky-600 text-left text-white">
                   <tr>
                     <th className="py-3 px-4">No</th>
                     <th className="py-3 px-4">Nama</th>
+                    <th className="py-3 px-4">Email</th>
                     <th className="py-3 px-4">Jumlah</th>
                     <th className="py-3 px-4">Jenis Tagihan</th>
                     <th className="py-3 px-4">Status</th>
@@ -166,12 +178,13 @@ const DaftarTagihan = () => {
                       >
                         <td className="py-3 text-center px-4">{index + 1}</td>
                         <td className="py-3 px-4">{item.nama}</td>
+                        <td className="py-3 text-right">{item.email || "-"}</td>
                         <td className="py-3 px-4 text-right">{formatRupiah(item.jumlah)}</td>
-                        <td className="py-3 px-4 text-center">{item.jenisTagihan}</td>
+                        <td className="py-3 px-4  ">{item.jenisTagihan}</td>
                         <td className={`py-3 px-4 text-center font-semibold ${item.status === "Sudah Bayar" ? "text-green-600" : "text-red-600"}`}>
                           {item.status}
                         </td>
-                        <td className="py-3 px-4 text-center">{item.tanggal || "-"}</td>
+                        <td className="py-3 px-4 text-right">{formatTanggal(item.tanggal)}</td>
                       </tr>
                     ))
                   ) : (

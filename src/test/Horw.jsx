@@ -211,8 +211,8 @@ function Horw() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
           {[
             { title: "Total Tagihan", value: summary.totalCount, amount: summary.totalAmount, color: "sky", icon: "ri-database-2-line" },
-            { title: "Sudah Lunas", value: summary.sudahBayarCount, amount: summary.sudahBayarAmount, color: "green", icon: "ri-check-double-line" },
-            { title: "Belum Lunas", value: summary.belumBayarCount, amount: summary.belumBayarAmount, color: "red", icon: "ri-close-circle-line" },
+            { title: "Sudah Bayar", value: summary.sudahBayarCount, amount: summary.sudahBayarAmount, color: "green", icon: "ri-check-double-line" },
+            { title: "Belum Bayar", value: summary.belumBayarCount, amount: summary.belumBayarAmount, color: "red", icon: "ri-close-circle-line" },
           ].map((item, idx) => (
             <div key={idx} className={`bg-white border-t-4 border-${item.color}-500 rounded-lg shadow-md p-6 text-center`}>
               <i className={`${item.icon} text-3xl text-${item.color}-500`}></i>
@@ -370,7 +370,7 @@ function Horw() {
               <tr>
                 <th className="py-3 px-4">No</th>
                 <th className="py-3 px-4">Nama</th>
-                <th className="py-3 px-4">email</th>
+                <th className="py-3 px-4">Email</th>
                 <th className="py-3 px-4">Jumlah</th>
                 <th className="py-3 px-4">Jenis Tagihan</th>
                 <th className="py-3 px-4">Status</th>
@@ -389,8 +389,8 @@ function Horw() {
                     <td className="py-3 px-4">{item.nama || "-"}</td>
                     <td className="py-3 text-right">{item.email || "-"}</td>
                     <td className="py-3 px-4 text-right">{formatRupiah(item.jumlah)}</td>
-                    <td className="py-3 px-4 text-center">{item.jenisTagihan || "-"}</td>
-                    <td className={`py-3 px-4 text-center font-semibold ${item.status === "Sudah Bayar" ? "text-green-600" : "text-red-600"}`}>
+                    <td className="py-3 px-4 ">{item.jenisTagihan || "-"}</td>
+                    <td className={`py-3 px-4 font-semibold ${item.status === "Sudah Bayar" ? "text-green-600" : "text-red-600"}`}>
                       {item.status || "Belum Bayar"}
                     </td>
                     <td className="py-3 px-4 text-right">{formatTanggal(item.tanggal)}</td>

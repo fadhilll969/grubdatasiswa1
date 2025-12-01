@@ -76,6 +76,40 @@
       "kategori": "Siswa",
       "kelas": "X",
       "jurusan": "TKJ"
+    },
+    {
+      "id": "dae5",
+      "nama": "dddd",
+      "email": " kihzlihlisza@gmail.com",
+      "nomer": "0788676",
+      "kategori": "Siswa",
+      "kelas": "X",
+      "jurusan": "TKJ"
+    },
+    {
+      "nama": "lumiiinoir",
+      "email": "ykfaa@gmail.com",
+      "nomer": "8787",
+      "kategori": "Siswa",
+      "kelas": "XII",
+      "jurusan": "TSM",
+      "id": "49a7"
+    },
+    {
+      "id": "7796",
+      "nama": " egewgedsagd",
+      "email": " aegswgsaa@gmail.com",
+      "nomer": "878457",
+      "kategori": "Guru",
+      "mapel": "PJOK"
+    },
+    {
+      "id": "4b23",
+      "nama": " gugu",
+      "email": " asfagsaa@gmail.com",
+      "nomer": "878457",
+      "kategori": "Guru",
+      "mapel": "MTK"
     }
   ],
   "users": [
@@ -95,10 +129,10 @@
       "id": "001e",
       "nama": "sheyy are ",
       "email": "hysaiiyaa@gmail.com",
-      "jumlah": 50000000,
+      "jumlah": 500000000,
       "jenisTagihan": "SPP Bulanan",
       "tanggal": "2025-11-18",
-      "status": "Belum Bayar"
+      "status": "Sudah Bayar"
     },
     {
       "id": "fbed",
@@ -113,10 +147,10 @@
       "id": "6bd4",
       "nama": "herz im fine🥀",
       "email": "hysaiiyaa@gmail.com",
-      "jumlah": 50000000,
+      "jumlah": 500000000,
       "jenisTagihan": "Seragam",
       "tanggal": "2025-11-18",
-      "status": "Belum Bayar"
+      "status": "Sudah Bayar"
     },
     {
       "id": "644f",
@@ -125,6 +159,58 @@
       "jumlah": "50000000000",
       "jenisTagihan": "Uang Gedung",
       "tanggal": "2025-11-18",
+      "status": "Belum Bayar"
+    },
+    {
+      "id": "f5f9",
+      "nama": "dddd",
+      "email": " kihzlihlisza@gmail.com",
+      "jumlah": "5000000000",
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-11-22",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "eb07",
+      "nama": "dddd",
+      "email": " kihzlihlisza@gmail.com",
+      "jumlah": "5000000000",
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-11-24"
+    },
+    {
+      "id": "8c5a",
+      "nama": "sheyzz",
+      "email": "hysaiiyadda@gmail.com",
+      "jumlah": "45000000000",
+      "jenisTagihan": "Uang Gedung",
+      "tanggal": "2025-11-26",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "4f66",
+      "nama": "lumiiinoir",
+      "email": "ykfaa@gmail.com",
+      "jumlah": "50000000000",
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-12-01",
+      "status": "Sudah Bayar"
+    },
+    {
+      "id": "7aae",
+      "nama": "testjftjfy",
+      "email": "hysaiiyaa@gmail.com",
+      "jumlah": "50000000000",
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-12-01"
+    },
+    {
+      "id": "2451",
+      "nama": "herz im fine🥀",
+      "email": "hysaiiyaa@gmail.com",
+      "jumlah": 2313500,
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-12-01",
       "status": "Sudah Bayar"
     }
   ],
@@ -146,6 +232,11 @@
       "nama_kategori": "Uang Gedung",
       "keterangan": "Bayar uang sekolah perbulan",
       "aktif": true
+    },
+    {
+      "id": "a31b",
+      "nama_kategori": "test",
+      "keterangan": "htryty"
     }
   ],
   "clok": [
@@ -163,6 +254,11 @@
       "id": "18c6",
       "kategori_nama": "Karyawan",
       "aktif": true
+    },
+    {
+      "id": "3b61",
+      "kategori_nama": "test",
+      "aktif": false
     }
   ],
   "kls": [

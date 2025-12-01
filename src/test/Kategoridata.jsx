@@ -107,8 +107,8 @@ const Kategoridata = () => {
                         <thead className="bg-sky-600 text-center text-white">
                             <tr>
                                 <th className="py-3 px-4">No</th>
-                                <th className="py-3 px-4">Nama Kategori</th>
-                                <th className="py-3 px-4">Keterangan</th>
+                                <th className="py-3 text-left px-4">Nama Kategori</th>
+                                <th className="py-3 text-left px-4">Keterangan</th>
                                 <th className="py-3 px-4">Aktif</th>
                                 <th className="py-3 px-4">Aksi</th>
                             </tr>
@@ -124,8 +124,8 @@ const Kategoridata = () => {
                                 kategoriList.map((item, index) => (
                                     <tr key={item.id} className="border-t">
                                         <td className="py-3 px-4">{index + 1}</td>
-                                        <td className="py-3 px-4">{item.nama_kategori || "-"}</td>
-                                        <td className="py-3 px-4">{item.keterangan || "-"}</td>
+                                        <td className="py-3 text-left px-4">{item.nama_kategori || "-"}</td>
+                                        <td className="py-3 text-left px-4">{item.keterangan || "-"}</td>
                                         <td className="py-3 px-4">
                                             <label className="relative inline-flex items-center cursor-pointer">
                                                 <input

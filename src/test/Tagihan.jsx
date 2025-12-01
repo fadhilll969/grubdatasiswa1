@@ -12,7 +12,6 @@ const Tagihan = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("Semua");
 
-  // Format Tanggal
   const formatTanggal = (tanggal) => {
     if (!tanggal) return "-";
     const date = new Date(tanggal);
@@ -22,7 +21,6 @@ const Tagihan = () => {
     return `${day}/${month}/${year}`;
   };
 
-  // GET DATA
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/coco");
@@ -39,8 +37,21 @@ const Tagihan = () => {
     fetchData();
   }, []);
 
-  // UPDATE STATUS — gunakan PATCH agar tidak menghapus field lain
+   
   const updateStatus = async (id, statusBaru) => {
+    const result = await Swal.fire({
+      title: "Konfirmasi Perubahan Status",
+      text: `Apakah Anda yakin ingin mengubah status menjadi "${statusBaru}"?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya, Ubah",
+      cancelButtonText: "Batal",
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       await axios.patch(`http://localhost:5000/coco/${id}`, {
         status: statusBaru,
@@ -48,7 +59,6 @@ const Tagihan = () => {
 
       Swal.fire("Berhasil", "Status berhasil diperbarui.", "success");
 
-      // Update lokal tanpa fetch ulang
       setData((prev) =>
         prev.map((item) =>
           item.id === id ? { ...item, status: statusBaru } : item
@@ -60,7 +70,7 @@ const Tagihan = () => {
     }
   };
 
-  // DELETE DATA
+  
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Konfirmasi Penghapusan",
@@ -86,7 +96,8 @@ const Tagihan = () => {
     }
   };
 
-   const filteredData = data.filter((item) => {
+   
+  const filteredData = data.filter((item) => {
     const cocokNama = (item.nama || "")
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -96,7 +107,6 @@ const Tagihan = () => {
 
     return cocokNama && cocokStatus;
   });
-
 
   return (
     <div className="min-h-screen bg-sky-200">
@@ -113,8 +123,7 @@ const Tagihan = () => {
             </div>
 
              <div className="p-5 flex flex-col md:flex-row items-center justify-between gap-4">
-
-               <div className="relative w-full md:w-1/3">
+              <div className="relative w-full md:w-1/3">
                 <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
                 <input
                   type="text"
@@ -125,7 +134,7 @@ const Tagihan = () => {
                 />
               </div>
 
-               <select
+              <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
                 className="p-2 border-2 rounded-lg bg-white focus:ring-2 focus:ring-sky-400 w-full md:w-1/4"
@@ -135,18 +144,16 @@ const Tagihan = () => {
                 <option value="Belum Bayar">Belum Bayar</option>
               </select>
 
-               <button
+              <button
                 className="p-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 w-full md:w-auto flex items-center justify-center gap-2"
                 onClick={() => navigate("/p")}
               >
                 <i className="ri-add-circle-line text-lg"></i> Tambah Tagihan
               </button>
             </div>
-
           </div>
 
-       
-          {loading ? (
+           {loading ? (
             <p className="text-center mt-6 text-gray-700">Memuat data...</p>
           ) : (
             <div className="mt-6 overflow-x-auto">
@@ -169,8 +176,9 @@ const Tagihan = () => {
                     filteredData.map((item, index) => (
                       <tr
                         key={item.id}
-                        className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                          } hover:bg-sky-100 transition`}
+                        className={`${
+                          index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                        } hover:bg-sky-100 transition`}
                       >
                         <td className="py-3 text-center">{index + 1}</td>
                         <td className="py-3">{item.nama || "-"}</td>
@@ -180,9 +188,7 @@ const Tagihan = () => {
                           Rp {Number(item.jumlah || 0).toLocaleString("id-ID")}
                         </td>
 
-                        <td className="py-3 text-center">
-                          {item.jenisTagihan || "-"}
-                        </td>
+                        <td className="py-3 px-4">{item.jenisTagihan || "-"}</td>
 
                         <td className="py-3 text-center font-semibold">
                           <span
@@ -196,10 +202,13 @@ const Tagihan = () => {
                           </span>
                         </td>
 
-                        <td className="py-3 text-right">{formatTanggal(item.tanggal)}</td>
+                        <td className="py-3 text-right">
+                          {formatTanggal(item.tanggal)}
+                        </td>
 
-                        <td className="py-3 text-center">
+                        <td className="py-3 px-3 text-center">
                           <div className="flex justify-center gap-2 flex-wrap">
+
                              {item.status === "Sudah Bayar" ? (
                               <button
                                 className="bg-yellow-500 text-white px-2 py-1 rounded-lg hover:bg-yellow-600 transition"
@@ -220,15 +229,14 @@ const Tagihan = () => {
                               </button>
                             )}
 
-                       
-                            <button
+                             <button
                               className="bg-sky-600 text-white px-2 py-1 rounded-lg hover:bg-sky-700 transition"
                               onClick={() => navigate(`/ed/${item.id}`)}
                             >
                               <i className="ri-edit-2-line text-sm"></i>
                             </button>
- 
-                            <button
+
+                             <button
                               className="bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition"
                               onClick={() => handleDelete(item.id)}
                             >

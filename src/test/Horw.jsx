@@ -83,7 +83,6 @@ function Horw() {
     }
   };
 
-
   useEffect(() => {
     const ambilDataUser = async () => {
       try {
@@ -159,11 +158,12 @@ function Horw() {
       </div>
     );
   }
+
   const formatTanggal = (tanggal) => {
     if (!tanggal) return "-";
 
     const date = new Date(tanggal);
-    if (isNaN(date)) return tanggal; // jika format tidak valid, tampilkan apa adanya
+    if (isNaN(date)) return tanggal;
 
     const dd = String(date.getDate()).padStart(2, "0");
     const mm = String(date.getMonth() + 1).padStart(2, "0");
@@ -181,8 +181,8 @@ function Horw() {
           <i className="ri-dashboard-line text-sky-600"></i> Dashboard Sekolah
         </h1>
 
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
-          {["total", "siswa", "guru", "karyawan"].map((cat, idx) => {
+         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
+          {["total", "siswa", "guru", "karyawan"].map((cat) => {
             const colors = {
               total: "sky",
               siswa: "blue",
@@ -201,100 +201,18 @@ function Horw() {
                 className={`bg-white border-t-4 border-${colors[cat]}-600 rounded-lg shadow-md p-6 text-center`}
               >
                 <i className={`${icons[cat]} text-3xl text-${colors[cat]}-600`}></i>
-                <h3 className="text-xl font-semibold mt-2">{cat.charAt(0).toUpperCase() + cat.slice(1)}</h3>
+                <h3 className="text-xl font-semibold mt-2">
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </h3>
                 <p className="text-3xl font-bold my-3">{jumlah[cat]}</p>
               </div>
             );
           })}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
-          {[
-            { title: "Total Tagihan", value: summary.totalCount, amount: summary.totalAmount, color: "sky", icon: "ri-database-2-line" },
-            { title: "Sudah Bayar", value: summary.sudahBayarCount, amount: summary.sudahBayarAmount, color: "green", icon: "ri-check-double-line" },
-            { title: "Belum Bayar", value: summary.belumBayarCount, amount: summary.belumBayarAmount, color: "red", icon: "ri-close-circle-line" },
-          ].map((item, idx) => (
-            <div key={idx} className={`bg-white border-t-4 border-${item.color}-500 rounded-lg shadow-md p-6 text-center`}>
-              <i className={`${item.icon} text-3xl text-${item.color}-500`}></i>
-              <h3 className="text-xl font-semibold mt-2 text-gray-700">{item.title}</h3>
-              <p className={`text-3xl font-bold my-1 ${item.color === "red" ? "text-red-600" : item.color === "green" ? "text-green-600" : ""}`}>
-                {item.value}
-              </p>
-              <p className={`text-lg font-semibold ${item.color === "red" ? "text-red-700" : item.color === "green" ? "text-green-700" : "text-gray-600"}`}>
-                {formatRupiah(item.amount)}
-              </p>
-            </div>
-          ))}
-        </div>
+         <h1 className="text-4xl mt-10 font-bold">Data Siswa / Guru / Karyawan</h1>
 
-        <h1 className="text-4xl mt-10 font-bold">Data Siswa / Guru / Karyawan</h1>
-        <div className="flex flex-col md:flex-row gap-3 items-center mb-6 mt-5 flex-wrap">
-          <div className="relative w-full md:w-1/3">
-            <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
-            <input
-              type="text"
-              placeholder="Cari user berdasarkan nama..."
-              value={searchTermUser}
-              onChange={(e) => setSearchTermUser(e.target.value)}
-              className="p-2 pl-10 border rounded w-full bg-white focus:ring-2 focus:ring-sky-400"
-            />
-          </div>
-
-          <select
-            className="p-2 border rounded w-full md:w-60 bg-white focus:ring-2 focus:ring-sky-400"
-            value={searchCategoryUser}
-            onChange={(e) => {
-              const selectedCategory = e.target.value;
-              setSearchCategoryUser(selectedCategory);
-              setSearchClass("Semua");
-              setSearchJurusan("Semua");
-              setSearchMapel("");
-            }}
-          >
-            <option value="Semua">Semua Kategori</option>
-            {filterOptionsUser.map((option) => (
-              <option key={option} value={option}>{option}</option>
-            ))}
-          </select>
-
-          {searchCategoryUser === "Siswa" && (
-            <>
-              <select
-                className="p-2 border rounded w-full md:w-1/5 bg-white focus:ring-2 focus:ring-sky-400"
-                value={searchClass}
-                onChange={(e) => setSearchClass(e.target.value)}
-              >
-                <option value="Semua">Semua Kelas</option>
-                {classOptions.map((cls) => (
-                  <option key={cls} value={cls}>{cls}</option>
-                ))}
-              </select>
-
-              <select
-                className="p-2 border rounded w-full md:w-1/5 bg-white focus:ring-2 focus:ring-sky-400"
-                value={searchJurusan}
-                onChange={(e) => setSearchJurusan(e.target.value)}
-              >
-                <option value="Semua">Semua Jurusan</option>
-                {jurusanOptions.map((j) => (
-                  <option key={j} value={j}>{j}</option>
-                ))}
-              </select>
-            </>
-          )}
-
-          {searchCategoryUser === "Guru" && (
-            <input
-              type="text"
-              placeholder="Cari Mapel..."
-              value={searchMapel}
-              onChange={(e) => setSearchMapel(e.target.value)}
-              className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
-            />
-          )}
-        </div>
-
-        <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+        <div className="overflow-x-auto bg-white rounded-lg shadow-md mt-6">
           <table className="table-auto w-full text-gray-700">
             <thead className="bg-sky-600 text-white text-left">
               <tr>
@@ -303,8 +221,8 @@ function Horw() {
                 <th className="py-3 px-4">Nama</th>
                 <th className="py-3 px-4">Kelas</th>
                 <th className="py-3 px-4">Jurusan/Mapel</th>
-                <th className="py-3 px-4">Nomer</th>
-                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Kode Unik</th>
+                <th className="py-3 px-10">Email</th>
               </tr>
             </thead>
 
@@ -313,17 +231,25 @@ function Horw() {
                 filteredDataUser.map((user, index) => (
                   <tr
                     key={user.id || index}
-                    className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
+                    className={`${
+                      index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                    } hover:bg-sky-100 transition`}
                   >
-                    <td className="py-3 text-center px-4">{index + 1}</td>
+                    <td className="py-3 px-4 text-center">{index + 1}</td>
                     <td className="py-3 px-4">
                       {getCategoryIcon(user.kategori)}
-                      {user.kategori || "-"}
+                      {user.kategori}
                     </td>
-                    <td className="py-3 px-4">{user.nama || "-"}</td>
-                    <td className="py-3 px-4 text-center">{user.kelas || "-"}</td>
-                    <td className="text-center">{user.kategori === "Siswa" ? (user.jurusan || "-") : (user.mapel || "-")}</td>
-                    <td className="py-3 px-4">{user.nomer || "-"}</td>
+                    <td className="py-3 px-4">{user.nama}</td>
+                    <td className="py-3 px-4 ">{user.kelas || "-"}</td>
+                    <td className="py-3 px-4  ">
+                      {user.kategori === "Siswa"
+                        ? user.jurusan || "-"
+                        : user.mapel || "-"}
+                    </td>
+
+                     <td className="py-3 px-4">{user.nomor || "-"}</td>
+
                     <td className="py-3 px-4 text-right">{user.email || "-"}</td>
                   </tr>
                 ))
@@ -331,75 +257,6 @@ function Horw() {
                 <tr>
                   <td colSpan="7" className="text-center py-5 text-gray-500 italic">
                     Tidak terdapat data user.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        <h1 className="text-4xl mt-10 font-bold">Daftar Tagihan</h1>
-
-        <div className="flex flex-col md:flex-row gap-3 items-center my-6">
-          <div className="relative w-full md:w-1/3">
-            <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
-            <input
-              type="text"
-              placeholder="Cari tagihan berdasarkan nama..."
-              value={searchTermTagihan}
-              onChange={(e) => setSearchTermTagihan(e.target.value)}
-              className="p-2 pl-10 border rounded w-full bg-white focus:ring-2 focus:ring-sky-400"
-            />
-          </div>
-
-          <select
-            className="p-2 border rounded w-full md:w-60 bg-white focus:ring-2 focus:ring-sky-400"
-            value={searchStatusTagihan}
-            onChange={(e) => setSearchStatusTagihan(e.target.value)}
-          >
-            <option value="Semua">Semua Status</option>
-            {filterOptionsTagihan.map((status) => (
-              <option key={status} value={status}>{status}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="overflow-x-auto bg-white rounded-lg shadow-md mb-10">
-          <table className="table-auto w-full text-gray-700">
-            <thead className="bg-sky-600 text-white text-left">
-              <tr>
-                <th className="py-3 px-4">No</th>
-                <th className="py-3 px-4">Nama</th>
-                <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Jumlah</th>
-                <th className="py-3 px-4">Jenis Tagihan</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4">Tanggal</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filteredDataTagihan.length > 0 ? (
-                filteredDataTagihan.map((item, index) => (
-                  <tr
-                    key={item.id || index}
-                    className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
-                  >
-                    <td className="py-3 text-center px-4">{index + 1}</td>
-                    <td className="py-3 px-4">{item.nama || "-"}</td>
-                    <td className="py-3 text-right">{item.email || "-"}</td>
-                    <td className="py-3 px-4 text-right">{formatRupiah(item.jumlah)}</td>
-                    <td className="py-3 px-4 ">{item.jenisTagihan || "-"}</td>
-                    <td className={`py-3 px-4 font-semibold ${item.status === "Sudah Bayar" ? "text-green-600" : "text-red-600"}`}>
-                      {item.status || "Belum Bayar"}
-                    </td>
-                    <td className="py-3 px-4 text-right">{formatTanggal(item.tanggal)}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center py-5 text-gray-500 italic">
-                    Tidak terdapat data tagihan.
                   </td>
                 </tr>
               )}

@@ -1,4 +1,4 @@
- import "remixicon/fonts/remixicon.css";  
+import "remixicon/fonts/remixicon.css";
 import Swal from "sweetalert2";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
@@ -32,6 +32,8 @@ function Dasbor() {
 
   const menuItems = [
     { path: "/w", icon: "ri-dashboard-line", label: "Dashboard" },
+    { path: "/Presensi", icon: "ri-time-line", label: "Presensi" },
+
     { isSection: true, label: "Database" },
     { path: "/datakategori", icon: "ri-folder-2-line", label: "Kategori Data" },
     { path: "/kelas", icon: "ri-team-line", label: "Kelas" },

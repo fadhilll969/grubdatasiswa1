@@ -19,7 +19,7 @@ import Tmbhdataclok from "./test/Tmbhdataclok"
 import Editclok from "./test/Editclok"
 import Tmbhkls from "./test/Tmbhkls"
 import Editkelas from "./test/Editkelas"
-
+import Presensi from "./test/Presensi"
 
 
 
@@ -46,6 +46,8 @@ const App = () => {
       <Route path="/kelas" element={<Kelas />} />
       <Route path="/tambahkelas/:kelas?" element={<Tmbhkls />} />
       <Route path="/editkelas/:id" element={<Editkelas />} />
+      <Route path="/Presensi" element={<Presensi />} />
+
     </Routes>
 
   )

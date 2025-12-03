@@ -17,14 +17,16 @@ const Tmbhdata = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [nomer, setNomer] = useState("");
+  const [nomor, setNomor] = useState("");  
   const [mapel, setMapel] = useState("");
 
   const API_URL_DATA = "http://localhost:5000/doss";
   const API_URL_KATEGORI = "http://localhost:5000/clok";
   const API_URL_KELAS = "http://localhost:5000/kls";
 
-  useEffect(() => {
+   const generateNumber = () => Math.floor(1000 + Math.random() * 9000);
+
+   useEffect(() => {
     const fetchKategori = async () => {
       try {
         const res = await axios.get(API_URL_KATEGORI);
@@ -47,7 +49,7 @@ const Tmbhdata = () => {
     fetchKelas();
   }, []);
 
-  useEffect(() => {
+   useEffect(() => {
     if (selectedKelas) {
       const jurusan = kelasList
         .filter((k) => k.kelas === selectedKelas)
@@ -61,21 +63,27 @@ const Tmbhdata = () => {
     }
   }, [selectedKelas, kelasList]);
 
+   const handleKategoriChange = (value) => {
+    setSelectedKategori(value);
+    setSelectedKelas("");
+    setSelectedJurusan("");
+    setMapel("");
+
+    if (value) {
+      const prefix =
+        value === "Siswa" ? "SIS" : value === "Guru" ? "GUR" : "KAR";
+      setNomor(`${prefix}-${generateNumber()}`); 
+    } else {
+      setNomor("");
+    }
+  };
+
   const handleAddData = async () => {
-    if (!name || !email || !nomer || !selectedKategori) {
+    if (!name || !email || !selectedKategori) {
       Swal.fire({
         icon: "warning",
         title: "Data tidak lengkap!",
-        text: "Nama, Nomor, Email, dan Kategori harus diisi.",
-      });
-      return;
-    }
-
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      Swal.fire({
-        icon: "warning",
-        title: "Email tidak valid!",
-        text: "Masukkan format email yang benar.",
+        text: "Nama, Email, dan Kategori harus diisi.",
       });
       return;
     }
@@ -89,11 +97,20 @@ const Tmbhdata = () => {
       return;
     }
 
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      Swal.fire({
+        icon: "warning",
+        title: "Email tidak valid!",
+        text: "Masukkan format email yang benar.",
+      });
+      return;
+    }
+
     const newData = {
       nama: name,
       email,
-      nomer,
       kategori: selectedKategori,
+      nomor,  
       ...(selectedKategori === "Siswa" && {
         kelas: selectedKelas,
         jurusan: selectedJurusan,
@@ -132,25 +149,18 @@ const Tmbhdata = () => {
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
-
       <div className="flex-1 p-8">
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52">
-
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
             Tambah Data
           </h2>
 
-          <div className="mb-4">
+           <div className="mb-4">
             <label className="block font-semibold mb-1">Kategori</label>
             <select
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
               value={selectedKategori}
-              onChange={(e) => {
-                setSelectedKategori(e.target.value);
-                setSelectedKelas("");
-                setSelectedJurusan("");
-                setMapel("");
-              }}
+              onChange={(e) => handleKategoriChange(e.target.value)}
             >
               <option value="">Pilih Kategori</option>
               {kategoriList.map((kat) => (
@@ -161,7 +171,7 @@ const Tmbhdata = () => {
             </select>
           </div>
 
-          {selectedKategori === "Siswa" && (
+           {selectedKategori === "Siswa" && (
             <>
               <div className="mb-4">
                 <label className="block font-semibold mb-1">Kelas</label>
@@ -197,7 +207,7 @@ const Tmbhdata = () => {
             </>
           )}
 
-          {selectedKategori === "Guru" && (
+           {selectedKategori === "Guru" && (
             <div className="mb-4">
               <label className="block font-semibold mb-1">Mata Pelajaran</label>
               <input
@@ -209,7 +219,7 @@ const Tmbhdata = () => {
             </div>
           )}
 
-          <div className="mb-4">
+           <div className="mb-4">
             <label className="block font-semibold mb-1">Nama</label>
             <input
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
@@ -219,17 +229,7 @@ const Tmbhdata = () => {
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block font-semibold mb-1">Nomor Telepon</label>
-            <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
-              placeholder="Nomor Telepon"
-              value={nomer}
-              onChange={(e) => /^\d*$/.test(e.target.value) && setNomer(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-6">
+           <div className="mb-6">
             <label className="block font-semibold mb-1">Email</label>
             <input
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
@@ -239,7 +239,7 @@ const Tmbhdata = () => {
             />
           </div>
 
-          <div className="flex justify-end gap-3">
+           <div className="flex justify-end gap-3">
             <button
               className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
               onClick={() => navigate("/h")}
@@ -254,7 +254,6 @@ const Tmbhdata = () => {
               <i className="ri-save-3-line"></i> Simpan
             </button>
           </div>
-
         </div>
       </div>
     </div>

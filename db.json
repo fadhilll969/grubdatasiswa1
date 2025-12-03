@@ -1,115 +1,37 @@
 {
   "doss": [
     {
-      "nama": "sheyy are ",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "8787",
-      "kategori": "Siswa",
-      "kelas": "XII",
-      "jurusan": "TKJ",
-      "id": "79f8"
-    },
-    {
-      "nama": "herz im fine🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa",
-      "kelas": "XII",
-      "jurusan": "TSM",
-      "id": "91fd"
-    },
-    {
-      "nama": "gauyho",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099",
-      "kategori": "Guru",
-      "mapel": "MTK",
-      "id": "8a27"
-    },
-    {
-      "nama": "herz im ",
+      "id": "281d",
+      "nama": "swssd",
       "email": "herzzddarey@gmail.com",
-      "nomer": "088123",
       "kategori": "Siswa",
+      "nomor": "SIS-4332",
       "kelas": "XI",
-      "jurusan": "TSM",
-      "id": "51b7"
-    },
-    {
-      "nama": "testjftjfy",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Siswa",
-      "kelas": "X",
-      "jurusan": "TKJ",
-      "id": "046a"
-    },
-    {
-      "id": "4471",
-      "nama": "zzishdef",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "099787",
-      "kategori": "Karyawan"
-    },
-    {
-      "nama": "sheyy are you okayy🥀🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "nomer": "8787",
-      "kategori": "Guru",
-      "mapel": "IPA",
-      "id": "5b9e"
-    },
-    {
-      "id": "4b5c",
-      "nama": "sheyzz",
-      "email": "hysaiiyadda@gmail.com",
-      "nomer": "873387",
-      "kategori": "Siswa",
-      "kelas": "X",
       "jurusan": "TKJ"
     },
     {
-      "id": "3709",
-      "nama": "andresuki",
-      "email": "herzzddarey@gmail.com",
-      "nomer": "54765476578",
-      "kategori": "Siswa",
-      "kelas": "X",
-      "jurusan": "TKJ"
-    },
-    {
-      "id": "dae5",
-      "nama": "dddd",
-      "email": " kihzlihlisza@gmail.com",
-      "nomer": "0788676",
-      "kategori": "Siswa",
-      "kelas": "X",
-      "jurusan": "TKJ"
-    },
-    {
-      "nama": "lumiiinoir",
+      "id": "f766",
+      "nama": "ss",
       "email": "ykfaa@gmail.com",
-      "nomer": "8787",
       "kategori": "Siswa",
-      "kelas": "XII",
-      "jurusan": "TSM",
-      "id": "49a7"
+      "nomor": "SIS-3509",
+      "kelas": "X",
+      "jurusan": "TKJ"
     },
     {
-      "id": "7796",
-      "nama": " egewgedsagd",
-      "email": " aegswgsaa@gmail.com",
-      "nomer": "878457",
+      "id": "ca60",
+      "nama": "kkhnj",
+      "email": "ykfaa@gmail.com",
       "kategori": "Guru",
-      "mapel": "PJOK"
+      "nomor": "GUR-4532",
+      "mapel": "sss"
     },
     {
-      "id": "4b23",
-      "nama": " gugu",
-      "email": " asfagsaa@gmail.com",
-      "nomer": "878457",
-      "kategori": "Guru",
-      "mapel": "MTK"
+      "id": "7bdc",
+      "nama": "wsdwsd",
+      "email": "herzzddarey@gmail.com",
+      "kategori": "Karyawan",
+      "nomor": "KAR-5917"
     }
   ],
   "users": [
@@ -291,6 +213,32 @@
       "kelas": "XII",
       "jurusan": "TSM",
       "id": "2ed2"
+    }
+  ],
+  "presensi": [
+    {
+      "id": "9e3f",
+      "nis": "SIS-4332",
+      "nama": "swssd",
+      "tanggal": "2025-12-03",
+      "jamMasuk": "10:38",
+      "jamPulang": "15:38"
+    },
+    {
+      "id": "b9e8",
+      "nis": "GUR-4532",
+      "nama": "kkhnj",
+      "tanggal": "2025-12-03",
+      "jamMasuk": "10:44",
+      "jamPulang": "12:44"
+    },
+    {
+      "id": "3b8e",
+      "nis": "KAR-5917",
+      "nama": "wsdwsd",
+      "tanggal": "2025-12-03",
+      "jamMasuk": "14:56",
+      "jamPulang": "15:56"
     }
   ]
 }

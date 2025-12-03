@@ -73,8 +73,7 @@ const DaftarTagihan = () => {
     if (!tanggal) return "-";
 
     const date = new Date(tanggal);
-    if (isNaN(date)) return tanggal; // jika format tidak valid, tampilkan apa adanya
-
+    if (isNaN(date)) return tanggal;  
     const dd = String(date.getDate()).padStart(2, "0");
     const mm = String(date.getMonth() + 1).padStart(2, "0");
     const yyyy = date.getFullYear();

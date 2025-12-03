@@ -7,7 +7,6 @@ import "remixicon/fonts/remixicon.css";
 
 const Rodd = () => {
   const filterOptions = ["Siswa", "Karyawan", "Guru"];
-  const classOptions = ["X", "XI", "XII"];
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("Semua");
@@ -137,16 +136,14 @@ const Rodd = () => {
               </select>
 
               <button
-                className="p-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 w-full md:w-auto flex gap-2 items-center ml-59"
+                className="p-2 px-4 bg-blue-600 text-white ml-60 rounded-lg hover:bg-blue-700 transition duration-200 w-full md:w-auto flex gap-2 items-center"
                 onClick={() => navigate("/t")}
               >
                 <i className="ri-add-circle-line text-lg"></i>
                 Tambah Data
               </button>
-
             </div>
           </div>
-
 
           <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
@@ -157,7 +154,7 @@ const Rodd = () => {
                   <th className="py-3 px-4 text-left">Nama</th>
                   <th className="py-3 px-4 text-left">Kelas</th>
                   <th className="py-3 px-4 text-left">Jurusan/Mapel</th>
-                  <th className="py-3 px-4 text-left">Nomor</th>
+                  <th className="py-3 px-4 text-left">Nomor Unik</th>
                   <th className="py-3 px-4 text-left">Email</th>
                   <th className="py-3 px-4 text-left">Aksi</th>
                 </tr>
@@ -168,46 +165,36 @@ const Rodd = () => {
                   filteredData.map((data, index) => (
                     <tr
                       key={data.id}
-                      className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                        } hover:bg-sky-100 transition`}
+                      className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
                     >
                       <td className="py-3 px-4 text-center">{index + 1}</td>
-
                       <td className="py-3 px-4 flex items-center gap-1">
                         {getCategoryIcon(data.kategori)} {data.kategori}
                       </td>
-
                       <td className="py-3 px-4">{data.nama}</td>
-
+                      <td className="py-3 px-4 text-center">{data.kategori === "Siswa" ? data.kelas : "-"}</td>
                       <td className="py-3 px-4 text-center">
-                        {data.kategori === "Siswa" ? data.kelas : "-"}
-                      </td>
-
-                      <td className="py-3 text-center px-4">
                         {data.kategori === "Siswa"
                           ? data.jurusan
                           : data.kategori === "Guru"
-                            ? data.mapel
-                            : "-"}
+                          ? data.mapel
+                          : "-"}
                       </td>
-
-                      <td className="py-3 px-4">{data.nomer}</td>
-                      <td className="py-3 text-right px-4">{data.email}</td>
-
-                      <td className="py-3  px-4">
+                      <td className="py-3 px-4">{data.nomor || "-"}</td>
+                      <td className="py-3 px-4 text-right">{data.email}</td>
+                      <td className="py-3 px-4">
                         <div className="flex gap-2">
                           <button
                             className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition flex items-center gap-1"
                             onClick={() => navigate(`/edit/${data.id}`)}
                           >
-                            <i className="ri-edit-2-line text-sm"></i> Edit
+                            <i className="ri-edit-2-line"></i> Edit
                           </button>
-
                           <button
                             className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition flex items-center gap-1"
                             onClick={() => handleDelete(data.id)}
                           >
-                            <i className="ri-delete-bin-6-line text-sm"></i> Hapus
+                            <i className="ri-delete-bin-line"></i> Hapus
                           </button>
                         </div>
                       </td>
@@ -215,18 +202,14 @@ const Rodd = () => {
                   ))
                 ) : (
                   <tr>
-                    <td
-                      colSpan="8"
-                      className="text-center py-5 text-gray-500 italic"
-                    >
-                      Tidak ada data yang cocok.
+                    <td colSpan="8" className="text-center py-4 text-gray-500">
+                      Tidak ada data.
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
     </div>

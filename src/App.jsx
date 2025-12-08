@@ -20,7 +20,7 @@ import Editclok from "./test/Editclok"
 import Tmbhkls from "./test/Tmbhkls"
 import Editkelas from "./test/Editkelas"
 import Presensi from "./test/Presensi"
-
+import RekapPresensi from "./test/RekapPresensi"
 
 
 const App = () => {
@@ -47,6 +47,7 @@ const App = () => {
       <Route path="/tambahkelas/:kelas?" element={<Tmbhkls />} />
       <Route path="/editkelas/:id" element={<Editkelas />} />
       <Route path="/Presensi" element={<Presensi />} />
+      <Route path="/RekapPresensi" element={<RekapPresensi />} />
 
     </Routes>
 

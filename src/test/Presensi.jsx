@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Dasbor from "./Dasbor";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 
 const Presensi = () => {
-  const [dataOrang, setDataOrang] = useState([]);  
-  const [dataPresensi, setDataPresensi] = useState([]);  
+  const navigate = useNavigate();
+
+  const [dataOrang, setDataOrang] = useState([]);
+  const [dataPresensi, setDataPresensi] = useState([]);
 
   const [nis, setNis] = useState("");
   const [nama, setNama] = useState("");
@@ -16,7 +19,7 @@ const Presensi = () => {
   const API_PRESENSI = "http://localhost:5000/presensi";
   const API_DOSS = "http://localhost:5000/doss";
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchOrang = async () => {
       try {
         const res = await axios.get(API_DOSS);
@@ -32,7 +35,7 @@ const Presensi = () => {
     fetchOrang();
   }, []);
 
-   const fetchPresensi = async () => {
+  const fetchPresensi = async () => {
     try {
       const res = await axios.get(API_PRESENSI);
       setDataPresensi(res.data);
@@ -45,14 +48,14 @@ const Presensi = () => {
     fetchPresensi();
   }, []);
 
-   const handleNisChange = (e) => {
+  const handleNisChange = (e) => {
     const value = e.target.value;
     setNis(value);
 
-     const s = dataOrang.find((x) => x.nis === value);
+    const s = dataOrang.find((x) => x.nis === value);
     setNama(s ? s.nama : "");
 
-     const presensiHariIni = dataPresensi.find(
+    const presensiHariIni = dataPresensi.find(
       (d) => d.nis === value && d.tanggal === tanggal
     );
     if (presensiHariIni) {
@@ -64,7 +67,7 @@ const Presensi = () => {
     }
   };
 
-   const tambahPresensi = async (e) => {
+  const tambahPresensi = async (e) => {
     e.preventDefault();
 
     if (!nis || !nama || !tanggal) {
@@ -82,7 +85,7 @@ const Presensi = () => {
 
     try {
       if (presensiHariIni) {
-         if (!jamPulang) {
+        if (!jamPulang) {
           Swal.fire({
             icon: "warning",
             title: "Isi Jam Pulang",
@@ -103,7 +106,7 @@ const Presensi = () => {
           showConfirmButton: false,
         });
       } else {
-         if (!jamMasuk) {
+        if (!jamMasuk) {
           Swal.fire({
             icon: "warning",
             title: "Isi Jam Masuk",
@@ -119,6 +122,7 @@ const Presensi = () => {
           jamMasuk,
           jamPulang: "",
         });
+        navigate("/RekapPresensi");
 
         Swal.fire({
           icon: "success",
@@ -127,6 +131,7 @@ const Presensi = () => {
           showConfirmButton: false,
         });
       }
+
 
       fetchPresensi();
       setNis("");
@@ -142,16 +147,12 @@ const Presensi = () => {
     }
   };
 
-  const formatTanggal = (tgl) => {
-    const [year, month, day] = tgl.split("-");
-    return `${day}/${month}/${year}`;
-  };
+
 
   return (
-    <div className="min-h-screen bg-sky-100 flex">
-      <Dasbor />
+    <div className="min-h-screen bg-sky-200 flex">
       <div className="flex-1 p-6">
-        <div className="bg-white p-6 shadow-lg rounded-xl mb-10 max-w-3xl mx-auto">
+        <div className="bg-white p-6 shadow-lg rounded-xl mb-10 max-w-3xl mt-20 mx-auto">
           <form
             onSubmit={tambahPresensi}
             className="grid grid-cols-1 md:grid-cols-2 gap-5"
@@ -213,46 +214,11 @@ const Presensi = () => {
               <button
                 type="submit"
                 className="gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-              >
+               >
                 Simpan Presensi
               </button>
             </div>
           </form>
-        </div>
-
-         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-semibold mb-4">Daftar Presensi</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
-              <thead>
-                <tr className="bg-sky-600 text-left text-white">
-                  <th className="px-4 py-2">No</th>
-                  <th className="px-4 py-2">Nama</th>
-                  <th className="px-4 py-2">Kategori</th>
-                  <th className="px-4 py-2">Nomor Unik</th>
-                  <th className="px-4 py-2">Jam Masuk</th>
-                  <th className="px-4 py-2">Jam Pulang</th>
-                  <th className="px-4 py-2">Tanggal</th>
-                </tr>
-              </thead>
-              <tbody>
-                {dataPresensi.map((item, i) => {
-                  const orang = dataOrang.find((o) => o.nis === item.nis);
-                  return (
-                    <tr key={i} className="hover:bg-sky-100">
-                      <td className="px-4 py-2 text-center">{i + 1}</td>
-                      <td className="px-4 py-2">{item.nama}</td>
-                      <td className="px-4 py-2">{orang ? orang.kategori : "-"}</td>
-                      <td className="px-4 py-2">{item.nis}</td>
-                      <td className="px-4 py-2">{item.jamMasuk}</td>
-                      <td className="px-4 py-2">{item.jamPulang}</td>
-                      <td className="px-4 py-2 text-right">{formatTanggal(item.tanggal)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </div>

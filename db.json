@@ -1,37 +1,46 @@
 {
   "doss": [
     {
-      "id": "281d",
-      "nama": "swssd",
-      "email": "herzzddarey@gmail.com",
-      "kategori": "Siswa",
-      "nomor": "SIS-4332",
-      "kelas": "XI",
-      "jurusan": "TKJ"
+      "id": "c56b",
+      "nama": "nhaoto",
+      "email": "hysaiiyaa@gmail.com",
+      "kategori": "Guru",
+      "nomor": "GUR-4636",
+      "mapel": "pjok"
     },
     {
-      "id": "f766",
-      "nama": "ss",
-      "email": "ykfaa@gmail.com",
+      "id": "e157",
+      "nama": "wsws",
+      "email": "avvryz@gmail.com",
       "kategori": "Siswa",
-      "nomor": "SIS-3509",
+      "nomor": "SIS-1842",
       "kelas": "X",
       "jurusan": "TKJ"
     },
     {
-      "id": "ca60",
-      "nama": "kkhnj",
+      "id": "066a",
+      "nama": "rerere",
       "email": "ykfaa@gmail.com",
-      "kategori": "Guru",
-      "nomor": "GUR-4532",
-      "mapel": "sss"
+      "kategori": "Siswa",
+      "nomor": "SIS-8021",
+      "kelas": "XI",
+      "jurusan": "TSM"
     },
     {
-      "id": "7bdc",
-      "nama": "wsdwsd",
-      "email": "herzzddarey@gmail.com",
+      "id": "5dfe",
+      "nama": "grgrg",
+      "email": "avvryz@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "SIS-2544",
+      "kelas": "XII",
+      "jurusan": "TSM"
+    },
+    {
+      "id": "9387",
+      "nama": "ytyt",
+      "email": "hysaiiyaa@gmail.com",
       "kategori": "Karyawan",
-      "nomor": "KAR-5917"
+      "nomor": "KAR-3095"
     }
   ],
   "users": [
@@ -48,83 +57,30 @@
   ],
   "coco": [
     {
-      "id": "001e",
-      "nama": "sheyy are ",
-      "email": "hysaiiyaa@gmail.com",
-      "jumlah": 500000000,
+      "id": "ea24",
+      "nama": "wsws",
+      "email": "avvryz@gmail.com",
+      "jumlah": 50000,
       "jenisTagihan": "SPP Bulanan",
-      "tanggal": "2025-11-18",
-      "status": "Belum Bayar"
-    },
-    {
-      "id": "fbed",
-      "nama": "sheyy are ",
-      "email": "hysaiiyaa@gmail.com",
-      "jumlah": 5000000000,
-      "jenisTagihan": "SPP Bulanan",
-      "tanggal": "2025-11-18",
+      "tanggal": "2025-12-08",
       "status": "Sudah Bayar"
     },
     {
-      "id": "6bd4",
-      "nama": "herz im fine🥀",
-      "email": "hysaiiyaa@gmail.com",
-      "jumlah": 500000000,
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-18",
-      "status": "Sudah Bayar"
-    },
-    {
-      "id": "644f",
-      "nama": "andresuki",
-      "email": "herzzddarey@gmail.com",
-      "jumlah": "50000000000",
-      "jenisTagihan": "Uang Gedung",
-      "tanggal": "2025-11-18",
-      "status": "Belum Bayar"
-    },
-    {
-      "id": "f5f9",
-      "nama": "dddd",
-      "email": " kihzlihlisza@gmail.com",
-      "jumlah": "5000000000",
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-22",
-      "status": "Sudah Bayar"
-    },
-    {
-      "id": "eb07",
-      "nama": "dddd",
-      "email": " kihzlihlisza@gmail.com",
-      "jumlah": "5000000000",
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-11-24"
-    },
-    {
-      "id": "8c5a",
-      "nama": "sheyzz",
-      "email": "hysaiiyadda@gmail.com",
-      "jumlah": "45000000000",
-      "jenisTagihan": "Uang Gedung",
-      "tanggal": "2025-11-26",
-      "status": "Sudah Bayar"
-    },
-    {
-      "id": "4f66",
-      "nama": "lumiiinoir",
+      "id": "913c",
+      "nama": "rerere",
       "email": "ykfaa@gmail.com",
-      "jumlah": "50000000000",
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-12-01",
-      "status": "Sudah Bayar"
+      "jumlah": "50000",
+      "jenisTagihan": "Uang Gedung",
+      "tanggal": "2025-12-09"
     },
     {
-      "id": "7aae",
-      "nama": "testjftjfy",
-      "email": "hysaiiyaa@gmail.com",
-      "jumlah": "50000000000",
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-12-01"
+      "id": "9d70",
+      "nama": "grgrg",
+      "email": "avvryz@gmail.com",
+      "jumlah": "50000",
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-12-08",
+      "status": "Sudah Bayar"
     }
   ],
   "kategori-data": [
@@ -208,36 +164,20 @@
   ],
   "presensi": [
     {
-      "id": "9e3f",
-      "nis": "SIS-4332",
-      "nama": "swssd",
-      "tanggal": "2025-12-03",
-      "jamMasuk": "10:38",
-      "jamPulang": "15:38"
+      "id": "4d67",
+      "nis": "SIS-2544",
+      "nama": "grgrg",
+      "tanggal": "2025-12-08",
+      "jamMasuk": "09:00",
+      "jamPulang": "10:00"
     },
     {
-      "id": "b9e8",
-      "nis": "GUR-4532",
-      "nama": "kkhnj",
-      "tanggal": "2025-12-03",
-      "jamMasuk": "10:44",
-      "jamPulang": "12:44"
-    },
-    {
-      "id": "3b8e",
-      "nis": "KAR-5917",
-      "nama": "wsdwsd",
-      "tanggal": "2025-12-03",
-      "jamMasuk": "14:56",
-      "jamPulang": "15:56"
-    },
-    {
-      "id": "4d7f",
-      "nis": "SIS-4332",
-      "nama": "swssd",
-      "tanggal": "2025-12-04",
-      "jamMasuk": "07:34",
-      "jamPulang": "08:34"
+      "id": "cea4",
+      "nis": "KAR-3095",
+      "nama": "ytyt",
+      "tanggal": "2025-12-08",
+      "jamMasuk": "14:06",
+      "jamPulang": ""
     }
   ]
 }

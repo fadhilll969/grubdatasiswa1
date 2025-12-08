@@ -17,16 +17,16 @@ const Tmbhdata = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [nomor, setNomor] = useState("");  
+  const [nomor, setNomor] = useState("");
   const [mapel, setMapel] = useState("");
 
   const API_URL_DATA = "http://localhost:5000/doss";
   const API_URL_KATEGORI = "http://localhost:5000/clok";
   const API_URL_KELAS = "http://localhost:5000/kls";
 
-   const generateNumber = () => Math.floor(1000 + Math.random() * 9000);
+  const generateNumber = () => Math.floor(1000 + Math.random() * 9000);
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchKategori = async () => {
       try {
         const res = await axios.get(API_URL_KATEGORI);
@@ -49,7 +49,7 @@ const Tmbhdata = () => {
     fetchKelas();
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     if (selectedKelas) {
       const jurusan = kelasList
         .filter((k) => k.kelas === selectedKelas)
@@ -63,7 +63,7 @@ const Tmbhdata = () => {
     }
   }, [selectedKelas, kelasList]);
 
-   const handleKategoriChange = (value) => {
+  const handleKategoriChange = (value) => {
     setSelectedKategori(value);
     setSelectedKelas("");
     setSelectedJurusan("");
@@ -72,7 +72,7 @@ const Tmbhdata = () => {
     if (value) {
       const prefix =
         value === "Siswa" ? "SIS" : value === "Guru" ? "GUR" : "KAR";
-      setNomor(`${prefix}-${generateNumber()}`); 
+      setNomor(`${prefix}-${generateNumber()}`);
     } else {
       setNomor("");
     }
@@ -110,7 +110,7 @@ const Tmbhdata = () => {
       nama: name,
       email,
       kategori: selectedKategori,
-      nomor,  
+      nomor,
       ...(selectedKategori === "Siswa" && {
         kelas: selectedKelas,
         jurusan: selectedJurusan,
@@ -154,8 +154,15 @@ const Tmbhdata = () => {
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
             Tambah Data
           </h2>
-
-           <div className="mb-4">
+          <div className="mb-2">
+            <label className="font-semibold block mb-1">Nomor Unik</label>
+            <input
+              value={nomor}
+              readOnly
+              className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2"
+            />
+          </div>
+          <div className="mb-4">
             <label className="block font-semibold mb-1">Kategori</label>
             <select
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
@@ -171,7 +178,7 @@ const Tmbhdata = () => {
             </select>
           </div>
 
-           {selectedKategori === "Siswa" && (
+          {selectedKategori === "Siswa" && (
             <>
               <div className="mb-4">
                 <label className="block font-semibold mb-1">Kelas</label>
@@ -207,7 +214,7 @@ const Tmbhdata = () => {
             </>
           )}
 
-           {selectedKategori === "Guru" && (
+          {selectedKategori === "Guru" && (
             <div className="mb-4">
               <label className="block font-semibold mb-1">Mata Pelajaran</label>
               <input
@@ -219,7 +226,7 @@ const Tmbhdata = () => {
             </div>
           )}
 
-           <div className="mb-4">
+          <div className="mb-4">
             <label className="block font-semibold mb-1">Nama</label>
             <input
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
@@ -229,7 +236,7 @@ const Tmbhdata = () => {
             />
           </div>
 
-           <div className="mb-6">
+          <div className="mb-6">
             <label className="block font-semibold mb-1">Email</label>
             <input
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
@@ -239,7 +246,7 @@ const Tmbhdata = () => {
             />
           </div>
 
-           <div className="flex justify-end gap-3">
+          <div className="flex justify-end gap-3">
             <button
               className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
               onClick={() => navigate("/h")}

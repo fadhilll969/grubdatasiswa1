@@ -364,57 +364,63 @@ function Horw() {
         </div>
 
        
-        <div className="overflow-x-auto bg-white rounded-lg shadow-md mt-6">
-          <table className="table-auto w-full text-gray-700">
-            <thead className="bg-sky-600 text-white text-left">
-              <tr>
-                <th className="py-3 px-4">No</th>
-                <th className="py-3 px-4">Kategori</th>
-                <th className="py-3 px-4">Nama</th>
-                <th className="py-3 px-4">Kelas</th>
-                <th className="py-3 px-4">Jurusan/Mapel</th>
-                <th className="py-3 px-4">Kode Unik</th>
-                <th className="py-3 px-10">Email</th>
-              </tr>
-            </thead>
+      <div className="overflow-x-auto bg-white rounded-lg shadow-md mt-6">
+  <table className="min-w-full table-auto text-gray-700">
+    <thead className="bg-sky-600 text-white">
+      <tr>
+        <th className="py-3 px-4 text-center w-12">No</th>
+        <th className="py-3 px-4 text-left">Kategori</th>
+        <th className="py-3 px-4 text-left">Nama</th>
+        <th className="py-3 px-4 text-left">Kelas</th>
+        <th className="py-3 px-4 text-left">Jurusan / Mapel</th>
+        <th className="py-3 px-4 text-left">Email</th>
+      </tr>
+    </thead>
 
-            <tbody>
-              {filteredDataUser.length > 0 ? (
-                filteredDataUser.map((user, index) => (
-                  <tr
-                    key={user.id || index}
-                    className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                      } hover:bg-sky-100 transition`}
-                  >
-                    <td className="py-3 px-4 text-center">{index + 1}</td>
-                    <td className="py-3 px-4">
-                      {getCategoryIcon(user.kategori)}
-                      {user.kategori}
-                    </td>
-                    <td className="py-3 px-4">{user.nama}</td>
-                    <td className="py-3 px-4">{user.kelas || "-"}</td>
-                    <td className="py-3 px-4">
-                      {user.kategori === "Siswa"
-                        ? user.jurusan || "-"
-                        : user.mapel || "-"}
-                    </td>
-                    <td className="py-3 px-4">{user.nomor || "-"}</td>
-                    <td className="py-3 px-4 text-right">{user.email || "-"}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan="7"
-                    className="text-center py-5 text-gray-500 italic"
-                  >
-                    Tidak terdapat data user.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+    <tbody>
+      {filteredDataUser.length > 0 ? (
+        filteredDataUser.map((user, index) => (
+          <tr
+            key={user.id || index}
+            className={`${
+              index % 2 === 0 ? "bg-white" : "bg-sky-50"
+            } hover:bg-sky-100 transition`}
+          >
+            <td className="py-3 px-4 text-center font-medium">
+              {index + 1}
+            </td>
+
+            <td className="py-3 px-4 flex items-center gap-2">
+              {getCategoryIcon(user.kategori)}
+              <span>{user.kategori}</span>
+            </td>
+
+            <td className="py-3 px-4">{user.nama}</td>
+
+            <td className="py-3 px-4">{user.kelas || "-"}</td>
+
+            <td className="py-3 px-4">
+              {user.kategori === "Siswa"
+                ? user.jurusan || "-"
+                : user.mapel || "-"}
+            </td>
+
+            <td className="py-3 px-4 text-right">{user.email || "-"}</td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td
+            colSpan="6"
+            className="text-center py-5 text-gray-500 italic"
+          >
+            Tidak terdapat data user.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
 
 
 

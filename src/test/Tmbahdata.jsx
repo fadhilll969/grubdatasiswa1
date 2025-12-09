@@ -71,7 +71,7 @@ const Tmbhdata = () => {
 
     if (value) {
       const prefix =
-        value === "Siswa" ? "SIS" : value === "Guru" ? "GUR" : "KAR";
+        value === "Siswa" ? "RFID" : value === "Guru" ? "RFID" : "RFID";
       setNomor(`${prefix}-${generateNumber()}`);
     } else {
       setNomor("");

@@ -21,44 +21,68 @@ const Editjir = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [nomor, setNomor] = useState(""); // NOMOR UNIK & TIDAK BOLEH HILANG
+   const [nomor, setNomor] = useState("");
 
   const API_URL_DATA = "http://localhost:5000/doss";
   const API_URL_KATEGORI = "http://localhost:5000/clok";
   const API_URL_KELAS = "http://localhost:5000/kls";
 
-  // GET DATA UTAMA
-  useEffect(() => {
+   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${API_URL_DATA}/${id}`);
-        const data = res.data;
+        const data = res.data || {};
 
         setName(data.nama || "");
         setEmail(data.email || "");
-        setNomor(data.nomer || data.nomor || ""); // nomor tetap disimpan
+
+         let raw = data.nomor || "";
+        raw = raw.replace(/\D/g, "").slice(0, 4);
+        setNomor(raw);
+
         setSelectedKategori(data.kategori || "");
 
         if (data.kategori === "Siswa") {
           setSelectedKelas(data.kelas || "");
           setSelectedJurusan(data.jurusan || "");
+        } else {
+          setSelectedKelas("");
+          setSelectedJurusan("");
         }
+
         if (data.kategori === "Guru") {
           setMapel(data.mapel || "");
+        } else {
+          setMapel("");
         }
       } catch (err) {
         console.error("Gagal mengambil data:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal mengambil data",
+          text: "Cek koneksi atau server.",
+        });
       }
     };
 
-    axios.get(API_URL_KATEGORI).then((res) => {
-      setKategoriList(res.data.filter((kat) => kat.aktif));
-    });
+    const fetchAux = async () => {
+      try {
+        const [katRes, klsRes] = await Promise.all([
+          axios.get(API_URL_KATEGORI),
+          axios.get(API_URL_KELAS),
+        ]);
+        setKategoriList(
+          Array.isArray(katRes.data)
+            ? katRes.data.filter((kat) => kat.aktif)
+            : []
+        );
+        setKelasList(Array.isArray(klsRes.data) ? klsRes.data : []);
+      } catch (err) {
+        console.error("Gagal mengambil kategori/kelas:", err);
+      }
+    };
 
-    axios.get(API_URL_KELAS).then((res) => {
-      setKelasList(res.data);
-    });
-
+    fetchAux();
     fetchData();
   }, [id]);
 
@@ -66,7 +90,8 @@ const Editjir = () => {
     if (selectedKelas) {
       const jurusanOptions = kelasList
         .filter((k) => k.kelas === selectedKelas)
-        .map((k) => k.jurusan);
+        .map((k) => k.jurusan)
+        .filter(Boolean);
 
       setJurusanList(jurusanOptions);
 
@@ -77,9 +102,17 @@ const Editjir = () => {
       setJurusanList([]);
       setSelectedJurusan("");
     }
-  }, [selectedKelas, kelasList]);
+  }, [selectedKelas, kelasList, selectedJurusan]);
 
-   const handleUpdateData = async () => {
+  const handleUpdateData = async () => {
+    if (!/^\d{4}$/.test(nomor)) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Nomor Unik Tidak Valid!",
+        text: "Nomor unik harus 4 digit angka (contoh: 0001).",
+      });
+    }
+
     if (!name || !email || !selectedKategori) {
       return Swal.fire({
         icon: "warning",
@@ -108,7 +141,8 @@ const Editjir = () => {
       nama: name,
       email,
       kategori: selectedKategori,
-      nomor,  
+      // simpan sebagai RFID-XXXX
+      nomor: `RFID-${nomor}`,
       ...(selectedKategori === "Siswa" && {
         kelas: selectedKelas,
         jurusan: selectedJurusan,
@@ -134,6 +168,7 @@ const Editjir = () => {
           });
           navigate("/h");
         } catch (error) {
+          console.error("PUT error:", error);
           Swal.fire({
             icon: "error",
             title: "Gagal!",
@@ -147,23 +182,29 @@ const Editjir = () => {
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
-
       <div className="flex-1 p-8">
-        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 ">
+        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52">
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
             Edit Data
           </h2>
 
-           <div className="mb-2">
-            <label className="font-semibold block mb-1">Nomor Unik</label>
+          <div className="mb-2">
+            <label className="font-semibold block mb-1">Nomor RFID</label>
             <input
+              type="text"
               value={nomor}
-              readOnly
-              className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2"
+              onChange={(e) => {
+                let val = e.target.value.replace(/\D/g, "");
+                if (val.length > 4) return;
+                setNomor(val);
+              }}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="4 digit angka"
             />
+            <p className="text-sm text-gray-500 mt-1">Disimpan sebagai: RFID-xxxx</p>
           </div>
 
-           <div className="mb-2">
+          <div className="mb-2">
             <label className="font-semibold block mb-1">Kategori</label>
             <select
               value={selectedKategori}
@@ -184,7 +225,7 @@ const Editjir = () => {
             </select>
           </div>
 
-           {selectedKategori === "Siswa" && (
+          {selectedKategori === "Siswa" && (
             <>
               <div className="mb-2">
                 <label className="font-semibold block mb-1">Kelas</label>
@@ -220,7 +261,7 @@ const Editjir = () => {
             </>
           )}
 
-           {selectedKategori === "Guru" && (
+          {selectedKategori === "Guru" && (
             <div className="mb-2">
               <label className="font-semibold block mb-1">Mata Pelajaran</label>
               <input
@@ -232,7 +273,7 @@ const Editjir = () => {
             </div>
           )}
 
-           <div className="mb-2">
+          <div className="mb-2">
             <label className="font-semibold block mb-1">Nama</label>
             <input
               value={name}
@@ -242,7 +283,7 @@ const Editjir = () => {
             />
           </div>
 
-           <div className="mb-2">
+          <div className="mb-2">
             <label className="font-semibold block mb-1">Email</label>
             <input
               value={email}
@@ -252,7 +293,7 @@ const Editjir = () => {
             />
           </div>
 
-           <div className="flex justify-end gap-3">
+          <div className="flex justify-end gap-3">
             <button
               className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
               onClick={() => navigate("/h")}

@@ -48,7 +48,7 @@ function Dasbor() {
   return (
     <div className="w-60 min-h-screen">
       <div className="fixed top-0 left-0 h-full w-60 bg-indigo-800 text-white shadow-lg">
-        <div className="text-3xl mt-6 font-bold mb-8 text-center flex items-center justify-center gap-2">
+        <div className="text-3xl mt-3 font-bold mb-8 text-center flex items-center justify-center gap-2">
           <i className="ri-menu-2-line"></i> MENU
         </div>
 
@@ -58,7 +58,7 @@ function Dasbor() {
               item.isSection ? (
                 <p
                   key={index}
-                  className="mt-5 mb-2 text-sm uppercase tracking-wide text-indigo-300 font-semibold"
+                  className="mt-2 mb-2 text-sm uppercase tracking-wide text-indigo-300 font-semibold"
                 >
                   {item.label}
                 </p>

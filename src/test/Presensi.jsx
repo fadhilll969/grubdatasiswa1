@@ -3,7 +3,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-
 const Presensi = () => {
   const navigate = useNavigate();
 
@@ -11,10 +10,6 @@ const Presensi = () => {
   const [dataPresensi, setDataPresensi] = useState([]);
 
   const [nis, setNis] = useState("");
-  const [nama, setNama] = useState("");
-  const [tanggal, setTanggal] = useState(new Date().toISOString().split("T")[0]);
-  const [jamMasuk, setJamMasuk] = useState("");
-  const [jamPulang, setJamPulang] = useState("");
 
   const API_PRESENSI = "http://localhost:5000/presensi";
   const API_DOSS = "http://localhost:5000/doss";
@@ -35,190 +30,121 @@ const Presensi = () => {
     fetchOrang();
   }, []);
 
-  const fetchPresensi = async () => {
-    try {
-      const res = await axios.get(API_PRESENSI);
-      setDataPresensi(res.data);
-    } catch (error) {
-      console.error("Gagal mengambil data presensi:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchPresensi = async () => {
+      try {
+        const res = await axios.get(API_PRESENSI);
+        setDataPresensi(res.data);
+      } catch (error) {
+        console.error("Gagal mengambil data presensi:", error);
+      }
+    };
     fetchPresensi();
   }, []);
 
-  const handleNisChange = (e) => {
-    const value = e.target.value;
-    setNis(value);
+   const getJamNow = () =>
+    new Date().toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
-    const s = dataOrang.find((x) => x.nis === value);
-    setNama(s ? s.nama : "");
+ const tambahPresensiOtomatis = async (value) => {
+  const tanggal = new Date().toISOString().split("T")[0];
 
-    const presensiHariIni = dataPresensi.find(
-      (d) => d.nis === value && d.tanggal === tanggal
-    );
-    if (presensiHariIni) {
-      setJamMasuk(presensiHariIni.jamMasuk || "");
-      setJamPulang(presensiHariIni.jamPulang || "");
-    } else {
-      setJamMasuk("");
-      setJamPulang("");
-    }
-  };
+  const orang = dataOrang.find((o) => o.nis === value);
+  if (!orang) return;
 
-  const tambahPresensi = async (e) => {
-    e.preventDefault();
+  const sudahAda = dataPresensi.find(
+    (d) => d.nis === value && d.tanggal === tanggal
+  );
 
-    if (!nis || !nama || !tanggal) {
+  try {
+     if (sudahAda && sudahAda.jamMasuk && sudahAda.jamPulang) {
       Swal.fire({
         icon: "warning",
-        title: "Data tidak lengkap",
-        text: "Nomor Unik dan Tanggal wajib diisi!",
+        title: "Sudah Absen Hari Ini",
+        text: `${orang.nama} sudah absen masuk & pulang hari ini.`,
       });
+      return; // STOP
+    }
+
+     if (!sudahAda) {
+      await axios.post(API_PRESENSI, {
+        nis: orang.nis,
+        nama: orang.nama,
+        tanggal,
+        jamMasuk: getJamNow(),
+        jamPulang: "",
+      });
+
+      Swal.fire({
+        icon: "success",
+        title: orang.nama + " Absen Masuk",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+
+      navigate("/RekapPresensi");
       return;
     }
 
-    const presensiHariIni = dataPresensi.find(
-      (d) => d.nis === nis && d.tanggal === tanggal
-    );
-
-    try {
-      if (presensiHariIni) {
-        if (!jamPulang) {
-          Swal.fire({
-            icon: "warning",
-            title: "Isi Jam Pulang",
-            text: "Masukkan jam pulang untuk update presensi!",
-          });
-          return;
-        }
-
-        await axios.put(`${API_PRESENSI}/${presensiHariIni.id}`, {
-          ...presensiHariIni,
-          jamPulang,
-        });
-
-        Swal.fire({
-          icon: "success",
-          title: "Presensi pulang berhasil diupdate",
-          timer: 1500,
-          showConfirmButton: false,
-        });
-      } else {
-        if (!jamMasuk) {
-          Swal.fire({
-            icon: "warning",
-            title: "Isi Jam Masuk",
-            text: "Masukkan jam masuk untuk presensi!",
-          });
-          return;
-        }
-
-        await axios.post(API_PRESENSI, {
-          nis,
-          nama,
-          tanggal,
-          jamMasuk,
-          jamPulang: "",
-        });
-        navigate("/RekapPresensi");
-
-        Swal.fire({
-          icon: "success",
-          title: "Presensi masuk berhasil ditambahkan",
-          timer: 1500,
-          showConfirmButton: false,
-        });
-      }
-
-
-      fetchPresensi();
-      setNis("");
-      setNama("");
-      setJamMasuk("");
-      setJamPulang("");
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menyimpan presensi",
+     if (sudahAda && !sudahAda.jamPulang) {
+      await axios.put(`${API_PRESENSI}/${sudahAda.id}`, {
+        ...sudahAda,
+        jamPulang: getJamNow(),
       });
+
+      Swal.fire({
+        icon: "success",
+        title: orang.nama + " Absen Pulang",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+
+      navigate("/RekapPresensi");
+      return;
     }
-  };
 
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      icon: "error",
+      title: "Gagal menyimpan presensi",
+    });
+  }
+};
+const handleNisChange = (e) => {
+  const value = e.target.value;
+  setNis(value);
 
+   if (value.length >= 4) {
+    tambahPresensiOtomatis(value);
+    setNis("");
+  }
+};
 
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <div className="flex-1 p-6">
-        <div className="bg-white p-6 shadow-lg rounded-xl mb-10 max-w-3xl mt-20 mx-auto">
-          <form
-            onSubmit={tambahPresensi}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5"
-          >
-            <div>
-              <label className="font-medium text-gray-700 mb-1 block">Nomor Unik</label>
-              <input
-                type="text"
-                value={nis}
-                onChange={handleNisChange}
-                className="w-full mt-1 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-sky-400"
-                placeholder="Masukkan nomor unik"
-              />
-            </div>
+        <div className="bg-white p-6 shadow-lg rounded-xl mb-10 max-w-xl mt-20 mx-auto">
 
-            <div>
-              <label className="font-medium text-gray-700 mb-1 block">Nama</label>
-              <input
-                type="text"
-                value={nama}
-                readOnly
-                className="w-full mt-1 border bg-gray-100 rounded-lg p-2"
-              />
-            </div>
+          <label className="font-bold text-2xl text-gray-700 mb-1 block">
+            Presensi
+          </label>
 
-            <div>
-              <label className="font-medium text-gray-700 mb-1 block">Tanggal</label>
-              <input
-                type="date"
-                value={tanggal}
-                onChange={(e) => setTanggal(e.target.value)}
-                className="w-full mt-1 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-sky-400"
-              />
-            </div>
+          <input
+            type="text"
+            value={nis}
+            onChange={handleNisChange}
+            className="w-full mt-6 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-sky-400 text-xl text-center"
+            placeholder="Masukkan Nomor Unik"
+            autoFocus
+          />
 
-            {!dataPresensi.find((d) => d.nis === nis && d.tanggal === tanggal) ? (
-              <div>
-                <label className="font-medium text-gray-700 mb-1 block">Jam Masuk</label>
-                <input
-                  type="time"
-                  value={jamMasuk}
-                  onChange={(e) => setJamMasuk(e.target.value)}
-                  className="w-full mt-1 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-sky-400"
-                />
-              </div>
-            ) : (
-              <div>
-                <label className="font-medium text-gray-700 mb-1 block">Jam Pulang</label>
-                <input
-                  type="time"
-                  value={jamPulang}
-                  onChange={(e) => setJamPulang(e.target.value)}
-                  className="w-full mt-1 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-sky-400"
-                />
-              </div>
-            )}
+          <p className="text-center text-gray-600 mt-3">
+          
+          </p>
 
-            <div className="md:col-span-2 flex justify-end mt-4">
-              <button
-                type="submit"
-                className="gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-               >
-                Simpan Presensi
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     </div>

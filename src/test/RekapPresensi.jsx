@@ -59,7 +59,7 @@ const RekapPresensi = () => {
                                         <th className="px-4 py-2">No</th>
                                         <th className="px-4 py-2">Nama</th>
                                          <th className="px-4 py-2">Nomor Unik</th>
-                                        <th className="px-4 py-2">Jam Masuk</th>
+                                         <th className="px-4 py-2">Jam Masuk</th>
                                         <th className="px-4 py-2">Jam Pulang</th>
                                         <th className="px-4 py-2">Tanggal</th>
                                     </tr>

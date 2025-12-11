@@ -1,13 +1,47 @@
 {
   "doss": [
     {
-      "nama": "nhaotoEFD",
-      "email": "hysaiiyaa@gmail.com",
+      "id": "91c4",
+      "nama": "wswsdfed",
+      "email": "avvryz@gmail.com",
       "kategori": "Siswa",
-      "nomor": "RFID-4599",
-      "kelas": "X",
-      "jurusan": "TKJ",
-      "id": "933f"
+      "nomor": "RFID-7709",
+      "kelas": "XI",
+      "jurusan": "TKJ"
+    },
+    {
+      "id": "7b3f",
+      "nama": "qqsdq",
+      "email": "avvryz@gmail.com",
+      "kategori": "Guru",
+      "nomor": "RFID-4685",
+      "mapel": "2e2e"
+    },
+    {
+      "id": "e0bc",
+      "nama": "wqdqd",
+      "email": "avvryz@gmail.com",
+      "kategori": "Guru",
+      "nomor": "RFID-1667",
+      "mapel": "wqdwd"
+    },
+    {
+      "id": "d060",
+      "nama": "wsws",
+      "email": "avvryz@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "RFID-6461",
+      "kelas": "XII",
+      "jurusan": "TKJ"
+    },
+    {
+      "id": "4bf7",
+      "nama": "wswsfhrsdfg",
+      "email": "avvryz@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "RFID-7665",
+      "kelas": "XI",
+      "jurusan": "TKJ"
     }
   ],
   "users": [
@@ -104,12 +138,44 @@
   ],
   "presensi": [
     {
-      "id": "3acf",
-      "nis": "RFID-4599",
-      "nama": "nhaotoEFD",
-      "tanggal": "2025-12-09",
-      "jamMasuk": "09.32",
-      "jamPulang": ""
+      "id": "3fe4",
+      "nis": "RFID-7709",
+      "nama": "wswsdfed",
+      "tanggal": "2025-12-11",
+      "jamMasuk": "13.57",
+      "jamPulang": "13.57",
+      "kehadiran": "HADIR",
+      "keterangan": ""
+    },
+    {
+      "id": "7ca0",
+      "nis": "RFID-4685",
+      "nama": "qqsdq",
+      "tanggal": "2025-12-11",
+      "jamMasuk": "",
+      "jamPulang": "",
+      "kehadiran": "IZIN",
+      "keterangan": "loro"
+    },
+    {
+      "id": "fa9d",
+      "nis": "RFID-6461",
+      "nama": "wsws",
+      "tanggal": "2025-12-11",
+      "jamMasuk": "14.03",
+      "jamPulang": "14.03",
+      "kehadiran": "HADIR",
+      "keterangan": ""
+    },
+    {
+      "id": "9738",
+      "nis": "RFID-7665",
+      "nama": "wswsfhrsdfg",
+      "tanggal": "2025-12-11",
+      "jamMasuk": "14.11",
+      "jamPulang": "14.11",
+      "kehadiran": "HADIR",
+      "keterangan": ""
     }
   ]
 }

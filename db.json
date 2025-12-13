@@ -1,47 +1,22 @@
 {
   "doss": [
     {
-      "id": "91c4",
-      "nama": "wswsdfed",
+      "id": "81e9",
+      "nama": "cocoopamm",
+      "email": "hysaiiyaa@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "RFID-2032",
+      "kelas": "X",
+      "jurusan": "TKJ"
+    },
+    {
+      "id": "1b2e",
+      "nama": "cocopin",
       "email": "avvryz@gmail.com",
       "kategori": "Siswa",
-      "nomor": "RFID-7709",
+      "nomor": "RFID-6034",
       "kelas": "XI",
-      "jurusan": "TKJ"
-    },
-    {
-      "id": "7b3f",
-      "nama": "qqsdq",
-      "email": "avvryz@gmail.com",
-      "kategori": "Guru",
-      "nomor": "RFID-4685",
-      "mapel": "2e2e"
-    },
-    {
-      "id": "e0bc",
-      "nama": "wqdqd",
-      "email": "avvryz@gmail.com",
-      "kategori": "Guru",
-      "nomor": "RFID-1667",
-      "mapel": "wqdwd"
-    },
-    {
-      "id": "d060",
-      "nama": "wsws",
-      "email": "avvryz@gmail.com",
-      "kategori": "Siswa",
-      "nomor": "RFID-6461",
-      "kelas": "XII",
-      "jurusan": "TKJ"
-    },
-    {
-      "id": "4bf7",
-      "nama": "wswsfhrsdfg",
-      "email": "avvryz@gmail.com",
-      "kategori": "Siswa",
-      "nomor": "RFID-7665",
-      "kelas": "XI",
-      "jurusan": "TKJ"
+      "jurusan": "TSM"
     }
   ],
   "users": [
@@ -138,42 +113,22 @@
   ],
   "presensi": [
     {
-      "id": "3fe4",
-      "nis": "RFID-7709",
-      "nama": "wswsdfed",
-      "tanggal": "2025-12-11",
-      "jamMasuk": "13.57",
-      "jamPulang": "13.57",
+      "id": "ea7a",
+      "nis": "RFID-2032",
+      "nama": "cocoopamm",
+      "tanggal": "2025-12-13",
+      "jamMasuk": "11.12",
+      "jamPulang": "11.12",
       "kehadiran": "HADIR",
       "keterangan": ""
     },
     {
-      "id": "7ca0",
-      "nis": "RFID-4685",
-      "nama": "qqsdq",
-      "tanggal": "2025-12-11",
-      "jamMasuk": "",
-      "jamPulang": "",
-      "kehadiran": "IZIN",
-      "keterangan": "loro"
-    },
-    {
-      "id": "fa9d",
-      "nis": "RFID-6461",
-      "nama": "wsws",
-      "tanggal": "2025-12-11",
-      "jamMasuk": "14.03",
-      "jamPulang": "14.03",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "9738",
-      "nis": "RFID-7665",
-      "nama": "wswsfhrsdfg",
-      "tanggal": "2025-12-11",
-      "jamMasuk": "14.11",
-      "jamPulang": "14.11",
+      "id": "9998",
+      "nis": "RFID-6034",
+      "nama": "cocopin",
+      "tanggal": "2025-12-13",
+      "jamMasuk": "11.16",
+      "jamPulang": "11.16",
       "kehadiran": "HADIR",
       "keterangan": ""
     }

@@ -193,7 +193,7 @@ const TmbhdataTgihan = () => {
               <button
                 type="button"
                 onClick={() => navigate("/o")}
-                className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition"
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
               >
                 <i className="ri-arrow-left-line"></i> Kembali
               </button>

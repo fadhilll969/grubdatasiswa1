@@ -32,6 +32,8 @@ function Dasbor() {
 
   const menuItems = [
     { path: "/w", icon: "ri-dashboard-line", label: "Dashboard" },
+    { isSection: true, label: "Presensi" },
+
     { path: "/Presensi", icon: "ri-time-line", label: "Presensi" },
     { path: "/RekapPresensi", icon: "ri-file-list-3-line", label: "Rekap Presensi" },
 
@@ -78,7 +80,7 @@ function Dasbor() {
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-start gap-2 py-2 px-3 mt-10 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
+              className="w-full flex items-center justify-start gap-2 py-2 px-3 mt-2 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
             >
               <i className="ri-logout-box-line"></i> Logout
             </button>

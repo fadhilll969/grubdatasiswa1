@@ -16,8 +16,7 @@ const Presensi = () => {
   const API_PRESENSI = "http://localhost:5000/presensi";
   const API_DOSS = "http://localhost:5000/doss";
 
-  /* ================= FETCH DATA ================= */
-
+ 
   useEffect(() => {
     const fetchOrang = async () => {
       try {
@@ -50,7 +49,6 @@ const Presensi = () => {
     fetchPresensi();
   }, []);
 
-  /* ================= HELPER ================= */
 
   const getJamNow = () =>
     new Date().toLocaleTimeString("id-ID", {
@@ -158,8 +156,8 @@ const Presensi = () => {
       });
 
       Swal.fire({
-        icon: "info",
-        title: `${orangDitemukan.nama} Izin`,
+        icon: "success",
+        title: `${orangDitemukan.nama} Telah Izin`,
         timer: 1500,
         showConfirmButton: false,
       });
@@ -325,9 +323,9 @@ const Presensi = () => {
         <div className="flex justify-center">
           <button
             onClick={() => navigate("/w")}
-            className="bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-bold"
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-bold"
           >
-            Kembali
+            <i className="ri-arrow-left-line"></i> Kembali
           </button>
         </div>
       </div>

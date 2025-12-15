@@ -62,20 +62,17 @@ const RekapPresensi = () => {
                                         <th className="px-4 py-2">Nama</th>
                                         <th className="px-4 py-2">Nomor Unik</th>
                                         <th className="px-4 py-2">Keterangan</th>
-                                        <th className="px-4 py-2">Alasan</th>  {/* 🔥 Kolom baru */}
+                                        <th className="px-4 py-2">Alasan</th>   
                                         <th className="px-4 py-2">Jam Masuk</th>
                                         <th className="px-4 py-2">Jam Pulang</th>
                                         <th className="px-4 py-2">Tanggal</th>
                                     </tr>
-                                </thead>
-
-                                <tbody>
+                                </thead>                                <tbody>
                                     {dataPresensi.map((item, i) => (
                                         <tr key={i} className="hover:bg-sky-100">
                                             <td className="px-4 py-2 text-center">{i + 1}</td>
                                             <td className="px-4 py-2">{item.nama}</td>
                                             <td className="px-4 py-2">{item.nis}</td>
-
                                             <td
                                                 className={`px-4 py-2 font-bold ${item.kehadiran === "HADIR"
                                                     ? "text-green-600"
@@ -86,12 +83,9 @@ const RekapPresensi = () => {
                                             >
                                                 {item.kehadiran}
                                             </td>
-
-                                            {/* 🔥 Kolom ALASAN */}
-                                            <td className="px-4 py-2">
+                                             <td className="px-4 py-2">
                                                 {item.keterangan ? item.keterangan : "-"}
                                             </td>
-
                                             <td className="px-4 py-2">{item.jamMasuk || "-"}</td>
                                             <td className="px-4 py-2">{item.jamPulang || "-"}</td>
                                             <td className="px-4 py-2 text-right">{formatTanggal(item.tanggal)}</td>

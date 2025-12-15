@@ -17,6 +17,48 @@
       "nomor": "RFID-6034",
       "kelas": "XI",
       "jurusan": "TSM"
+    },
+    {
+      "id": "78c4",
+      "nama": "jtjtj",
+      "email": "hysaiiyaa@gmail.com",
+      "kategori": "Guru",
+      "nomor": "RFID-8298",
+      "mapel": "hjtyj"
+    },
+    {
+      "nama": "yao",
+      "email": "e1@gmail.com",
+      "kategori": "Karyawan",
+      "nomor": "RFID-3328",
+      "id": "545f"
+    },
+    {
+      "id": "142d",
+      "nama": "DAMN",
+      "email": "hysaiiyaa@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "RFID-4897",
+      "kelas": "XII",
+      "jurusan": "TSM"
+    },
+    {
+      "id": "db93",
+      "nama": "Shyrz",
+      "email": "avvryz@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "RFID-4503",
+      "kelas": "XI",
+      "jurusan": "TSM"
+    },
+    {
+      "id": "a9af",
+      "nama": "yfyyfy",
+      "email": "hysaiiyaa@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "RFID-1244",
+      "kelas": "X",
+      "jurusan": "TKJ"
     }
   ],
   "users": [
@@ -31,7 +73,25 @@
       "password": "jj"
     }
   ],
-  "coco": [],
+  "coco": [
+    {
+      "id": "615c",
+      "nama": "cocoopamm",
+      "email": "hysaiiyaa@gmail.com",
+      "jumlah": "50000",
+      "jenisTagihan": "Seragam",
+      "tanggal": "2025-12-15"
+    },
+    {
+      "id": "8608",
+      "nama": "Shyrz",
+      "email": "avvryz@gmail.com",
+      "jumlah": "50000",
+      "jenisTagihan": "Uang Gedung",
+      "tanggal": "2025-12-15",
+      "status": "Sudah Bayar"
+    }
+  ],
   "kategori-data": [
     {
       "id": "0662",
@@ -131,6 +191,36 @@
       "jamPulang": "11.16",
       "kehadiran": "HADIR",
       "keterangan": ""
+    },
+    {
+      "id": "664c",
+      "nis": "RFID-8298",
+      "nama": "jtjtj",
+      "tanggal": "2025-12-15",
+      "jamMasuk": "",
+      "jamPulang": "",
+      "kehadiran": "IZIN",
+      "keterangan": "wdw"
+    },
+    {
+      "id": "3648",
+      "nis": "RFID-4503",
+      "nama": "Shyrz",
+      "tanggal": "2025-12-15",
+      "jamMasuk": "14.20",
+      "jamPulang": "14.21",
+      "kehadiran": "HADIR",
+      "keterangan": ""
+    },
+    {
+      "id": "8c40",
+      "nis": "RFID-4897",
+      "nama": "DAMN",
+      "tanggal": "2025-12-15",
+      "jamMasuk": "",
+      "jamPulang": "",
+      "kehadiran": "IZIN",
+      "keterangan": "sakit"
     }
   ]
 }

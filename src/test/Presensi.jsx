@@ -16,7 +16,7 @@ const Presensi = () => {
   const API_PRESENSI = "http://localhost:5000/presensi";
   const API_DOSS = "http://localhost:5000/doss";
 
- 
+  // Ambil data orang
   useEffect(() => {
     const fetchOrang = async () => {
       try {
@@ -37,6 +37,7 @@ const Presensi = () => {
     fetchOrang();
   }, []);
 
+  // Ambil data presensi
   useEffect(() => {
     const fetchPresensi = async () => {
       try {
@@ -48,7 +49,6 @@ const Presensi = () => {
     };
     fetchPresensi();
   }, []);
-
 
   const getJamNow = () =>
     new Date().toLocaleTimeString("id-ID", {
@@ -63,7 +63,7 @@ const Presensi = () => {
     setKeteranganIzin("");
   };
 
-
+  // Cari orang berdasarkan NIS
   const handleNisChange = (e) => {
     const value = e.target.value;
     setNis(value);
@@ -72,9 +72,13 @@ const Presensi = () => {
     setOrangDitemukan(orang || null);
   };
 
-
+  // Proses HADIR
   const prosesHadir = async () => {
-    if (!orangDitemukan) return;
+    if (!orangDitemukan) {
+      Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
+      resetSemua();
+      return;
+    }
 
     const tanggal = new Date().toISOString().split("T")[0];
     const presensiHariIni = dataPresensi.find(
@@ -84,8 +88,8 @@ const Presensi = () => {
     if (presensiHariIni) {
       Swal.fire({
         icon: "warning",
-        title: "Sudah Absen Hari Ini",
-      });
+        title: "Sudah absen hari ini",
+       });
       resetSemua();
       return;
     }
@@ -109,24 +113,21 @@ const Presensi = () => {
       });
 
       resetSemua();
-      navigate("/RekapPresensi");
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menyimpan presensi",
-      });
+      Swal.fire({ icon: "error", title: "Gagal menyimpan presensi" });
     }
   };
 
-
+  // Proses IZIN
   const prosesIzin = async () => {
-    if (!orangDitemukan) return;
+    if (!orangDitemukan) {
+      Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
+      resetSemua();
+      return;
+    }
 
     if (!keteranganIzin.trim()) {
-      Swal.fire({
-        icon: "warning",
-        title: "Keterangan wajib diisi",
-      });
+      Swal.fire({ icon: "warning", title: "Keterangan wajib diisi" });
       return;
     }
 
@@ -138,8 +139,8 @@ const Presensi = () => {
     if (presensiHariIni) {
       Swal.fire({
         icon: "warning",
-        title: "Sudah Absen Hari Ini",
-      });
+        title: "Sudah absen hari ini",
+       });
       resetSemua();
       return;
     }
@@ -163,28 +164,29 @@ const Presensi = () => {
       });
 
       resetSemua();
-      navigate("/RekapPresensi");
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menyimpan izin",
-      });
+      Swal.fire({ icon: "error", title: "Gagal menyimpan izin" });
     }
   };
 
-
+  // Proses PULANG
   const prosesPulang = async () => {
-    if (!orangDitemukan) return;
+    if (!orangDitemukan) {
+      Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
+      resetSemua();
+      return;
+    }
 
     const tanggal = new Date().toISOString().split("T")[0];
     const presensiHariIni = dataPresensi.find(
       (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggal
     );
 
-    if (!presensiHariIni || !presensiHariIni.jamMasuk) {
+    if (!presensiHariIni || presensiHariIni.kehadiran !== "HADIR") {
       Swal.fire({
         icon: "warning",
-        title: "Belum Absen Masuk",
+        title: "Belum absen HADIR hari ini",
+        text: "Hanya bisa absen pulang setelah HADIR",
       });
       return;
     }
@@ -192,7 +194,7 @@ const Presensi = () => {
     if (presensiHariIni.jamPulang) {
       Swal.fire({
         icon: "warning",
-        title: "Sudah Absen Pulang",
+        title: "Sudah absen pulang hari ini",
       });
       resetSemua();
       return;
@@ -212,15 +214,10 @@ const Presensi = () => {
       });
 
       resetSemua();
-      navigate("/RekapPresensi");
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal menyimpan absen pulang",
-      });
+      Swal.fire({ icon: "error", title: "Gagal menyimpan absen pulang" });
     }
   };
-
 
   return (
     <div className="min-h-screen bg-sky-200 flex">
@@ -233,28 +230,25 @@ const Presensi = () => {
           <div className="mt-5 flex gap-4 justify-center">
             <button
               onClick={() => setPilihan("HADIR")}
-              className={`px-5 py-2 rounded-lg font-bold ${pilihan === "HADIR"
-                ? "bg-sky-600 text-white"
-                : "bg-sky-400 hover:bg-sky-600"
-                }`}
+              className={`px-5 py-2 rounded-lg font-bold ${
+                pilihan === "HADIR" ? "bg-sky-600 text-white" : "bg-sky-400 hover:bg-sky-600"
+              }`}
             >
               Hadir
             </button>
             <button
               onClick={() => setPilihan("PULANG")}
-              className={`px-5 py-2 rounded-lg font-bold ${pilihan === "PULANG"
-                ? "bg-red-600 text-white"
-                : "bg-red-400 hover:bg-red-600"
-                }`}
+              className={`px-5 py-2 rounded-lg font-bold ${
+                pilihan === "PULANG" ? "bg-red-600 text-white" : "bg-red-400 hover:bg-red-600"
+              }`}
             >
               Pulang
             </button>
             <button
               onClick={() => setPilihan("IZIN")}
-              className={`px-5 py-2 rounded-lg font-bold ${pilihan === "IZIN"
-                ? "bg-yellow-600 text-white"
-                : "bg-yellow-400 hover:bg-yellow-600"
-                }`}
+              className={`px-5 py-2 rounded-lg font-bold ${
+                pilihan === "IZIN" ? "bg-yellow-600 text-white" : "bg-yellow-400 hover:bg-yellow-600"
+              }`}
             >
               Izin
             </button>
@@ -273,9 +267,7 @@ const Presensi = () => {
 
               {orangDitemukan && (
                 <div className="mt-4 bg-gray-100 p-4 rounded-lg">
-                  <h3 className="font-bold text-xl">
-                    {orangDitemukan.nama}
-                  </h3>
+                  <h3 className="font-bold text-xl">{orangDitemukan.nama}</h3>
                   <p>Nomor : {orangDitemukan.nis}</p>
                   <p>Kategori : {orangDitemukan.kategori}</p>
                 </div>

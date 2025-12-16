@@ -8,45 +8,43 @@ import "remixicon/fonts/remixicon.css";
 const Tmbhdata = () => {
   const navigate = useNavigate();
 
+  const API_URL_DATA = "http://localhost:5000/doss";
+  const API_URL_KATEGORI = "http://localhost:5000/clok";
+  const API_URL_KELAS = "http://localhost:5000/kls";
+
   const [kategoriList, setKategoriList] = useState([]);
   const [kelasList, setKelasList] = useState([]);
+
+  const [usedNumbers, setUsedNumbers] = useState([]);
+
   const [selectedKategori, setSelectedKategori] = useState("");
   const [selectedKelas, setSelectedKelas] = useState("");
   const [selectedJurusan, setSelectedJurusan] = useState("");
   const [jurusanOptions, setJurusanOptions] = useState([]);
 
+  const [nomor, setNomor] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [nomor, setNomor] = useState("");
   const [mapel, setMapel] = useState("");
 
-  const API_URL_DATA = "http://localhost:5000/doss";
-  const API_URL_KATEGORI = "http://localhost:5000/clok";
-  const API_URL_KELAS = "http://localhost:5000/kls";
-
-  const generateNumber = () => Math.floor(1000 + Math.random() * 9000);
-
   useEffect(() => {
-    const fetchKategori = async () => {
+    const fetchAll = async () => {
       try {
-        const res = await axios.get(API_URL_KATEGORI);
-        setKategoriList(res.data.filter((k) => k.aktif));
-      } catch (error) {
-        console.error("Gagal mengambil kategori:", error);
+        const [katRes, kelasRes, dataRes] = await Promise.all([
+          axios.get(API_URL_KATEGORI),
+          axios.get(API_URL_KELAS),
+          axios.get(API_URL_DATA),
+        ]);
+
+        setKategoriList(katRes.data.filter((k) => k.aktif));
+        setKelasList(kelasRes.data);
+        setUsedNumbers(dataRes.data.map((d) => d.nomor));
+      } catch (err) {
+        console.error("Gagal ambil data:", err);
       }
     };
 
-    const fetchKelas = async () => {
-      try {
-        const res = await axios.get(API_URL_KELAS);
-        setKelasList(res.data);
-      } catch (error) {
-        console.error("Gagal mengambil kelas:", error);
-      }
-    };
-
-    fetchKategori();
-    fetchKelas();
+    fetchAll();
   }, []);
 
   useEffect(() => {
@@ -63,36 +61,21 @@ const Tmbhdata = () => {
     }
   }, [selectedKelas, kelasList]);
 
-  const handleKategoriChange = (value) => {
-    setSelectedKategori(value);
-    setSelectedKelas("");
-    setSelectedJurusan("");
-    setMapel("");
-
-    if (value) {
-      const prefix =
-        value === "Siswa" ? "RFID" : value === "Guru" ? "RFID" : "RFID";
-      setNomor(`${prefix}-${generateNumber()}`);
-    } else {
-      setNomor("");
-    }
-  };
-
   const handleAddData = async () => {
-    if (!name || !email || !selectedKategori) {
+    if (!nomor || !name || !email || !selectedKategori) {
       Swal.fire({
         icon: "warning",
-        title: "Data tidak lengkap!",
-        text: "Nama, Email, dan Kategori harus diisi.",
+        title: "Data belum lengkap!",
+        text: "Nomor, Nama, Email, dan Kategori wajib diisi.",
       });
       return;
     }
 
-    if (selectedKategori === "Siswa" && (!selectedKelas || !selectedJurusan)) {
+    if (usedNumbers.includes(nomor)) {
       Swal.fire({
-        icon: "warning",
-        title: "Kelas dan Jurusan belum dipilih!",
-        text: "Harap pilih kelas dan jurusan siswa.",
+        icon: "error",
+        title: "Nomor sudah digunakan!",
+        text: "Gunakan nomor unik yang berbeda.",
       });
       return;
     }
@@ -101,16 +84,26 @@ const Tmbhdata = () => {
       Swal.fire({
         icon: "warning",
         title: "Email tidak valid!",
-        text: "Masukkan format email yang benar.",
+      });
+      return;
+    }
+
+    if (
+      selectedKategori === "Siswa" &&
+      (!selectedKelas || !selectedJurusan)
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "Kelas & Jurusan wajib diisi!",
       });
       return;
     }
 
     const newData = {
+      nomor,
       nama: name,
       email,
       kategori: selectedKategori,
-      nomor,
       ...(selectedKategori === "Siswa" && {
         kelas: selectedKelas,
         jurusan: selectedJurusan,
@@ -119,27 +112,26 @@ const Tmbhdata = () => {
     };
 
     Swal.fire({
-      title: "Ingin menambahkan data?",
+      title: "Simpan data?",
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Batal",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
+    }).then(async (res) => {
+      if (res.isConfirmed) {
         try {
           await axios.post(API_URL_DATA, newData);
           Swal.fire({
             icon: "success",
-            title: "Berhasil menambah!",
+            title: "Data berhasil ditambahkan!",
             timer: 1500,
             showConfirmButton: false,
           });
           navigate("/h");
-        } catch (error) {
+        } catch {
           Swal.fire({
             icon: "error",
-            title: "Gagal!",
-            text: "Tidak dapat mengirim data ke server.",
+            title: "Gagal menyimpan data!",
           });
         }
       }
@@ -154,20 +146,19 @@ const Tmbhdata = () => {
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
             Tambah Data
           </h2>
-          <div className="mb-2">
-            <label className="font-semibold block mb-1">Nomor Unik</label>
-            <input
-              value={nomor}
-              readOnly
-              className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block font-semibold mb-1">Kategori</label>
+
+
+          <div className="mb-3">
+            <label className="font-semibold block mb-1">Kategori</label>
             <select
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-500"
               value={selectedKategori}
-              onChange={(e) => handleKategoriChange(e.target.value)}
+              onChange={(e) => {
+                setSelectedKategori(e.target.value);
+                setSelectedKelas("");
+                setSelectedJurusan("");
+                setMapel("");
+              }}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
             >
               <option value="">Pilih Kategori</option>
               {kategoriList.map((kat) => (
@@ -180,12 +171,12 @@ const Tmbhdata = () => {
 
           {selectedKategori === "Siswa" && (
             <>
-              <div className="mb-4">
-                <label className="block font-semibold mb-1">Kelas</label>
+              <div className="mb-3">
+                <label className="font-semibold block mb-1">Kelas</label>
                 <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                   value={selectedKelas}
                   onChange={(e) => setSelectedKelas(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 >
                   <option value="">Pilih Kelas</option>
                   {[...new Set(kelasList.map((k) => k.kelas))].map((kls) => (
@@ -196,12 +187,12 @@ const Tmbhdata = () => {
                 </select>
               </div>
 
-              <div className="mb-4">
-                <label className="block font-semibold mb-1">Jurusan</label>
+              <div className="mb-3">
+                <label className="font-semibold block mb-1">Jurusan</label>
                 <select
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                   value={selectedJurusan}
                   onChange={(e) => setSelectedJurusan(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 >
                   <option value="">Pilih Jurusan</option>
                   {jurusanOptions.map((j, i) => (
@@ -215,48 +206,58 @@ const Tmbhdata = () => {
           )}
 
           {selectedKategori === "Guru" && (
-            <div className="mb-4">
-              <label className="block font-semibold mb-1">Mata Pelajaran</label>
+            <div className="mb-3">
+              <label className="font-semibold block mb-1">
+                Mata Pelajaran
+              </label>
               <input
-                className="w-full border border-gray-300 rounded-lg px-3 py-2"
-                placeholder="Masukkan mapel"
                 value={mapel}
                 onChange={(e) => setMapel(e.target.value)}
+                placeholder="Masukkan mapel"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2"
               />
             </div>
           )}
 
-          <div className="mb-4">
-            <label className="block font-semibold mb-1">Nama</label>
+          <div className="mb-3">
+            <label className="font-semibold block mb-1">Nama</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
-              placeholder="Nama lengkap"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Nama lengkap"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="font-semibold block mb-1">Nomor Unik</label>
+            <input
+              value={nomor}
+              onChange={(e) => setNomor(e.target.value)}
+              placeholder="Masukkan nomor unik"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
           </div>
 
           <div className="mb-6">
-            <label className="block font-semibold mb-1">Email</label>
+            <label className="font-semibold block mb-1">Email</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
-              placeholder="Alamat Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Alamat email"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
           </div>
 
           <div className="flex justify-end gap-3">
             <button
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
               onClick={() => navigate("/h")}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg"
             >
               <i className="ri-arrow-left-line"></i> Kembali
             </button>
-
             <button
-              className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
               onClick={handleAddData}
+              className="bg-sky-600 text-white px-4 py-2 rounded-lg"
             >
               <i className="ri-save-3-line"></i> Simpan
             </button>

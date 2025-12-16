@@ -28,7 +28,7 @@ function Horw() {
     belumBayarAmount: 0,
   });
 
-   
+
   const [searchTermUser, setSearchTermUser] = useState("");
   const [searchCategoryUser, setSearchCategoryUser] = useState("Semua");
   const [searchClass, setSearchClass] = useState("Semua");
@@ -39,7 +39,7 @@ function Horw() {
   const [jurusanOptions, setJurusanOptions] = useState([]);
   const [mapelOptions, setMapelOptions] = useState([]);
 
-  
+
   const [searchTermTagihan, setSearchTermTagihan] = useState("");
   const [searchStatusTagihan, setSearchStatusTagihan] = useState("Semua");
   const filterOptionsTagihan = ["Sudah Bayar", "Belum Bayar"];
@@ -47,7 +47,7 @@ function Horw() {
   const formatRupiah = (num) =>
     "Rp " + Number(num || 0).toLocaleString("id-ID");
 
- 
+
   const fetchDataTagihan = async () => {
     try {
       const response = await axios.get("http://localhost:5000/coco");
@@ -127,7 +127,7 @@ function Horw() {
     fetchDataTagihan();
   }, []);
 
-   
+
   const filteredDataUser = dataList.filter((data) => {
     const matchName = data.nama
       ?.toLowerCase()
@@ -154,7 +154,7 @@ function Horw() {
     return matchName && matchCategory && matchClass && matchJurusan && matchMapel;
   });
 
-  
+
   const cleanStatus = (status) => {
     if (!status || status.trim() === "") return "Belum Bayar";
     const s = status.trim().toLowerCase();
@@ -162,7 +162,7 @@ function Horw() {
     if (s === "sudah bayar") return "Sudah Bayar";
     if (s === "belum bayar") return "Belum Bayar";
 
-    return "Belum Bayar";  
+    return "Belum Bayar";
   };
 
   const filteredDataTagihan = dataTagihan.filter((item) => {
@@ -209,7 +209,7 @@ function Horw() {
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-10 flex items-center justify-center gap-2">
           <i className="ri-dashboard-line text-sky-600"></i> Dashboard Sekolah
         </h1>
- 
+
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-10">
           {[
@@ -229,7 +229,7 @@ function Horw() {
           ))}
         </div>
 
-     
+
         <h1 className="text-4xl mt-10 font-bold">Ringkasan Tagihan</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
@@ -285,14 +285,14 @@ function Horw() {
           </div>
         </div>
 
-       
+
 
         <h1 className="text-4xl mt-10 font-bold">
           Data Siswa / Guru / Karyawan
         </h1>
 
-         <div className="flex flex-col md:flex-row gap-4 mt-6">
-           <div className="relative w-full md:w-1/3">
+        <div className="flex flex-col md:flex-row gap-4 mt-6">
+          <div className="relative w-full md:w-1/3">
             <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
             <input
               type="text"
@@ -303,7 +303,7 @@ function Horw() {
             />
           </div>
 
-           <select
+          <select
             className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
             value={searchCategoryUser}
             onChange={(e) => {
@@ -319,7 +319,7 @@ function Horw() {
             <option value="Karyawan">Karyawan</option>
           </select>
 
-           {searchCategoryUser === "Siswa" && (
+          {searchCategoryUser === "Siswa" && (
             <select
               className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
               value={searchClass}
@@ -334,7 +334,7 @@ function Horw() {
             </select>
           )}
 
-           {searchCategoryUser === "Siswa" && (
+          {searchCategoryUser === "Siswa" && (
             <select
               className="p-2 border-2 rounded-lg w-full md:w-1/4 bg-white focus:ring-2 focus:ring-sky-400"
               value={searchJurusan}
@@ -349,7 +349,7 @@ function Horw() {
             </select>
           )}
 
-           {searchCategoryUser === "Guru" && (
+          {searchCategoryUser === "Guru" && (
             <div className="relative w-full md:w-1/3">
               <i className="ri-book-2-line absolute left-3 top-3 text-gray-400"></i>
               <input
@@ -363,64 +363,63 @@ function Horw() {
           )}
         </div>
 
-       
-      <div className="overflow-x-auto bg-white rounded-lg shadow-md mt-6">
-  <table className="min-w-full table-auto text-gray-700">
-    <thead className="bg-sky-600 text-white">
-      <tr>
-        <th className="py-3 px-4 text-center w-12">No</th>
-        <th className="py-3 px-4 text-left">Kategori</th>
-        <th className="py-3 px-4 text-left">Nama</th>
-        <th className="py-3 px-4 text-left">Kelas</th>
-        <th className="py-3 px-4 text-left">Jurusan / Mapel</th>
-        <th className="py-3 px-4 text-left">Email</th>
-      </tr>
-    </thead>
 
-    <tbody>
-      {filteredDataUser.length > 0 ? (
-        filteredDataUser.map((user, index) => (
-          <tr
-            key={user.id || index}
-            className={`${
-              index % 2 === 0 ? "bg-white" : "bg-sky-50"
-            } hover:bg-sky-100 transition`}
-          >
-            <td className="py-3 px-4 text-center font-medium">
-              {index + 1}
-            </td>
+        <div className="overflow-x-auto bg-white rounded-lg shadow-md mt-6">
+          <table className="min-w-full table-auto text-gray-700">
+            <thead className="bg-sky-600 text-white">
+              <tr>
+                <th className="py-3 px-4 text-center w-12">No</th>
+                <th className="py-3 px-4 text-left">Kategori</th>
+                <th className="py-3 px-4 text-left">Nama</th>
+                <th className="py-3 px-4 text-left">Kelas</th>
+                <th className="py-3 px-4 text-left">Jurusan / Mapel</th>
+                <th className="py-3 px-4 text-left">Email</th>
+              </tr>
+            </thead>
 
-            <td className="py-3 px-4 flex items-center gap-2">
-              {getCategoryIcon(user.kategori)}
-              <span>{user.kategori}</span>
-            </td>
+            <tbody>
+              {filteredDataUser.length > 0 ? (
+                filteredDataUser.map((user, index) => (
+                  <tr
+                    key={user.id || index}
+                    className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                      } hover:bg-sky-100 transition`}
+                  >
+                    <td className="py-3 px-4 text-center font-medium">
+                      {index + 1}
+                    </td>
 
-            <td className="py-3 px-4">{user.nama}</td>
+                    <td className="py-3 px-4 flex items-center gap-2">
+                      {getCategoryIcon(user.kategori)}
+                      <span>{user.kategori}</span>
+                    </td>
 
-            <td className="py-3 px-4">{user.kelas || "-"}</td>
+                    <td className="py-3 px-4">{user.nama}</td>
 
-            <td className="py-3 px-4">
-              {user.kategori === "Siswa"
-                ? user.jurusan || "-"
-                : user.mapel || "-"}
-            </td>
+                    <td className="py-3 px-4">{user.kelas || "-"}</td>
 
-            <td className="py-3 px-4 text-right">{user.email || "-"}</td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td
-            colSpan="6"
-            className="text-center py-5 text-gray-500 italic"
-          >
-            Tidak terdapat data user.
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-</div>
+                    <td className="py-3 px-4">
+                      {user.kategori === "Siswa"
+                        ? user.jurusan || "-"
+                        : user.mapel || "-"}
+                    </td>
+
+                    <td className="py-3 px-4 text-right">{user.email || "-"}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="6"
+                    className="text-center py-5 text-gray-500 italic"
+                  >
+                    Tidak terdapat data user.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
 
 

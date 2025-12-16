@@ -221,6 +221,26 @@
       "jamPulang": "",
       "kehadiran": "IZIN",
       "keterangan": "sakit"
+    },
+    {
+      "id": "63e8",
+      "nis": "RFID-1244",
+      "nama": "yfyyfy",
+      "tanggal": "2025-12-16",
+      "jamMasuk": "09.58",
+      "jamPulang": "10.03",
+      "kehadiran": "HADIR",
+      "keterangan": ""
+    },
+    {
+      "id": "d392",
+      "nis": "RFID-1244",
+      "nama": "yfyyfy",
+      "tanggal": "2025-12-16",
+      "jamMasuk": "",
+      "jamPulang": "",
+      "kehadiran": "IZIN",
+      "keterangan": "szsa"
     }
   ]
 }

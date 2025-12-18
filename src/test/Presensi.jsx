@@ -37,8 +37,7 @@ const Presensi = () => {
     fetchOrang();
   }, []);
 
-  // Ambil data presensi
-  useEffect(() => {
+   useEffect(() => {
     const fetchPresensi = async () => {
       try {
         const res = await axios.get(API_PRESENSI);
@@ -63,8 +62,7 @@ const Presensi = () => {
     setKeteranganIzin("");
   };
 
-  // Cari orang berdasarkan NIS
-  const handleNisChange = (e) => {
+   const handleNisChange = (e) => {
     const value = e.target.value;
     setNis(value);
 
@@ -118,8 +116,7 @@ const Presensi = () => {
     }
   };
 
-  // Proses IZIN
-  const prosesIzin = async () => {
+   const prosesIzin = async () => {
     if (!orangDitemukan) {
       Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
       resetSemua();
@@ -133,7 +130,7 @@ const Presensi = () => {
 
     const tanggal = new Date().toISOString().split("T")[0];
     const presensiHariIni = dataPresensi.find(
-      (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggal
+      (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggal               
     );
 
     if (presensiHariIni) {
@@ -169,8 +166,7 @@ const Presensi = () => {
     }
   };
 
-  // Proses PULANG
-  const prosesPulang = async () => {
+   const prosesPulang = async () => {
     if (!orangDitemukan) {
       Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
       resetSemua();

@@ -200,7 +200,7 @@
       "jamMasuk": "",
       "jamPulang": "",
       "kehadiran": "IZIN",
-      "keterangan": "wdw"
+      "keterangan": "sakit"
     },
     {
       "id": "3648",
@@ -213,16 +213,6 @@
       "keterangan": ""
     },
     {
-      "id": "8c40",
-      "nis": "RFID-4897",
-      "nama": "DAMN",
-      "tanggal": "2025-12-15",
-      "jamMasuk": "",
-      "jamPulang": "",
-      "kehadiran": "IZIN",
-      "keterangan": "sakit"
-    },
-    {
       "id": "63e8",
       "nis": "RFID-1244",
       "nama": "yfyyfy",
@@ -233,14 +223,24 @@
       "keterangan": ""
     },
     {
-      "id": "d392",
+      "id": "2487",
       "nis": "RFID-1244",
       "nama": "yfyyfy",
-      "tanggal": "2025-12-16",
-      "jamMasuk": "",
+      "tanggal": "2025-12-18",
+      "jamMasuk": "09.10",
       "jamPulang": "",
-      "kehadiran": "IZIN",
-      "keterangan": "szsa"
+      "kehadiran": "HADIR",
+      "keterangan": ""
+    },
+    {
+      "id": "843b",
+      "nis": "RFID-4503",
+      "nama": "Shyrz",
+      "tanggal": "2025-12-18",
+      "jamMasuk": "09.30",
+      "jamPulang": "",
+      "kehadiran": "HADIR",
+      "keterangan": ""
     }
   ]
 }

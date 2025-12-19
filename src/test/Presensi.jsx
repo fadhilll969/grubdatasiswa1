@@ -16,38 +16,40 @@ const Presensi = () => {
   const API_PRESENSI = "http://localhost:5000/presensi";
   const API_DOSS = "http://localhost:5000/doss";
 
-  // Ambil data orang
+ 
   useEffect(() => {
     const fetchOrang = async () => {
       try {
         const res = await axios.get(API_DOSS);
-        const semuaKategori = ["Siswa", "Guru", "Karyawan"];
-        const daftarOrang = res.data
-          .filter((x) => semuaKategori.includes(x.kategori))
+        const daftar = res.data
+          .filter((x) => ["Siswa", "Guru", "Karyawan"].includes(x.kategori))
           .map((s) => ({
             nis: s.nomor,
             nama: s.nama,
             kategori: s.kategori,
           }));
-        setDataOrang(daftarOrang);
-      } catch (error) {
-        console.error(error);
+        setDataOrang(daftar);
+      } catch {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal memuat data orang",
+        });
       }
     };
     fetchOrang();
   }, []);
 
-   useEffect(() => {
-    const fetchPresensi = async () => {
-      try {
-        const res = await axios.get(API_PRESENSI);
-        setDataPresensi(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchPresensi = async () => {
+    const res = await axios.get(API_PRESENSI);
+    setDataPresensi(res.data);
+  };
+
+  useEffect(() => {
     fetchPresensi();
   }, []);
+
+ 
+  const tanggalHariIni = new Date().toISOString().split("T")[0];
 
   const getJamNow = () =>
     new Date().toLocaleTimeString("id-ID", {
@@ -62,33 +64,33 @@ const Presensi = () => {
     setKeteranganIzin("");
   };
 
-   const handleNisChange = (e) => {
+  const handleNisChange = (e) => {
     const value = e.target.value;
     setNis(value);
-
-    const orang = dataOrang.find((o) => o.nis === value);
-    setOrangDitemukan(orang || null);
+    setOrangDitemukan(dataOrang.find((o) => o.nis === value) || null);
   };
 
-  // Proses HADIR
+  const presensiHariIni = orangDitemukan
+    ? dataPresensi.find(
+      (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggalHariIni
+    )
+    : null;
+
+
   const prosesHadir = async () => {
     if (!orangDitemukan) {
-      Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
-      resetSemua();
+      Swal.fire({
+        icon: "error",
+        title: "Nomor tidak terdaftar",
+      });
       return;
     }
-
-    const tanggal = new Date().toISOString().split("T")[0];
-    const presensiHariIni = dataPresensi.find(
-      (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggal
-    );
 
     if (presensiHariIni) {
       Swal.fire({
         icon: "warning",
         title: "Sudah absen hari ini",
-       });
-      resetSemua();
+      });
       return;
     }
 
@@ -96,49 +98,52 @@ const Presensi = () => {
       await axios.post(API_PRESENSI, {
         nis: orangDitemukan.nis,
         nama: orangDitemukan.nama,
-        tanggal,
+        tanggal: tanggalHariIni,
         jamMasuk: getJamNow(),
         jamPulang: "",
         kehadiran: "HADIR",
         keterangan: "",
       });
 
+      await fetchPresensi();
       Swal.fire({
         icon: "success",
-        title: `${orangDitemukan.nama} Absen Masuk`,
+        title: "Absen Hadir Berhasil",
         timer: 1500,
         showConfirmButton: false,
       });
-
       resetSemua();
-    } catch (error) {
-      Swal.fire({ icon: "error", title: "Gagal menyimpan presensi" });
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal menyimpan presensi",
+      });
     }
   };
 
-   const prosesIzin = async () => {
+ 
+  const prosesIzin = async () => {
     if (!orangDitemukan) {
-      Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
-      resetSemua();
+      Swal.fire({
+        icon: "error",
+        title: "Nomor tidak terdaftar",
+      });
       return;
     }
 
     if (!keteranganIzin.trim()) {
-      Swal.fire({ icon: "warning", title: "Keterangan wajib diisi" });
+      Swal.fire({
+        icon: "warning",
+        title: "Keterangan wajib diisi",
+      });
       return;
     }
-
-    const tanggal = new Date().toISOString().split("T")[0];
-    const presensiHariIni = dataPresensi.find(
-      (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggal               
-    );
 
     if (presensiHariIni) {
       Swal.fire({
         icon: "warning",
         title: "Sudah absen hari ini",
-       });
-      resetSemua();
+      });
       return;
     }
 
@@ -146,43 +151,44 @@ const Presensi = () => {
       await axios.post(API_PRESENSI, {
         nis: orangDitemukan.nis,
         nama: orangDitemukan.nama,
-        tanggal,
+        tanggal: tanggalHariIni,
         jamMasuk: "",
         jamPulang: "",
         kehadiran: "IZIN",
         keterangan: keteranganIzin,
       });
 
+      await fetchPresensi();
       Swal.fire({
         icon: "success",
-        title: `${orangDitemukan.nama} Telah Izin`,
+        title: "Izin Berhasil",
         timer: 1500,
         showConfirmButton: false,
       });
-
       resetSemua();
-    } catch (error) {
-      Swal.fire({ icon: "error", title: "Gagal menyimpan izin" });
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal menyimpan izin",
+      });
     }
   };
 
-   const prosesPulang = async () => {
+ 
+  const prosesPulang = async () => {
     if (!orangDitemukan) {
-      Swal.fire({ icon: "error", title: "Nomor tidak terdaftar!" });
-      resetSemua();
+      Swal.fire({
+        icon: "error",
+        title: "Nomor tidak terdaftar",
+      });
       return;
     }
-
-    const tanggal = new Date().toISOString().split("T")[0];
-    const presensiHariIni = dataPresensi.find(
-      (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggal
-    );
 
     if (!presensiHariIni || presensiHariIni.kehadiran !== "HADIR") {
       Swal.fire({
         icon: "warning",
-        title: "Belum absen HADIR hari ini",
-        text: "Hanya bisa absen pulang setelah HADIR",
+        title: "Belum absen HADIR",
+        text: "Absen pulang hanya bisa setelah hadir",
       });
       return;
     }
@@ -192,7 +198,6 @@ const Presensi = () => {
         icon: "warning",
         title: "Sudah absen pulang hari ini",
       });
-      resetSemua();
       return;
     }
 
@@ -202,120 +207,116 @@ const Presensi = () => {
         jamPulang: getJamNow(),
       });
 
+      await fetchPresensi();
       Swal.fire({
         icon: "success",
-        title: `${orangDitemukan.nama} Absen Pulang`,
+        title: "Absen Pulang Berhasil",
         timer: 1500,
         showConfirmButton: false,
       });
-
       resetSemua();
-    } catch (error) {
-      Swal.fire({ icon: "error", title: "Gagal menyimpan absen pulang" });
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Gagal menyimpan absen pulang",
+      });
     }
   };
 
+
   return (
-    <div className="min-h-screen bg-sky-200 flex">
-      <div className="flex-1 p-6">
-        <div className="bg-white p-6 shadow-lg rounded-xl mb-10 max-w-xl mt-20 mx-auto">
-          <label className="font-bold text-2xl text-gray-700 block">
-            Presensi
-          </label>
+    <div className="min-h-screen bg-sky-200 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-xl">
+        <h1 className="text-2xl font-bold text-center">Presensi</h1>
 
-          <div className="mt-5 flex gap-4 justify-center">
-            <button
-              onClick={() => setPilihan("HADIR")}
-              className={`px-5 py-2 rounded-lg font-bold ${
-                pilihan === "HADIR" ? "bg-sky-600 text-white" : "bg-sky-400 hover:bg-sky-600"
-              }`}
-            >
-              Hadir
-            </button>
-            <button
-              onClick={() => setPilihan("PULANG")}
-              className={`px-5 py-2 rounded-lg font-bold ${
-                pilihan === "PULANG" ? "bg-red-600 text-white" : "bg-red-400 hover:bg-red-600"
-              }`}
-            >
-              Pulang
-            </button>
-            <button
-              onClick={() => setPilihan("IZIN")}
-              className={`px-5 py-2 rounded-lg font-bold ${
-                pilihan === "IZIN" ? "bg-yellow-600 text-white" : "bg-yellow-400 hover:bg-yellow-600"
-              }`}
-            >
-              Izin
-            </button>
-          </div>
+        <div className="flex gap-3 justify-center mt-4">
+          {["HADIR", "PULANG", "IZIN"].map((p) => {
+            const warna = {
+              HADIR: "bg-green-600 hover:bg-green-700",
+              PULANG: "bg-red-600 hover:bg-red-700",
+              IZIN: "bg-yellow-500 hover:bg-yellow-600",
+            };
 
-          {pilihan && (
-            <div className="mt-5">
-              <input
-                type="text"
-                value={nis}
-                onChange={handleNisChange}
-                className="w-full border p-3 rounded-lg text-xl text-center"
-                placeholder="Masukkan Nomor Unik"
-                autoFocus
+            const warnaAktif = {
+              HADIR: "bg-green-700",
+              PULANG: "bg-red-700",
+              IZIN: "bg-yellow-600",
+            };
+
+            return (
+              <button
+                key={p}
+                onClick={() => setPilihan(p)}
+                className={`px-4 py-2 rounded-lg font-bold text-white ${pilihan === p ? warnaAktif[p] : warna[p]
+                  }`}
+              >
+                {p}
+              </button>
+            );
+          })}
+        </div>
+
+        {pilihan && (
+          <>
+            <input
+              className="w-full border p-3 rounded-lg mt-4 text-center"
+              placeholder="Masukkan Nomor Unik"
+              value={nis}
+              onChange={handleNisChange}
+              autoFocus
+            />
+
+            {orangDitemukan && (
+              <div className="mt-3 bg-gray-100 p-3 rounded">
+                <b>{orangDitemukan.nama}</b>
+                <p>{orangDitemukan.kategori}</p>
+              </div>
+            )}
+
+            {pilihan === "IZIN" && orangDitemukan && (
+              <textarea
+                className="w-full mt-3 border p-3 rounded"
+                placeholder="Keterangan izin"
+                value={keteranganIzin}
+                onChange={(e) => setKeteranganIzin(e.target.value)}
               />
+            )}
 
-              {orangDitemukan && (
-                <div className="mt-4 bg-gray-100 p-4 rounded-lg">
-                  <h3 className="font-bold text-xl">{orangDitemukan.nama}</h3>
-                  <p>Nomor : {orangDitemukan.nis}</p>
-                  <p>Kategori : {orangDitemukan.kategori}</p>
-                </div>
-              )}
+            {orangDitemukan && pilihan === "HADIR" && (
+              <button
+                onClick={prosesHadir}
+                className="w-full bg-green-600 text-white py-3 rounded-lg mt-4"
+              >
+                Konfirmasi Hadir
+              </button>
+            )}
 
-              {pilihan === "IZIN" && orangDitemukan && (
-                <textarea
-                  className="w-full mt-4 border p-3 rounded-lg"
-                  placeholder="Keterangan izin..."
-                  value={keteranganIzin}
-                  onChange={(e) => setKeteranganIzin(e.target.value)}
-                />
-              )}
+            {orangDitemukan && pilihan === "IZIN" && (
+              <button
+                onClick={prosesIzin}
+                className="w-full bg-green-600 text-white py-3 rounded-lg mt-4"
+              >
+                Konfirmasi Izin
+              </button>
+            )}
 
-              {orangDitemukan && pilihan === "HADIR" && (
-                <button
-                  onClick={prosesHadir}
-                  className="mt-5 w-full bg-green-600 text-white py-3 rounded-lg font-bold"
-                >
-                  Konfirmasi Hadir
-                </button>
-              )}
+            {orangDitemukan && pilihan === "PULANG" && (
+              <button
+                onClick={prosesPulang}
+                className="w-full bg-green-600 text-white py-3 rounded-lg mt-4"
+              >
+                Konfirmasi Pulang
+              </button>
+            )}
+          </>
+        )}
 
-              {orangDitemukan && pilihan === "IZIN" && (
-                <button
-                  onClick={prosesIzin}
-                  className="mt-5 w-full bg-yellow-600 text-white py-3 rounded-lg font-bold"
-                >
-                  Konfirmasi Izin
-                </button>
-              )}
-
-              {orangDitemukan && pilihan === "PULANG" && (
-                <button
-                  onClick={prosesPulang}
-                  className="mt-5 w-full bg-red-600 text-white py-3 rounded-lg font-bold"
-                >
-                  Konfirmasi Pulang
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="flex justify-center">
-          <button
-            onClick={() => navigate("/w")}
-            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-bold"
-          >
-            <i className="ri-arrow-left-line"></i> Kembali
-          </button>
-        </div>
+        <button
+          onClick={() => navigate("/w")}
+          className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg"
+        >
+          <i className="ri-arrow-left-line"></i> Kembali
+        </button>
       </div>
     </div>
   );

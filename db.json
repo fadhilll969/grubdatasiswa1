@@ -241,6 +241,46 @@
       "jamPulang": "",
       "kehadiran": "HADIR",
       "keterangan": ""
+    },
+    {
+      "id": "379c",
+      "nis": "RFID-4503",
+      "nama": "Shyrz",
+      "tanggal": "2025-12-19",
+      "jamMasuk": "",
+      "jamPulang": "",
+      "kehadiran": "IZIN",
+      "keterangan": "sakit"
+    },
+    {
+      "id": "5d6f",
+      "nis": "RFID-4503",
+      "nama": "Shyrz",
+      "tanggal": "2025-12-19",
+      "jamMasuk": "07.28",
+      "jamPulang": "",
+      "kehadiran": "HADIR",
+      "keterangan": ""
+    },
+    {
+      "id": "707d",
+      "nis": "RFID-2032",
+      "nama": "cocoopamm",
+      "tanggal": "2025-12-19",
+      "jamMasuk": "07.32",
+      "jamPulang": "07.34",
+      "kehadiran": "HADIR",
+      "keterangan": ""
+    },
+    {
+      "id": "7888",
+      "nis": "RFID-6034",
+      "nama": "cocopin",
+      "tanggal": "2025-12-19",
+      "jamMasuk": "07.43",
+      "jamPulang": "",
+      "kehadiran": "HADIR",
+      "keterangan": ""
     }
   ]
 }

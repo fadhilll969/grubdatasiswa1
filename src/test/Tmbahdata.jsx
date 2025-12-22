@@ -14,7 +14,6 @@ const Tmbhdata = () => {
 
   const [kategoriList, setKategoriList] = useState([]);
   const [kelasList, setKelasList] = useState([]);
-
   const [usedNumbers, setUsedNumbers] = useState([]);
 
   const [selectedKategori, setSelectedKategori] = useState("");
@@ -23,7 +22,7 @@ const Tmbhdata = () => {
   const [jurusanOptions, setJurusanOptions] = useState([]);
 
   const [nomor, setNomor] = useState("");
-  const [name, setName] = useState("");
+   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mapel, setMapel] = useState("");
 
@@ -40,7 +39,7 @@ const Tmbhdata = () => {
         setKelasList(kelasRes.data);
         setUsedNumbers(dataRes.data.map((d) => d.nomor));
       } catch (err) {
-        console.error("Gagal ambil data:", err);
+        console.error(err);
       }
     };
 
@@ -52,7 +51,6 @@ const Tmbhdata = () => {
       const jurusan = kelasList
         .filter((k) => k.kelas === selectedKelas)
         .map((k) => k.jurusan);
-
       setJurusanOptions(jurusan);
       setSelectedJurusan("");
     } else {
@@ -66,7 +64,13 @@ const Tmbhdata = () => {
       Swal.fire({
         icon: "warning",
         title: "Data belum lengkap!",
-        text: "Nomor, Nama, Email, dan Kategori wajib diisi.",
+      });
+      return;
+    }
+    if (nomor.length !== 4) {
+      Swal.fire({
+        icon: "warning",
+        title: "Nomor harus 4 digit!",
       });
       return;
     }
@@ -75,7 +79,6 @@ const Tmbhdata = () => {
       Swal.fire({
         icon: "error",
         title: "Nomor sudah digunakan!",
-        text: "Gunakan nomor unik yang berbeda.",
       });
       return;
     }
@@ -100,7 +103,7 @@ const Tmbhdata = () => {
     }
 
     const newData = {
-      nomor,
+      nomor,  
       nama: name,
       email,
       kategori: selectedKategori,
@@ -146,7 +149,6 @@ const Tmbhdata = () => {
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-700">
             Tambah Data
           </h2>
-
 
           <div className="mb-3">
             <label className="font-semibold block mb-1">Kategori</label>
@@ -213,7 +215,6 @@ const Tmbhdata = () => {
               <input
                 value={mapel}
                 onChange={(e) => setMapel(e.target.value)}
-                placeholder="Masukkan mapel"
                 className="w-full border border-gray-300 rounded-lg px-3 py-2"
               />
             </div>
@@ -224,16 +225,24 @@ const Tmbhdata = () => {
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Nama lengkap"
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="Masukkan Nama"
             />
           </div>
+
           <div className="mb-3">
             <label className="font-semibold block mb-1">Nomor Unik</label>
             <input
+              type="text"
               value={nomor}
-              onChange={(e) => setNomor(e.target.value)}
-              placeholder="Masukkan nomor unik"
+              onChange={(e) => {
+                const val = e.target.value.replace(/\D/g, "");
+                if (val.length <= 4) {
+                  setNomor(val);
+                 }
+              }}
+              maxLength={4}
+              placeholder="Masukkan Nomor"
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
           </div>
@@ -241,9 +250,9 @@ const Tmbhdata = () => {
           <div className="mb-6">
             <label className="font-semibold block mb-1">Email</label>
             <input
+              placeholder="Masukkan Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Alamat email"
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
           </div>

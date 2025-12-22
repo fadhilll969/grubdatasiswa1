@@ -34,8 +34,7 @@ function Dasbor() {
     { path: "/w", icon: "ri-dashboard-line", label: "Dashboard" },
     { isSection: true, label: "Presensi" },
 
-    { path: "/Presensi", icon: "ri-time-line", label: "Presensi" },
-    { path: "/rekap-presensi", icon: "ri-file-list-3-line", label: "Rekap Presensi" },
+     { path: "/rekap-presensi", icon: "ri-file-list-3-line", label: "Rekap Presensi" },
 
     { isSection: true, label: "Database" },
     { path: "/datakategori", icon: "ri-folder-2-line", label: "Kategori Data" },

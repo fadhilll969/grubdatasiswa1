@@ -1,62 +1,29 @@
 {
   "doss": [
     {
-      "id": "81e9",
-      "nama": "cocoopamm",
-      "email": "hysaiiyaa@gmail.com",
+      "id": "863f",
+      "nomor": "4878",
+      "nama": "Testguug",
+      "email": "ddd@gmail.com",
       "kategori": "Siswa",
-      "nomor": "RFID-2032",
       "kelas": "X",
       "jurusan": "TKJ"
     },
     {
-      "id": "1b2e",
-      "nama": "cocopin",
-      "email": "avvryz@gmail.com",
+      "id": "e195",
+      "nomor": "2323",
+      "nama": "cocoopamm",
+      "email": "hysaiiyaa@gmail.com",
       "kategori": "Siswa",
-      "nomor": "RFID-6034",
       "kelas": "XI",
-      "jurusan": "TSM"
+      "jurusan": "TKJ"
     },
     {
-      "id": "78c4",
-      "nama": "jtjtj",
-      "email": "hysaiiyaa@gmail.com",
-      "kategori": "Guru",
-      "nomor": "RFID-8298",
-      "mapel": "hjtyj"
-    },
-    {
-      "nama": "yao",
-      "email": "e1@gmail.com",
-      "kategori": "Karyawan",
-      "nomor": "RFID-3328",
-      "id": "545f"
-    },
-    {
-      "id": "142d",
-      "nama": "DAMN",
+      "id": "15dd",
+      "nomor": "1231",
+      "nama": "cocoopamm",
       "email": "hysaiiyaa@gmail.com",
       "kategori": "Siswa",
-      "nomor": "RFID-4897",
-      "kelas": "XII",
-      "jurusan": "TSM"
-    },
-    {
-      "id": "db93",
-      "nama": "Shyrz",
-      "email": "avvryz@gmail.com",
-      "kategori": "Siswa",
-      "nomor": "RFID-4503",
-      "kelas": "XI",
-      "jurusan": "TSM"
-    },
-    {
-      "id": "a9af",
-      "nama": "yfyyfy",
-      "email": "hysaiiyaa@gmail.com",
-      "kategori": "Siswa",
-      "nomor": "RFID-1244",
       "kelas": "X",
       "jurusan": "TKJ"
     }
@@ -75,20 +42,20 @@
   ],
   "coco": [
     {
-      "id": "615c",
+      "id": "f347",
       "nama": "cocoopamm",
       "email": "hysaiiyaa@gmail.com",
       "jumlah": "50000",
-      "jenisTagihan": "Seragam",
-      "tanggal": "2025-12-15"
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-12-22"
     },
     {
-      "id": "8608",
-      "nama": "Shyrz",
-      "email": "avvryz@gmail.com",
+      "id": "9693",
+      "nama": "Gham",
+      "email": "hiihih@gmail.com",
       "jumlah": "50000",
-      "jenisTagihan": "Uang Gedung",
-      "tanggal": "2025-12-15",
+      "jenisTagihan": "SPP Bulanan",
+      "tanggal": "2025-12-22",
       "status": "Sudah Bayar"
     }
   ],
@@ -173,112 +140,22 @@
   ],
   "presensi": [
     {
-      "id": "ea7a",
-      "nis": "RFID-2032",
+      "id": "cfa0",
+      "nis": "1231",
       "nama": "cocoopamm",
-      "tanggal": "2025-12-13",
-      "jamMasuk": "11.12",
-      "jamPulang": "11.12",
+      "tanggal": "2025-12-22",
+      "jamMasuk": "12.28",
+      "jamPulang": "12.45",
       "kehadiran": "HADIR",
       "keterangan": ""
     },
     {
-      "id": "9998",
-      "nis": "RFID-6034",
-      "nama": "cocopin",
-      "tanggal": "2025-12-13",
-      "jamMasuk": "11.16",
-      "jamPulang": "11.16",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "664c",
-      "nis": "RFID-8298",
-      "nama": "jtjtj",
-      "tanggal": "2025-12-15",
-      "jamMasuk": "",
-      "jamPulang": "",
-      "kehadiran": "IZIN",
-      "keterangan": "sakit"
-    },
-    {
-      "id": "3648",
-      "nis": "RFID-4503",
-      "nama": "Shyrz",
-      "tanggal": "2025-12-15",
-      "jamMasuk": "14.20",
-      "jamPulang": "14.21",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "63e8",
-      "nis": "RFID-1244",
-      "nama": "yfyyfy",
-      "tanggal": "2025-12-16",
-      "jamMasuk": "09.58",
-      "jamPulang": "10.03",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "2487",
-      "nis": "RFID-1244",
-      "nama": "yfyyfy",
-      "tanggal": "2025-12-18",
-      "jamMasuk": "09.10",
-      "jamPulang": "",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "843b",
-      "nis": "RFID-4503",
-      "nama": "Shyrz",
-      "tanggal": "2025-12-18",
-      "jamMasuk": "09.30",
-      "jamPulang": "",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "379c",
-      "nis": "RFID-4503",
-      "nama": "Shyrz",
-      "tanggal": "2025-12-19",
-      "jamMasuk": "",
-      "jamPulang": "",
-      "kehadiran": "IZIN",
-      "keterangan": "sakit"
-    },
-    {
-      "id": "5d6f",
-      "nis": "RFID-4503",
-      "nama": "Shyrz",
-      "tanggal": "2025-12-19",
-      "jamMasuk": "07.28",
-      "jamPulang": "",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "707d",
-      "nis": "RFID-2032",
+      "id": "ced1",
+      "nis": "2323",
       "nama": "cocoopamm",
-      "tanggal": "2025-12-19",
-      "jamMasuk": "07.32",
-      "jamPulang": "07.34",
-      "kehadiran": "HADIR",
-      "keterangan": ""
-    },
-    {
-      "id": "7888",
-      "nis": "RFID-6034",
-      "nama": "cocopin",
-      "tanggal": "2025-12-19",
-      "jamMasuk": "07.43",
-      "jamPulang": "",
+      "tanggal": "2025-12-22",
+      "jamMasuk": "12.45",
+      "jamPulang": "12.45",
       "kehadiran": "HADIR",
       "keterangan": ""
     }

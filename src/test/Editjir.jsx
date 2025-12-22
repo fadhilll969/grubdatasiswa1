@@ -21,13 +21,13 @@ const Editjir = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-   const [nomor, setNomor] = useState("");
+  const [nomor, setNomor] = useState("");
 
   const API_URL_DATA = "http://localhost:5000/doss";
   const API_URL_KATEGORI = "http://localhost:5000/clok";
   const API_URL_KELAS = "http://localhost:5000/kls";
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${API_URL_DATA}/${id}`);
@@ -36,7 +36,7 @@ const Editjir = () => {
         setName(data.nama || "");
         setEmail(data.email || "");
 
-         let raw = data.nomor || "";
+        let raw = data.nomor || "";
         raw = raw.replace(/\D/g, "").slice(0, 4);
         setNomor(raw);
 
@@ -86,7 +86,7 @@ const Editjir = () => {
     fetchData();
   }, [id]);
 
-   useEffect(() => {
+  useEffect(() => {
     if (selectedKelas) {
       const jurusanOptions = kelasList
         .filter((k) => k.kelas === selectedKelas)
@@ -141,8 +141,7 @@ const Editjir = () => {
       nama: name,
       email,
       kategori: selectedKategori,
-      // simpan sebagai RFID-XXXX
-      nomor: `RFID-${nomor}`,
+       nomor: `RFID-${nomor}`,
       ...(selectedKategori === "Siswa" && {
         kelas: selectedKelas,
         jurusan: selectedJurusan,
@@ -189,7 +188,7 @@ const Editjir = () => {
           </h2>
 
           <div className="mb-2">
-            <label className="font-semibold block mb-1">Nomor RFID</label>
+            <label className="font-semibold block mb-1">Nomor Unik</label>
             <input
               type="text"
               value={nomor}
@@ -201,8 +200,7 @@ const Editjir = () => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
               placeholder="4 digit angka"
             />
-            <p className="text-sm text-gray-500 mt-1">Disimpan sebagai: RFID-xxxx</p>
-          </div>
+           </div>
 
           <div className="mb-2">
             <label className="font-semibold block mb-1">Kategori</label>

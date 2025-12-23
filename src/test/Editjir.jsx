@@ -36,9 +36,8 @@ const Editjir = () => {
         setName(data.nama || "");
         setEmail(data.email || "");
 
-        let raw = data.nomor || "";
-        raw = raw.replace(/\D/g, "").slice(0, 4);
-        setNomor(raw);
+        setNomor(data.nomor || "");
+
 
         setSelectedKategori(data.kategori || "");
 
@@ -105,13 +104,6 @@ const Editjir = () => {
   }, [selectedKelas, kelasList, selectedJurusan]);
 
   const handleUpdateData = async () => {
-    if (!/^\d{4}$/.test(nomor)) {
-      return Swal.fire({
-        icon: "warning",
-        title: "Nomor Unik Tidak Valid!",
-        text: "Nomor unik harus 4 digit angka (contoh: 0001).",
-      });
-    }
 
     if (!name || !email || !selectedKategori) {
       return Swal.fire({
@@ -141,7 +133,7 @@ const Editjir = () => {
       nama: name,
       email,
       kategori: selectedKategori,
-       nomor: `RFID-${nomor}`,
+      nomor: nomor,
       ...(selectedKategori === "Siswa" && {
         kelas: selectedKelas,
         jurusan: selectedJurusan,
@@ -187,20 +179,16 @@ const Editjir = () => {
             Edit Data
           </h2>
 
-          <div className="mb-2">
-            <label className="font-semibold block mb-1">Nomor Unik</label>
-            <input
-              type="text"
-              value={nomor}
-              onChange={(e) => {
-                let val = e.target.value.replace(/\D/g, "");
-                if (val.length > 4) return;
-                setNomor(val);
-              }}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2"
-              placeholder="4 digit angka"
-            />
-           </div>
+          <input
+            type="text"
+            value={nomor}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, "");  
+              setNomor(value);
+            }}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2"
+            placeholder="Masukkan nomor"
+          />
 
           <div className="mb-2">
             <label className="font-semibold block mb-1">Kategori</label>

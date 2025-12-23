@@ -24,7 +24,7 @@ const Tagihan = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/coco");
-      setData(response.data);
+       setData(response.data.reverse());
     } catch (error) {
       console.error("Gagal mengambil data:", error);
       Swal.fire("Gagal", "Tidak dapat memuat data tagihan.", "error");
@@ -33,11 +33,12 @@ const Tagihan = () => {
     }
   };
 
+
   useEffect(() => {
     fetchData();
   }, []);
 
-   
+
   const updateStatus = async (id, statusBaru) => {
     const result = await Swal.fire({
       title: "Konfirmasi Perubahan Status",
@@ -70,7 +71,7 @@ const Tagihan = () => {
     }
   };
 
-  
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Konfirmasi Penghapusan",
@@ -96,7 +97,7 @@ const Tagihan = () => {
     }
   };
 
-   
+
   const filteredData = data.filter((item) => {
     const cocokNama = (item.nama || "")
       .toLowerCase()
@@ -122,7 +123,7 @@ const Tagihan = () => {
               </h3>
             </div>
 
-             <div className="p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="p-5 flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="relative w-full md:w-1/3">
                 <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
                 <input
@@ -153,7 +154,7 @@ const Tagihan = () => {
             </div>
           </div>
 
-           {loading ? (
+          {loading ? (
             <p className="text-center mt-6 text-gray-700">Memuat data...</p>
           ) : (
             <div className="mt-6 overflow-x-auto">
@@ -176,9 +177,8 @@ const Tagihan = () => {
                     filteredData.map((item, index) => (
                       <tr
                         key={item.id}
-                        className={`${
-                          index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                        } hover:bg-sky-100 transition`}
+                        className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                          } hover:bg-sky-100 transition`}
                       >
                         <td className="py-3 text-center">{index + 1}</td>
                         <td className="py-3">{item.nama || "-"}</td>
@@ -209,7 +209,7 @@ const Tagihan = () => {
                         <td className="py-3 px-3 text-center">
                           <div className="flex justify-center gap-2 flex-wrap">
 
-                             {item.status === "Sudah Bayar" ? (
+                            {item.status === "Sudah Bayar" ? (
                               <button
                                 className="bg-yellow-500 text-white px-2 py-1 rounded-lg hover:bg-yellow-600 transition"
                                 onClick={() =>
@@ -229,14 +229,14 @@ const Tagihan = () => {
                               </button>
                             )}
 
-                             <button
+                            <button
                               className="bg-sky-600 text-white px-2 py-1 rounded-lg hover:bg-sky-700 transition"
                               onClick={() => navigate(`/ed/${item.id}`)}
                             >
                               <i className="ri-edit-2-line text-sm"></i>
                             </button>
 
-                             <button
+                            <button
                               className="bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition"
                               onClick={() => handleDelete(item.id)}
                             >

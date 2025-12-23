@@ -22,7 +22,7 @@ const Tmbhdata = () => {
   const [jurusanOptions, setJurusanOptions] = useState([]);
 
   const [nomor, setNomor] = useState("");
-   const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mapel, setMapel] = useState("");
 
@@ -67,13 +67,7 @@ const Tmbhdata = () => {
       });
       return;
     }
-    if (nomor.length !== 4) {
-      Swal.fire({
-        icon: "warning",
-        title: "Nomor harus 4 digit!",
-      });
-      return;
-    }
+
 
     if (usedNumbers.includes(nomor)) {
       Swal.fire({
@@ -103,7 +97,7 @@ const Tmbhdata = () => {
     }
 
     const newData = {
-      nomor,  
+      nomor,
       nama: name,
       email,
       kategori: selectedKategori,
@@ -235,13 +229,7 @@ const Tmbhdata = () => {
             <input
               type="text"
               value={nomor}
-              onChange={(e) => {
-                const val = e.target.value.replace(/\D/g, "");
-                if (val.length <= 4) {
-                  setNomor(val);
-                 }
-              }}
-              maxLength={4}
+              onChange={(e) => setNomor(e.target.value)}
               placeholder="Masukkan Nomor"
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />

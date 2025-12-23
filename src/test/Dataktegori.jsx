@@ -99,10 +99,11 @@ const Dataktegori = () => {
                         </button>
                     </div>
                 </div>
-                <div className="mt-6 overflow-x-auto">
-                    <h1 className="text-3xl font-bold mb-3 mt-10">Daftar Kategori Data</h1>
-                    <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
-                        <thead className="bg-sky-600 text-center text-white">
+                <h1 className="text-3xl font-bold mb-3 mt-10">Daftar Kategori Data</h1>
+
+                <div className="rounded-xl mt-6 overflow-x-auto shadow-md bg-white">
+                    <table className="min-w-full border-separate border-spacing-0 text-center">
+                        <thead className="bg-sky-700 text-white text-center">
                             <tr>
                                 <th className="py-3 px-4">No</th>
                                 <th className="py-3 text-left px-4">Nama Kategori</th>

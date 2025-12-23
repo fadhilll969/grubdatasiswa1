@@ -10,22 +10,40 @@
       "jurusan": "TKJ"
     },
     {
-      "id": "e195",
-      "nomor": "2323",
       "nama": "cocoopamm",
       "email": "hysaiiyaa@gmail.com",
       "kategori": "Siswa",
+      "nomor": "23232313",
       "kelas": "XI",
-      "jurusan": "TKJ"
+      "jurusan": "TKJ",
+      "id": "e195"
     },
     {
-      "id": "15dd",
-      "nomor": "1231",
+      "nama": "cocoopamm",
+      "email": "hysaiiyaa@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "1231232123",
+      "kelas": "X",
+      "jurusan": "TKJ",
+      "id": "15dd"
+    },
+    {
+      "id": "05f0",
+      "nomor": "48783424234",
       "nama": "cocoopamm",
       "email": "hysaiiyaa@gmail.com",
       "kategori": "Siswa",
       "kelas": "X",
-      "jurusan": "TKJ"
+      "jurusan": "TSM"
+    },
+    {
+      "nama": "Roihan ",
+      "email": "roihan@gmail.com",
+      "kategori": "Siswa",
+      "nomor": "2589287447",
+      "kelas": "XII",
+      "jurusan": "TKJ",
+      "id": "ec77"
     }
   ],
   "users": [
@@ -38,6 +56,16 @@
       "id": "8e8d",
       "email": "hysaiiyaa@gmail.com",
       "password": "jj"
+    },
+    {
+      "id": "275f",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "dswd"
+    },
+    {
+      "id": "e527",
+      "email": "hysaiiyaa@gmail.com",
+      "password": "1234567"
     }
   ],
   "coco": [
@@ -50,12 +78,12 @@
       "tanggal": "2025-12-22"
     },
     {
-      "id": "9693",
-      "nama": "Gham",
-      "email": "hiihih@gmail.com",
-      "jumlah": "50000",
-      "jenisTagihan": "SPP Bulanan",
-      "tanggal": "2025-12-22",
+      "id": "81f8",
+      "nama": "Roihan ",
+      "email": "roihan@gmail.com",
+      "jumlah": "1000000",
+      "jenisTagihan": "Outing Class 1",
+      "tanggal": "2025-12-31",
       "status": "Sudah Bayar"
     }
   ],
@@ -79,9 +107,10 @@
       "aktif": true
     },
     {
-      "id": "a31b",
-      "nama_kategori": "test",
-      "keterangan": "htryty"
+      "nama_kategori": "Outing Class 1",
+      "keterangan": "Program Belajar Di Luar",
+      "aktif": true,
+      "id": "30d5"
     }
   ],
   "clok": [
@@ -101,9 +130,9 @@
       "aktif": true
     },
     {
-      "id": "3b61",
-      "kategori_nama": "test",
-      "aktif": false
+      "kategori_nama": "Satpam Pagi",
+      "aktif": true,
+      "id": "7acf"
     }
   ],
   "kls": [
@@ -136,26 +165,31 @@
       "kelas": "XII",
       "jurusan": "TSM",
       "id": "2ed2"
+    },
+    {
+      "kelas": "X",
+      "jurusan": "TKJ 3",
+      "id": "4e3d"
     }
   ],
   "presensi": [
     {
-      "id": "cfa0",
-      "nis": "1231",
-      "nama": "cocoopamm",
-      "tanggal": "2025-12-22",
-      "jamMasuk": "12.28",
-      "jamPulang": "12.45",
+      "id": "7116",
+      "nis": "2589287447",
+      "nama": "Roihan ",
+      "tanggal": "2025-12-23",
+      "jamMasuk": "12.29",
+      "jamPulang": "12.29",
       "kehadiran": "HADIR",
       "keterangan": ""
     },
     {
-      "id": "ced1",
-      "nis": "2323",
+      "id": "476d",
+      "nis": "48783424234",
       "nama": "cocoopamm",
-      "tanggal": "2025-12-22",
-      "jamMasuk": "12.45",
-      "jamPulang": "12.45",
+      "tanggal": "2025-12-23",
+      "jamMasuk": "12.29",
+      "jamPulang": "12.29",
       "kehadiran": "HADIR",
       "keterangan": ""
     }

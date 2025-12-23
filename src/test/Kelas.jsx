@@ -80,31 +80,36 @@ const Kelas = () => {
           </div>
         </div>
 
-        <div className="rounded-xl mt-6 overflow-x-auto">
+        <div className="rounded-xl mt-6 overflow-x-auto shadow-md bg-white">
           {loading ? (
-            <div className="text-center py-4">Memuat data...</div>
+            <div className="text-center py-6 text-gray-600 font-medium">Memuat data...</div>
           ) : (
-            <table className="min-w-full border border-gray-200 bg-white rounded-lg shadow-md text-center">
-              <thead className="bg-sky-600 text-white">
-                <tr>
-                  <th className="py-3 px-4">No</th>
+            <table className="min-w-full border-separate border-spacing-0 text-center">
+              <thead>
+                <tr className="bg-sky-700 text-white text-center">
+                  <th className="py-3 px-2 rounded-tl-lg text-center">No</th>
                   <th className="py-3 px-4">Kelas</th>
                   <th className="py-3 px-4">Jurusan</th>
-                  <th className="py-3 px-4">Aksi</th>
+                  <th className="py-3 px-4 rounded-tr-lg">Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {kelasList.length === 0 ? (
                   <tr>
-                    <td colSpan="4" className="py-4 text-gray-500">Tidak ada data</td>
+                    <td colSpan="4" className="py-6 text-gray-500 italic">
+                      Tidak ada data
+                    </td>
                   </tr>
                 ) : (
                   kelasList.map((item, index) => (
-                    <tr key={item.id} className="border-t">
+                    <tr
+                      key={item.id}
+                      className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
+                    >
                       <td className="py-3 px-4">{index + 1}</td>
                       <td className="py-3 px-4">{item.kelas}</td>
                       <td className="py-3 px-4">{item.jurusan}</td>
-                      <td className="py-3 px-4 flex justify-center gap-2">
+                      <td className="py-3 px-4 text-left flex justify-center gap-2">
                         <button
                           className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition flex items-center gap-1"
                           onClick={() => navigate(`/editkelas/${item.id}`)}
@@ -125,6 +130,7 @@ const Kelas = () => {
             </table>
           )}
         </div>
+
       </div>
     </div>
   );

@@ -33,9 +33,7 @@ function Dasbor() {
   const menuItems = [
     { path: "/w", icon: "ri-dashboard-line", label: "Dashboard" },
     { isSection: true, label: "Presensi" },
-
-     { path: "/rekap-presensi", icon: "ri-file-list-3-line", label: "Rekap Presensi" },
-
+    { path: "/rekap-presensi", icon: "ri-file-list-3-line", label: "Rekap Presensi" },
     { isSection: true, label: "Database" },
     { path: "/datakategori", icon: "ri-folder-2-line", label: "Kategori Data" },
     { path: "/kelas", icon: "ri-team-line", label: "Kelas" },
@@ -48,12 +46,12 @@ function Dasbor() {
 
   return (
     <div className="w-60 min-h-screen">
-      <div className="fixed top-0 left-0 h-full w-60 bg-indigo-800 text-white shadow-lg">
-        <div className="text-3xl mt-3 font-bold mb-8 text-center flex items-center justify-center gap-2">
+      <div className="fixed top-0 left-0 h-full w-60 bg-indigo-800 text-white shadow-lg flex flex-col">
+         <div className="text-3xl mt-3 font-bold mb-4 text-center flex items-center justify-center gap-2">
           <i className="ri-menu-2-line"></i> MENU
         </div>
 
-        <nav className="px-3">
+         <nav className="flex-1 overflow-y-auto px-3">
           <div className="text-lg">
             {menuItems.map((item, index) =>
               item.isSection ? (
@@ -76,15 +74,17 @@ function Dasbor() {
                 </Link>
               )
             )}
-
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center justify-start gap-2 py-2 px-3 mt-2 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
-            >
-              <i className="ri-logout-box-line"></i> Logout
-            </button>
           </div>
         </nav>
+
+         <div className="p-3">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-start gap-2 py-2 px-3 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
+          >
+            <i className="ri-logout-box-line"></i> Logout
+          </button>
+        </div>
       </div>
     </div>
   );

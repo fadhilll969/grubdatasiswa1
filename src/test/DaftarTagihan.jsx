@@ -28,11 +28,13 @@ const DaftarTagihan = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/coco");
-      const hasil = response.data.map((item) => ({
-        ...item,
-        status: item.status || "Belum Bayar",
-        jumlah: safeNumber(item.jumlah),
-      }));
+      const hasil = response.data
+        .map((item) => ({
+          ...item,
+          status: item.status || "Belum Bayar",
+          jumlah: safeNumber(item.jumlah),
+        }))
+        .reverse(); 
 
       setData(hasil);
 
@@ -58,6 +60,7 @@ const DaftarTagihan = () => {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchData();
@@ -87,10 +90,10 @@ const DaftarTagihan = () => {
         <Dasbor />
 
         <div className="flex-1 p-6">
- 
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
 
-             <div className="bg-white border-t-4 border-sky-600 rounded-xl shadow-lg p-5 flex items-center gap-4">
+            <div className="bg-white border-t-4 border-sky-600 rounded-xl shadow-lg p-5 flex items-center gap-4">
               <div className="p-4 rounded-full bg-sky-100">
                 <i className="ri-database-2-line text-3xl text-sky-600"></i>
               </div>
@@ -103,7 +106,7 @@ const DaftarTagihan = () => {
               </div>
             </div>
 
-             <div className="bg-white border-t-4 border-green-600 rounded-xl shadow-lg p-5 flex items-center gap-4">
+            <div className="bg-white border-t-4 border-green-600 rounded-xl shadow-lg p-5 flex items-center gap-4">
               <div className="p-4 rounded-full bg-green-100">
                 <i className="ri-check-double-line text-3xl text-green-600"></i>
               </div>
@@ -118,7 +121,7 @@ const DaftarTagihan = () => {
               </div>
             </div>
 
-             <div className="bg-white border-t-4 border-red-600 rounded-xl shadow-lg p-5 flex items-center gap-4">
+            <div className="bg-white border-t-4 border-red-600 rounded-xl shadow-lg p-5 flex items-center gap-4">
               <div className="p-4 rounded-full bg-red-100">
                 <i className="ri-close-circle-line text-3xl text-red-600"></i>
               </div>
@@ -135,7 +138,7 @@ const DaftarTagihan = () => {
 
           </div>
 
-         
+
           <div className="rounded-xl mt-10 overflow-hidden">
             <div className="p-5 flex flex-col md:flex-row gap-4">
 
@@ -166,7 +169,7 @@ const DaftarTagihan = () => {
             </div>
           </div>
 
-        
+
           {loading ? (
             <p className="text-center mt-6 text-gray-700">
               Memuat data tagihan...
@@ -191,9 +194,8 @@ const DaftarTagihan = () => {
                     filteredData.map((item, index) => (
                       <tr
                         key={item.id || `${item.nama}-${index}`}
-                        className={`${
-                          index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                        } hover:bg-sky-100 transition`}
+                        className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                          } hover:bg-sky-100 transition`}
                       >
                         <td className="py-3 text-center px-4">{index + 1}</td>
                         <td className="py-3 px-4">{item.nama}</td>
@@ -203,11 +205,10 @@ const DaftarTagihan = () => {
                         </td>
                         <td className="py-3 px-4">{item.jenisTagihan}</td>
                         <td
-                          className={`py-3 px-4 text-center font-semibold ${
-                            item.status === "Sudah Bayar"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
+                          className={`py-3 px-4 text-center font-semibold ${item.status === "Sudah Bayar"
+                            ? "text-green-600"
+                            : "text-red-600"
+                            }`}
                         >
                           {item.status}
                         </td>

@@ -21,7 +21,7 @@ const Presensi = () => {
       minute: "2-digit",
     });
 
-  
+
   useEffect(() => {
     const fetchOrang = async () => {
       try {
@@ -41,7 +41,7 @@ const Presensi = () => {
     fetchOrang();
   }, []);
 
-   const fetchPresensi = async () => {
+  const fetchPresensi = async () => {
     try {
       const res = await axios.get(API_PRESENSI);
       setDataPresensi(res.data);
@@ -69,35 +69,35 @@ const Presensi = () => {
 
   const presensiHariIni = orangDitemukan
     ? dataPresensi.find(
-        (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggalHariIni
-      )
+      (d) => d.nis === orangDitemukan.nis && d.tanggal === tanggalHariIni
+    )
     : null;
 
- // Validasi jam masuk
-const validasiJamMasuk = () => {
-  const jamSekarang = new Date().getHours();  
-  return jamSekarang >= 6 && jamSekarang <= 8;  
-};
+  // Validasi jam masuk
+  const validasiJamMasuk = () => {
+    const jamSekarang = new Date().getHours();
+    return jamSekarang >= 6;
+  };
 
-// Validasi jam pulang
-const validasiJamPulang = () => {
-  const jamSekarang = new Date().getHours();  
-  return jamSekarang >= 14; 
-};
+  // Validasi jam pulang
+  const validasiJamPulang = () => {
+    const jamSekarang = new Date().getHours();
+    return jamSekarang >= 12;
+  };
 
 
-   const prosesMasukPulang = async () => {
+  const prosesMasukPulang = async () => {
     if (!orangDitemukan) {
       Swal.fire({ icon: "error", title: "Nomor tidak terdaftar" });
       return;
     }
 
     if (!presensiHariIni) {
-       if (!validasiJamMasuk()) {
+      if (!validasiJamMasuk()) {
         Swal.fire({
           icon: "warning",
           title: "Belum jam absen masuk",
-         });
+        });
         return;
       }
 
@@ -123,11 +123,11 @@ const validasiJamPulang = () => {
         Swal.fire({ icon: "error", title: "Gagal menyimpan presensi" });
       }
     } else if (!presensiHariIni.jamPulang) {
-       if (!validasiJamPulang()) {
+      if (!validasiJamPulang()) {
         Swal.fire({
           icon: "warning",
           title: "Belum waktunya absen pulang",
-         });
+        });
         return;
       }
 
@@ -152,7 +152,7 @@ const validasiJamPulang = () => {
     }
   };
 
-   const prosesIzin = async () => {
+  const prosesIzin = async () => {
     if (!orangDitemukan) {
       Swal.fire({ icon: "error", title: "Nomor tidak terdaftar" });
       return;
@@ -194,7 +194,7 @@ const validasiJamPulang = () => {
       <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-xl">
         <h1 className="text-2xl font-bold text-center">Presensi</h1>
 
-         <div className="flex gap-3 justify-center mt-4">
+        <div className="flex gap-3 justify-center mt-4">
           {["HADIR", "IZIN"].map((p) => {
             const warna = {
               HADIR: "bg-green-600 hover:bg-green-700",
@@ -208,9 +208,8 @@ const validasiJamPulang = () => {
               <button
                 key={p}
                 onClick={() => setPilihan(p)}
-                className={`px-4 py-2 rounded-lg font-bold text-white ${
-                  pilihan === p ? warnaAktif[p] : warna[p]
-                }`}
+                className={`px-4 py-2 rounded-lg font-bold text-white ${pilihan === p ? warnaAktif[p] : warna[p]
+                  }`}
               >
                 {p}
               </button>

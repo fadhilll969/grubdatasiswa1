@@ -10,11 +10,11 @@ const Kategoridata = () => {
     const navigate = useNavigate();
     const [kategoriList, setKategoriList] = useState([]);
 
-     useEffect(() => {
+    useEffect(() => {
         const fetchKategori = async () => {
             try {
                 const res = await axios.get(API_URL);
-                 const data = res.data.map((item) => ({
+                const data = res.data.map((item) => ({
                     ...item,
                     aktif: item.aktif !== undefined ? item.aktif : false,
                 }));
@@ -26,7 +26,7 @@ const Kategoridata = () => {
         fetchKategori();
     }, []);
 
-     const handleToggleAktif = async (kategori) => {
+    const handleToggleAktif = async (kategori) => {
         try {
             const updatedStatus = !kategori.aktif;
             await axios.put(`${API_URL}/${kategori.id}`, {
@@ -44,7 +44,7 @@ const Kategoridata = () => {
         }
     };
 
-     const handleDelete = (id) => {
+    const handleDelete = (id) => {
         Swal.fire({
             title: "Yakin ingin menghapus data ini?",
             text: "Data yang dihapus tidak bisa dikembalikan!",
@@ -101,10 +101,10 @@ const Kategoridata = () => {
                     </div>
                 </div>
 
-                 <div className="mt-6 overflow-x-auto">
-                    <h1 className="text-3xl mb-3 font-bold">Daftar Jenis Tagihan</h1>
-                    <table className="min-w-full border border-gray-200 bg-white rounded-lg overflow-hidden shadow-md">
-                        <thead className="bg-sky-600 text-center text-white">
+                <h1 className="text-3xl mb-3 mt-5 font-bold">Daftar Jenis Tagihan</h1>
+                <div className="rounded-xl mt-6 overflow-x-auto shadow-md bg-white">
+                    <table className="min-w-full border-separate border-spacing-0 text-center">
+                        <thead className="bg-sky-700 text-white text-center">
                             <tr>
                                 <th className="py-3 px-4">No</th>
                                 <th className="py-3 text-left px-4">Nama Kategori</th>

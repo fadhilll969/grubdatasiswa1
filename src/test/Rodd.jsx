@@ -18,7 +18,9 @@ const Rodd = () => {
   useEffect(() => {
     axios
       .get(API_URL)
-      .then((res) => setDataList(res.data))
+      .then((res) => {
+        setDataList(res.data.reverse());
+      })
       .catch((err) => console.error("Gagal ambil data:", err));
   }, []);
 
@@ -86,13 +88,13 @@ const Rodd = () => {
         <Dasbor />
 
         <div className="flex-1 p-6">
-           <div className="bg-white rounded-xl shadow-lg mb-4">
+          <div className="bg-white rounded-xl shadow-lg mb-4">
             <div className="bg-sky-600 py-4 px-6 flex items-center justify-center gap-2 rounded-t-xl">
               <i className="ri-table-line text-white text-2xl"></i>
               <h3 className="text-2xl font-semibold text-white">Data</h3>
             </div>
 
-             <div className="p-5 flex flex-col md:flex-row items-center gap-4">
+            <div className="p-5 flex flex-col md:flex-row items-center gap-4">
               <div className="relative w-full md:w-1/3">
                 <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
                 <input
@@ -134,11 +136,11 @@ const Rodd = () => {
                   <th className="py-3 px-4">No</th>
                   <th className="py-3 px-4 text-left">Kategori</th>
                   <th className="py-3 px-4 text-left">Nama</th>
-                  <th className="py-3 px-4">Kelas</th>
-                  <th className="py-3 px-4">Jurusan / Mapel</th>
-                  <th className="py-3 px-4">Nomor Unik</th>
+                  <th className="py-3 px-4  text-left">Kelas</th>
+                  <th className="py-3 px-4  text-left">Jurusan / Mapel</th>
+                  <th className="py-3 px-4  text-left">Nomor Unik</th>
                   <th className="py-3 px-4 text-left">Email</th>
-                  <th className="py-3 px-4">Aksi</th>
+                  <th className="py-3 px-4  text-left">Aksi</th>
                 </tr>
               </thead>
 
@@ -156,10 +158,10 @@ const Rodd = () => {
                         {data.kategori}
                       </td>
                       <td className="py-3 px-4">{data.nama}</td>
-                      <td className="py-3 px-4 text-center">
+                      <td className="py-3 px-4  ">
                         {data.kategori === "Siswa" ? data.kelas : "-"}
                       </td>
-                      <td className="py-3 px-4 text-center">
+                      <td className="py-3 px-4  r">
                         {data.kategori === "Siswa"
                           ? data.jurusan
                           : data.kategori === "Guru"
@@ -167,7 +169,7 @@ const Rodd = () => {
                             : "-"}
                       </td>
                       <td className="py-3 px-4">{data.nomor || "-"}</td>
-                      <td className="py-3 px-4">{data.email}</td>
+                      <td className="py-3 px-4 text-right">{data.email}</td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2 justify-center">
                           <button

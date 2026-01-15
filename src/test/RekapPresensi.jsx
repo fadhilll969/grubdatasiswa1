@@ -81,7 +81,7 @@ const RekapPresensi = () => {
               onChange={(e) => setFilterKehadiran(e.target.value)}
               className="p-2 border-2 bg-white rounded-lg w-full md:w-1/5 focus:ring-2 focus:ring-sky-400"
             >
-              <option value="SEMUA">Semua Kehadiran</option>
+              <option value="SEMUA">Semua</option>
               <option value="HADIR">Hadir</option>
               <option value="IZIN">Izin</option>
             </select>

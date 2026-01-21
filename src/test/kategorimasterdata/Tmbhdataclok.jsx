@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
 
@@ -41,7 +41,7 @@ const Tmbhdataclok = () => {
         icon: "success",
         title: "Berhasil!",
         text: "Kategori baru berhasil disimpan!",
-      }).then(() => navigate("/datakategori"));
+      }).then(() => navigate("/kategori/data"));
     } catch (error) {
       console.error("Gagal menyimpan kategori:", error);
       Swal.fire({
@@ -82,7 +82,7 @@ const Tmbhdataclok = () => {
             <div className="flex justify-end gap-3 mt-6">
               <button
                 type="button"
-                onClick={() => navigate("/datakategori")}
+                onClick={() => navigate("/kategori/data")}
                 className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition"
               >
                 <i className="ri-arrow-left-line"></i> Kembali

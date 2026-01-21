@@ -95,7 +95,7 @@ function Register() {
                             Sudah Punya Akun?
                             <button >
                                 <span className="font-bold ml-1 text-sky-400 underline">
-                                    <Link to="/f">
+                                    <Link to="/login">
                                         Login
                                     </Link>
                                 </span>

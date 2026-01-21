@@ -22,67 +22,77 @@ function Dasbor() {
         Swal.fire({
           title: "Berhasil Logout!",
           icon: "success",
-          timer: 1500,
+          timer: 1200,
           showConfirmButton: false,
         });
-        setTimeout(() => nav("/f"), 1500);
+        setTimeout(() => nav("/login"), 1200);
       }
     });
   };
 
   const menuItems = [
     { path: "/w", icon: "ri-dashboard-line", label: "Dashboard" },
+
     { isSection: true, label: "Presensi" },
     { path: "/rekap-presensi", icon: "ri-file-list-3-line", label: "Rekap Presensi" },
+
     { isSection: true, label: "Database" },
-    { path: "/datakategori", icon: "ri-folder-2-line", label: "Kategori Data" },
+    { path: "/kategori/data", icon: "ri-folder-2-line", label: "Kategori Data" },
     { path: "/kelas", icon: "ri-team-line", label: "Kelas" },
     { path: "/h", icon: "ri-database-2-line", label: "Master Data" },
+
     { isSection: true, label: "Keuangan" },
-    { path: "/a", icon: "ri-price-tag-3-line", label: "Kategori Tagihan" },
-    { path: "/o", icon: "ri-bill-line", label: "Tagihan" },
-    { path: "/q", icon: "ri-file-list-3-line", label: "Rekap Tagihan" },
+    { path: "/kategori", icon: "ri-price-tag-3-line", label: "Kategori Tagihan" },
+    { path: "/tagihan", icon: "ri-bill-line", label: "Tagihan" },
+    { path: "/tagihan/rekap", icon: "ri-file-list-3-line", label: "Rekap Tagihan" },
   ];
 
   return (
     <div className="w-60 min-h-screen">
       <div className="fixed top-0 left-0 h-full w-60 bg-indigo-800 text-white shadow-lg flex flex-col">
-         <div className="text-3xl mt-3 font-bold mb-4 text-center flex items-center justify-center gap-2">
+
+        {/* HEADER */}
+        <div className="text-2xl mt-4 mb-6 font-bold text-center flex items-center justify-center gap-2">
           <i className="ri-menu-2-line"></i> MENU
         </div>
 
-         <nav className="flex-1 overflow-y-auto px-3">
-          <div className="text-lg">
-            {menuItems.map((item, index) =>
-              item.isSection ? (
-                <p
-                  key={index}
-                  className="mt-2 mb-2 text-sm uppercase tracking-wide text-indigo-300 font-semibold"
-                >
-                  {item.label}
-                </p>
-              ) : (
-                <Link
-                  key={index}
-                  to={item.path}
-                  className={`flex items-center gap-2 py-2 px-3 rounded-md transition-all duration-200
-                    hover:bg-blue-600 hover:translate-x-1
-                    ${location.pathname === item.path ? "bg-blue-700 font-bold" : ""}`}
-                >
-                  <i className={item.icon}></i>
-                  {item.label}
-                </Link>
-              )
-            )}
-          </div>
+        {/* MENU */}
+        <nav className="flex-1 overflow-y-auto px-3 text-sm">
+          {menuItems.map((item, index) =>
+            item.isSection ? (
+              <p
+                key={index}
+                className="mt-4 mb-2 text-xs uppercase tracking-wide text-indigo-300 font-semibold"
+              >
+                {item.label}
+              </p>
+            ) : (
+              <Link
+                key={index}
+                to={item.path}
+                className={`flex items-center gap-3 py-2 px-3 rounded-md transition-all
+                  hover:bg-blue-600 hover:translate-x-1
+                  ${
+                    location.pathname.startsWith(item.path)
+                      ? "bg-blue-700 font-semibold"
+                      : ""
+                  }`}
+              >
+                <i className={`${item.icon} text-lg`}></i>
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
-         <div className="p-3">
+        {/* LOGOUT */}
+        <div className="p-3 border-t border-indigo-700">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-start gap-2 py-2 px-3 rounded-md bg-red-500 hover:bg-red-600 font-bold transition-all duration-200"
+            className="w-full flex items-center gap-2 py-2 px-3 rounded-md bg-red-500 hover:bg-red-600 font-bold transition"
           >
-            <i className="ri-logout-box-line"></i> Logout
+            <i className="ri-logout-box-line"></i>
+            Logout
           </button>
         </div>
       </div>

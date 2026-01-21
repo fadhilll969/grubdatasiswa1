@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
 
 const API_URL = "http://localhost:5000/clok";
@@ -29,7 +29,7 @@ const Editclok = () => {
           title: "Error",
           text: "Data kategori tidak ditemukan",
         });
-        navigate("/datakategori");
+        navigate("/kategori/data");
       }
     };
     fetchKategori();
@@ -64,7 +64,7 @@ const Editclok = () => {
         timer: 1500,
         showConfirmButton: false,
       });
-      navigate("/datakategori");
+      navigate("/kategori/data");
     } catch (error) {
       console.error("Gagal memperbarui kategori:", error);
       Swal.fire({
@@ -104,7 +104,7 @@ const Editclok = () => {
              <div className="flex justify-end gap-3 mt-6">
               <button
                 type="button"
-                onClick={() => navigate("/datakategori")}
+                onClick={() => navigate("/kategori/data")}
                 className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition"
               >
               <i className="ri-arrow-left-line"></i> Kembali

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
 
 const API_URL = "http://localhost:5000/kls";

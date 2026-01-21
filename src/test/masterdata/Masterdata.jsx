@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 import { useNavigate } from "react-router-dom";
 import "remixicon/fonts/remixicon.css";
 
-const Rodd = () => {
+const Masterdata = () => {
   const navigate = useNavigate();
   const API_URL = "http://localhost:5000/doss";
 
   const filterOptions = ["Siswa", "Karyawan", "Guru"];
+  const [visibleNomor, setVisibleNomor] = useState({});
 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,6 +59,13 @@ const Rodd = () => {
     });
   };
 
+  const toggleNomor = (id) => {
+    setVisibleNomor((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   const getCategoryIcon = (kategori) => {
     switch (kategori) {
       case "Siswa":
@@ -89,6 +97,7 @@ const Rodd = () => {
 
         <div className="flex-1 p-6">
           <div className="bg-white rounded-xl shadow-lg mb-4">
+            
             <div className="bg-sky-600 py-4 px-6 flex items-center justify-center gap-2 rounded-t-xl">
               <i className="ri-table-line text-white text-2xl"></i>
               <h3 className="text-2xl font-semibold text-white">Data</h3>
@@ -168,7 +177,34 @@ const Rodd = () => {
                             ? data.mapel
                             : "-"}
                       </td>
-                      <td className="py-3 px-4">{data.nomor || "-"}</td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <span className="tracking-widest">
+                            {data.nomor
+                              ? visibleNomor[data.id]
+                                ? data.nomor
+                                : "*".repeat(data.nomor.length)
+                              : "-"}
+                          </span>
+
+                          {data.nomor && (
+                            <button
+                              onClick={() => toggleNomor(data.id)}
+                              className="text-gray-500 hover:text-sky-600"
+                              type="button"
+                            >
+                              <i
+                                className={
+                                  visibleNomor[data.id]
+                                  ? "ri-eye-line"
+                                  : "ri-eye-off-line"
+                                }
+                              ></i>
+                            </button>
+                          )}
+                        </div>
+                      </td>
+
                       <td className="py-3 px-4 text-right">{data.email}</td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2 justify-center">
@@ -204,4 +240,4 @@ const Rodd = () => {
   );
 };
 
-export default Rodd;
+export default Masterdata;

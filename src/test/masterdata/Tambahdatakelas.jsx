@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
 
-const Tmbhdata = () => {
+const Tambahdatakelas = () => {
   const navigate = useNavigate();
 
   const API_URL_DATA = "http://localhost:5000/doss";
@@ -265,4 +265,4 @@ const Tmbhdata = () => {
   );
 };
 
-export default Tmbhdata;
+export default Tambahdatakelas;

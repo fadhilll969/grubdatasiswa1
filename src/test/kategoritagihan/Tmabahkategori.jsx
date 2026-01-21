@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
 
 
@@ -38,7 +38,7 @@ const Tmbahkategori = () => {
         icon: "success",
         title: "Berhasil!",
         text: "Kategori baru berhasil disimpan!",
-      }).then(() => navigate("/a"));
+      }).then(() => navigate("/kategori"));
     } catch (err) {
       console.error("Gagal menyimpan kategori:", err);
       Swal.fire({
@@ -91,7 +91,7 @@ const Tmbahkategori = () => {
               <button
                 type="button"
                 className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
-                onClick={() => navigate("/a")}
+                onClick={() => navigate("/kategori")}
               >
                 <i className="ri-arrow-left-line"></i> Kembali
               </button>

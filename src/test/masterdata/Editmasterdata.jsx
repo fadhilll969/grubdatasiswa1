@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
 
-const Editjir = () => {
+const Editmasterdata = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -300,4 +300,4 @@ const Editjir = () => {
   );
 };
 
-export default Editjir;
+export default Editmasterdata;

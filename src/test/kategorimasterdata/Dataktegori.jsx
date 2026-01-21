@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Dasbor from "./Dasbor";
+import Dasbor from "../Dasbor";
 
-const API_URL = "http://localhost:5000/kategori-data";
+const API_URL = "http://localhost:5000/clok";
 
-const Kategoridata = () => {
+const Dataktegori = () => {
     const navigate = useNavigate();
     const [kategoriList, setKategoriList] = useState([]);
 
@@ -43,6 +43,7 @@ const Kategoridata = () => {
             console.error("Gagal mengubah status aktif:", error);
         }
     };
+
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -82,33 +83,30 @@ const Kategoridata = () => {
     return (
         <div className="min-h-screen bg-sky-200 flex">
             <Dasbor />
-
             <div className="flex-1 p-6">
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div className="bg-sky-700 py-4 px-6 flex items-center justify-center gap-2">
                         <i className="ri-database-2-line text-white text-2xl"></i>
-                        <h3 className="text-2xl font-semibold text-white">Jenis Tagihan</h3>
+                        <h3 className="text-2xl font-semibold text-white">Kategori Data</h3>
                     </div>
 
                     <div className="flex justify-end p-4">
                         <button
                             className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-                            onClick={() => navigate("/tmbh")}
+                            onClick={() => navigate("/kategori/tambah-data")}
                         >
-                            <i className="ri-add-circle-line text-lg"></i>
-                            Tambah Jenis
+                            <i className="ri-add-circle-line text-lg"></i> Tambah Kategori
                         </button>
                     </div>
                 </div>
+                <h1 className="text-3xl font-bold mb-3 mt-10">Daftar Kategori Data</h1>
 
-                <h1 className="text-3xl mb-3 mt-5 font-bold">Daftar Jenis Tagihan</h1>
                 <div className="rounded-xl mt-6 overflow-x-auto shadow-md bg-white">
                     <table className="min-w-full border-separate border-spacing-0 text-center">
                         <thead className="bg-sky-700 text-white text-center">
                             <tr>
                                 <th className="py-3 px-4">No</th>
                                 <th className="py-3 text-left px-4">Nama Kategori</th>
-                                <th className="py-3 text-left px-4">Keterangan</th>
                                 <th className="py-3 px-4">Aktif</th>
                                 <th className="py-3 px-4">Aksi</th>
                             </tr>
@@ -116,7 +114,7 @@ const Kategoridata = () => {
                         <tbody className="text-center">
                             {kategoriList.length === 0 ? (
                                 <tr>
-                                    <td colSpan="5" className="py-4 text-gray-500">
+                                    <td colSpan="4" className="py-4 text-gray-500">
                                         Tidak ada data
                                     </td>
                                 </tr>
@@ -124,8 +122,7 @@ const Kategoridata = () => {
                                 kategoriList.map((item, index) => (
                                     <tr key={item.id} className="border-t">
                                         <td className="py-3 px-4">{index + 1}</td>
-                                        <td className="py-3 text-left px-4">{item.nama_kategori || "-"}</td>
-                                        <td className="py-3 text-left px-4">{item.keterangan || "-"}</td>
+                                        <td className="py-3 text-left px-4">{item.kategori_nama || "-"}</td>
                                         <td className="py-3 px-4">
                                             <label className="relative inline-flex items-center cursor-pointer">
                                                 <input
@@ -146,7 +143,7 @@ const Kategoridata = () => {
                                             <div className="flex justify-center gap-2">
                                                 <button
                                                     className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition flex items-center gap-1"
-                                                    onClick={() => navigate(`/kategori/edit/${item.id}`)}
+                                                    onClick={() => navigate(`/kategori/edit-data/${item.id}`)}
                                                 >
                                                     <i className="ri-edit-2-line text-sm"></i> Edit
                                                 </button>
@@ -164,9 +161,10 @@ const Kategoridata = () => {
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     );
 };
 
-export default Kategoridata;
+export default Dataktegori;

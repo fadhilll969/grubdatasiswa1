@@ -260,7 +260,9 @@ function Horw() {
             <i className="ri-search-line absolute left-3 top-3 text-gray-400"></i>
             <input type="text" placeholder="Cari tagihan berdasarkan nama..." value={searchTermTagihan} onChange={(e) => setSearchTermTagihan(e.target.value)} className="p-2 pl-10 border rounded w-full bg-white focus:ring-2 focus:ring-sky-400" />
           </div>
-          <select className="p-2 border rounded w-full md:w-60 bg-white focus:ring-2 focus:ring-sky-400" value={searchStatusTagihan} onChange={(e) => setSearchStatusTagihan(e.target.value)}>
+          <select 
+          className="p-2 border rounded w-full md:w-60 bg-white focus:ring-2 focus:ring-sky-400"
+           value={searchStatusTagihan} onChange={(e) => setSearchStatusTagihan(e.target.value)}>
             <option value="Semua">Semua Status</option>
             {filterOptionsTagihan.map((status) => (<option key={status} value={status}>{status}</option>))}
           </select>

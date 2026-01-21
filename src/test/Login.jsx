@@ -94,7 +94,7 @@ function Login() {
             <h1 className="">
               Belum Punya Akun?
               <span className="font-bold ml-1 text-sky-400 underline">
-                <Link to="/k">
+                <Link to="/register">
                   Daftar Sekarang
                 </Link>
               </span>

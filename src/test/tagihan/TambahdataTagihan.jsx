@@ -4,8 +4,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
+import { BASE_URL } from "../../config/api";
 
-const API_URL = "http://localhost:5000/coco";
+
+const API_TAGIHAN = "http://localhost:8080/api/tagihan";
 
 const TambahdataTagihan = () => {
   const navigate = useNavigate();
@@ -14,9 +16,11 @@ const TambahdataTagihan = () => {
     nama: "",
     email: "",
     jumlah: "",
-    status: "Belum Bayar",
     tanggal: "",
+    jenisTagihan: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -24,25 +28,48 @@ const TambahdataTagihan = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      await axios.post(API_URL, {
-        ...form,
+      const payload = {
+        nama: form.nama,
+        email: form.email,
         jumlah: Number(form.jumlah),
-        tanggal: form.tanggal || new Date().toISOString(),
+        tanggal: form.tanggal,
+        jenisTagihan: form.jenisTagihan || "",
+        // jangan kirim status
+      };
+
+      const res = await axios.post(API_TAGIHAN, payload, {
+        headers: { "Content-Type": "application/json" },
       });
 
-      Swal.fire("Berhasil", "Data tagihan ditambahkan", "success");
+      Swal.fire("Berhasil", "Data tagihan berhasil ditambahkan", "success");
+
+      setForm({
+        nama: "",
+        email: "",
+        jumlah: "",
+        tanggal: "",
+        jenisTagihan: "",
+      });
+
       navigate("/tagihan");
-    } catch {
-      Swal.fire("Gagal", "Tambah data gagal", "error");
+    } catch (err) {
+      console.error("ERROR:", err.response || err);
+      Swal.fire(
+        "Gagal",
+        err.response?.data?.message || "Tambah data gagal",
+        "error"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
-
       <div className="flex-1 p-8">
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl mx-auto mt-20">
           <h2 className="text-2xl font-bold text-sky-700 text-center mb-6">
@@ -66,6 +93,7 @@ const TambahdataTagihan = () => {
               <label className="block font-semibold mb-2">Email</label>
               <input
                 name="email"
+                type="email"
                 value={form.email}
                 onChange={handleChange}
                 placeholder="Masukkan email"
@@ -78,6 +106,7 @@ const TambahdataTagihan = () => {
               <input
                 name="jumlah"
                 type="number"
+                min="1"
                 value={form.jumlah}
                 onChange={handleChange}
                 placeholder="Masukkan jumlah"
@@ -87,25 +116,24 @@ const TambahdataTagihan = () => {
             </div>
 
             <div>
-              <label className="block font-semibold mb-2">Status</label>
-              <select
-                name="status"
-                value={form.status}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
-              >
-                <option value="Belum Bayar">Belum Bayar</option>
-                <option value="Sudah Bayar">Sudah Bayar</option>
-              </select>
-            </div>
-
-            <div>
               <label className="block font-semibold mb-2">Tanggal</label>
               <input
                 name="tanggal"
                 type="date"
                 value={form.tanggal}
                 onChange={handleChange}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold mb-2">Jenis Tagihan</label>
+              <input
+                name="jenisTagihan"
+                value={form.jenisTagihan}
+                onChange={handleChange}
+                placeholder="Opsional"
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
               />
             </div>
@@ -121,9 +149,13 @@ const TambahdataTagihan = () => {
 
               <button
                 type="submit"
-                className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg transition"
+                disabled={loading}
+                className={`bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg transition ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                <i className="ri-save-3-line"></i> Simpan
+                <i className="ri-save-3-line"></i>{" "}
+                {loading ? "Menyimpan..." : "Simpan"}
               </button>
             </div>
           </form>

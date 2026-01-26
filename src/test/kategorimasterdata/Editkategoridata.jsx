@@ -4,48 +4,50 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
+import { BASE_URL } from "../../config/api";
 
-const API_URL = "http://localhost:5000/clok";
+const API_URL = `${BASE_URL}/kategoridata`;
 
-const Editclok = () => {
+const EditKategoridata = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [kategori, setKategori] = useState({ kategori_nama: "", aktif: false });
+
+  const [kategori, setKategori] = useState({
+    kategori_nama: "", // sesuaikan sama backend
+  });
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchKategori = async () => {
+    async function fetchKategori() {
       try {
         const res = await axios.get(`${API_URL}/${id}`);
         setKategori({
           kategori_nama: res.data.kategori_nama || "",
-          aktif: res.data.aktif || false,
         });
         setLoading(false);
-      } catch (error) {
-        console.error("Gagal mengambil data kategori:", error);
+      } catch (err) {
         Swal.fire({
           icon: "error",
           title: "Error",
           text: "Data kategori tidak ditemukan",
         });
-        navigate("/kategori/data");
+        navigate("/kategoridata/data");
       }
-    };
+    }
     fetchKategori();
   }, [id, navigate]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setKategori((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!kategori.kategori_nama.trim()) {
       Swal.fire({
         icon: "warning",
@@ -54,7 +56,6 @@ const Editclok = () => {
       });
       return;
     }
-
     try {
       await axios.put(`${API_URL}/${id}`, kategori);
       Swal.fire({
@@ -64,9 +65,8 @@ const Editclok = () => {
         timer: 1500,
         showConfirmButton: false,
       });
-      navigate("/kategori/data");
-    } catch (error) {
-      console.error("Gagal memperbarui kategori:", error);
+      navigate("/kategoridata/data");
+    } catch (err) {
       Swal.fire({
         icon: "error",
         title: "Gagal",
@@ -80,44 +80,39 @@ const Editclok = () => {
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
+
       <div className="flex-1 p-8">
-        
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 mt-28">
-          <h2 className="text-2xl font-bold mb-6 text-sky-700 text-center">
-            Edit Kategori
-          </h2>
-
+          <h2 className="text-2xl font-bold mb-6 text-sky-700 text-center">Edit Kategori</h2>
           <form onSubmit={handleSubmit} className="space-y-5">
-
-             <div>
+            <div>
               <label className="block font-semibold mb-2">Nama Kategori</label>
               <input
                 type="text"
                 name="kategori_nama"
                 value={kategori.kategori_nama}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2"
                 placeholder="Masukkan Nama Kategori"
               />
             </div>
 
-             <div className="flex justify-end gap-3 mt-6">
+            <div className="flex justify-end gap-3 mt-6">
               <button
                 type="button"
-                onClick={() => navigate("/kategori/data")}
-                className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition"
+                onClick={() => navigate("/kategoridata/data")}
+                className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
               >
-              <i className="ri-arrow-left-line"></i> Kembali
+                <i className="ri-arrow-left-line"></i> Kembali
               </button>
 
               <button
                 type="submit"
-                className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg transition"
+                className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
               >
-                    <i className="ri-save-3-line"></i> Simpan
+                <i className="ri-save-3-line"></i> Simpan
               </button>
             </div>
-
           </form>
         </div>
       </div>
@@ -125,4 +120,4 @@ const Editclok = () => {
   );
 };
 
-export default Editclok;
+export default EditKategoridata;

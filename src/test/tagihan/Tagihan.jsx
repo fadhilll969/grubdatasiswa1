@@ -4,8 +4,9 @@ import Dasbor from "../Dasbor";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "remixicon/fonts/remixicon.css";
+import { BASE_URL } from "../../config/api";
 
-const API_URL = "http://localhost:5000/coco";
+const TAGIHAN_URL = `${BASE_URL}/tagihan`;
 
 const Tagihan = () => {
   const navigate = useNavigate();
@@ -15,25 +16,19 @@ const Tagihan = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("Semua");
 
-  const formatTanggal = (tanggal) => {
-    if (!tanggal) return "-";
-    return new Date(tanggal).toLocaleDateString("id-ID");
-  };
-
   // ================= GET DATA =================
   const fetchData = async () => {
     try {
-      const res = await axios.get(API_URL);
+      const resTagihan = await axios.get(TAGIHAN_URL);
 
       setData(
-        res.data.map((item) => ({
+        resTagihan.data.map((item) => ({
           ...item,
           status: item.status || "Belum Bayar",
           jumlah: Number(item.jumlah || 0),
         }))
       );
     } catch (err) {
-      console.error(err);
       Swal.fire("Gagal", "Tidak dapat memuat data", "error");
     } finally {
       setLoading(false);
@@ -57,7 +52,7 @@ const Tagihan = () => {
     try {
       const dataLama = data.find((d) => d.id === id);
 
-      await axios.put(`${API_URL}/${id}`, {
+      await axios.put(`${TAGIHAN_URL}/${id}`, {
         ...dataLama,
         status: statusBaru,
       });
@@ -69,8 +64,7 @@ const Tagihan = () => {
       );
 
       Swal.fire("Berhasil", "Status diperbarui", "success");
-    } catch (err) {
-      console.error(err);
+    } catch {
       Swal.fire("Gagal", "Update gagal", "error");
     }
   };
@@ -86,7 +80,7 @@ const Tagihan = () => {
     if (!ok.isConfirmed) return;
 
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await axios.delete(`${TAGIHAN_URL}/${id}`);
       setData((prev) => prev.filter((d) => d.id !== id));
       Swal.fire("Berhasil", "Data dihapus", "success");
     } catch {
@@ -106,15 +100,24 @@ const Tagihan = () => {
     return cocokNama && cocokStatus;
   });
 
+  // ================= FORMAT TANGGAL =================
+  const formatTanggal = (tanggal) => {
+    if (!tanggal) return "-";
+    const t = new Date(tanggal);
+    if (isNaN(t)) return "-";
+    return t.toLocaleDateString("id-ID");
+  };
+
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
 
       <div className="flex-1 p-6">
         <div className="bg-white rounded-lg shadow-md mb-6">
-          
-            <div className="bg-sky-600 py-4 px-6 flex items-center justify-center gap-2 rounded-t-xl">
-              <h3 className="text-2xl font-semibold text-white">Manajemen Tagihan</h3>
+          <div className="bg-sky-600 py-4 px-6 flex items-center justify-center gap-2 rounded-t-xl">
+            <h3 className="text-2xl font-semibold text-white">
+              Manajemen Tagihan
+            </h3>
           </div>
 
           <div className="p-4 flex flex-wrap gap-3 items-center">
@@ -138,7 +141,7 @@ const Tagihan = () => {
 
             <button
               onClick={() => navigate("/tagihan/tambah")}
-              className="bg-blue-600 text-white ml-55 px-4 py-2 rounded-lg flex items-center gap-2"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
             >
               <i className="ri-add-circle-line"></i> Tambah Tagihan
             </button>
@@ -175,12 +178,7 @@ const Tagihan = () => {
                       <td className="py-3 px-4 text-right">
                         Rp {d.jumlah.toLocaleString("id-ID")}
                       </td>
-                      <td
-                        className={`py-3 px-4 font-semibold ${d.status === "Sudah Bayar"
-                          ? "text-green-600"
-                          : "text-red-600"
-                          }`}
-                      >
+                      <td className={`py-3 px-4 font-semibold ${d.status === "Sudah Bayar" ? "text-green-600" : "text-red-600"}`}>
                         {d.status}
                       </td>
                       <td className="py-3 px-4">{formatTanggal(d.tanggal)}</td>
@@ -195,21 +193,21 @@ const Tagihan = () => {
                                   : "Sudah Bayar"
                               )
                             }
-                            className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                            className="bg-yellow-500 text-white px-2 py-1 rounded"
                           >
                             <i className="ri-refresh-line" />
                           </button>
 
                           <button
                             onClick={() => navigate(`/tagihan/edit/${d.id}`)}
-                            className="bg-sky-500 text-white px-2 py-1 rounded hover:bg-sky-600"
+                            className="bg-sky-500 text-white px-2 py-1 rounded"
                           >
                             <i className="ri-edit-2-line" />
                           </button>
 
                           <button
                             onClick={() => handleDelete(d.id)}
-                            className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                            className="bg-red-600 text-white px-2 py-1 rounded"
                           >
                             <i className="ri-delete-bin-line" />
                           </button>
@@ -227,7 +225,6 @@ const Tagihan = () => {
               </tbody>
             </table>
           </div>
-
         )}
       </div>
     </div>

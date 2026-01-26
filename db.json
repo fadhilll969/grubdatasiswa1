@@ -111,6 +111,12 @@
       "nama_kategori": "Uang Gedung",
       "keterangan": "Bayar uang sekolah perbulan",
       "aktif": true
+    },
+    {
+      "id": "4ef0",
+      "nama_kategori": "wdolpwkldpdw",
+      "keterangan": "Program Belajar Di Luar",
+      "aktif": false
     }
   ],
   "clok": [

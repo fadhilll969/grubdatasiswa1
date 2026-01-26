@@ -4,27 +4,43 @@ import axios from "axios";
 import Dasbor from "../Dasbor";
 import { useNavigate } from "react-router-dom";
 import "remixicon/fonts/remixicon.css";
+import { BASE_URL } from "../../config/api";
 
 const Masterdata = () => {
   const navigate = useNavigate();
-  const API_URL = "http://localhost:5000/doss";
-
-  const filterOptions = ["Siswa", "Karyawan", "Guru"];
-  const [visibleNomor, setVisibleNomor] = useState({});
+  const API_URL = `${BASE_URL}/masterdata`;
+  const API_KATEGORI = `${BASE_URL}/kategoridata`;
 
   const [dataList, setDataList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("Semua");
+  const [kategoriOptions, setKategoriOptions] = useState([]);
+  const [visibleNomor, setVisibleNomor] = useState({});
 
+  // Ambil data master & kategori
   useEffect(() => {
-    axios
-      .get(API_URL)
-      .then((res) => {
-        setDataList(res.data.reverse());
-      })
-      .catch((err) => console.error("Gagal ambil data:", err));
+    const fetchData = async () => {
+      try {
+        const [resData, resKategori] = await Promise.all([
+          axios.get(API_URL),
+          axios.get(API_KATEGORI),
+        ]);
+
+        setDataList(resData.data.reverse());
+
+        const activeKat = resKategori.data
+          .filter((k) => k.aktif)
+          .map((k) => k.kategori_nama);
+        setKategoriOptions(activeKat);
+      } catch (err) {
+        console.error("Gagal ambil data atau kategori:", err);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  // Hapus data
   const handleDelete = (id) => {
     Swal.fire({
       title: "Yakin ingin menghapus data ini?",
@@ -59,6 +75,7 @@ const Masterdata = () => {
     });
   };
 
+  // Toggle nomor unik
   const toggleNomor = (id) => {
     setVisibleNomor((prev) => ({
       ...prev,
@@ -66,6 +83,7 @@ const Masterdata = () => {
     }));
   };
 
+  // Icon kategori
   const getCategoryIcon = (kategori) => {
     switch (kategori) {
       case "Siswa":
@@ -79,6 +97,7 @@ const Masterdata = () => {
     }
   };
 
+  // Filter data
   const filteredData = dataList.filter((data) => {
     const matchName = data.nama
       ?.toLowerCase()
@@ -97,7 +116,6 @@ const Masterdata = () => {
 
         <div className="flex-1 p-6">
           <div className="bg-white rounded-xl shadow-lg mb-4">
-            
             <div className="bg-sky-600 py-4 px-6 flex items-center justify-center gap-2 rounded-t-xl">
               <i className="ri-table-line text-white text-2xl"></i>
               <h3 className="text-2xl font-semibold text-white">Data</h3>
@@ -121,9 +139,9 @@ const Masterdata = () => {
                 onChange={(e) => setSearchCategory(e.target.value)}
               >
                 <option value="Semua">Semua Kategori</option>
-                {filterOptions.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
+                {kategoriOptions.map((kat) => (
+                  <option key={kat} value={kat}>
+                    {kat}
                   </option>
                 ))}
               </select>
@@ -145,11 +163,11 @@ const Masterdata = () => {
                   <th className="py-3 px-4">No</th>
                   <th className="py-3 px-4 text-left">Kategori</th>
                   <th className="py-3 px-4 text-left">Nama</th>
-                  <th className="py-3 px-4  text-left">Kelas</th>
-                  <th className="py-3 px-4  text-left">Jurusan / Mapel</th>
-                  <th className="py-3 px-4  text-left">Nomor Unik</th>
+                  <th className="py-3 px-4 text-left">Kelas</th>
+                  <th className="py-3 px-4 text-left">Jurusan / Mapel</th>
+                  <th className="py-3 px-4 text-left">Nomor Unik</th>
                   <th className="py-3 px-4 text-left">Email</th>
-                  <th className="py-3 px-4  text-left">Aksi</th>
+                  <th className="py-3 px-4 text-left">Aksi</th>
                 </tr>
               </thead>
 
@@ -158,8 +176,9 @@ const Masterdata = () => {
                   filteredData.map((data, index) => (
                     <tr
                       key={data.id}
-                      className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                        } hover:bg-sky-100`}
+                      className={`${
+                        index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                      } hover:bg-sky-100`}
                     >
                       <td className="py-3 px-4 text-center">{index + 1}</td>
                       <td className="py-3 px-4 flex items-center">
@@ -167,15 +186,15 @@ const Masterdata = () => {
                         {data.kategori}
                       </td>
                       <td className="py-3 px-4">{data.nama}</td>
-                      <td className="py-3 px-4  ">
+                      <td className="py-3 px-4">
                         {data.kategori === "Siswa" ? data.kelas : "-"}
                       </td>
-                      <td className="py-3 px-4  r">
+                      <td className="py-3 px-4">
                         {data.kategori === "Siswa"
                           ? data.jurusan
                           : data.kategori === "Guru"
-                            ? data.mapel
-                            : "-"}
+                          ? data.mapel
+                          : "-"}
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
@@ -183,7 +202,7 @@ const Masterdata = () => {
                             {data.nomor
                               ? visibleNomor[data.id]
                                 ? data.nomor
-                                : "*".repeat(data.nomor.length)
+                                : "x".repeat(data.nomor.length)
                               : "-"}
                           </span>
 
@@ -196,15 +215,14 @@ const Masterdata = () => {
                               <i
                                 className={
                                   visibleNomor[data.id]
-                                  ? "ri-eye-line"
-                                  : "ri-eye-off-line"
+                                    ? "ri-eye-line"
+                                    : "ri-eye-off-line"
                                 }
                               ></i>
                             </button>
                           )}
                         </div>
                       </td>
-
                       <td className="py-3 px-4 text-right">{data.email}</td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2 justify-center">
@@ -226,7 +244,10 @@ const Masterdata = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8" className="py-4 text-center text-gray-500">
+                    <td
+                      colSpan="8"
+                      className="py-4 text-center text-gray-500"
+                    >
                       Tidak ada data.
                     </td>
                   </tr>

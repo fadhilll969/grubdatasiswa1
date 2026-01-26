@@ -6,93 +6,111 @@ import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
 import { BASE_URL } from "../../config/api";
 
-const API_URL = `${BASE_URL}/kelas`;
+const API_URL = `${BASE_URL}/kategoritagihan`;
 
-const Tmbhkls = () => {
+const EditKategoriTagihan = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [formData, setFormData] = useState({
-    kelas: "",
-    jurusan: "",
+  const [data, setData] = useState({
+    nama_kategori: "",
+    keterangan: "",
   });
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (id) {
-      axios.get(`${API_URL}/${id}`)
-        .then(res => setFormData(res.data))
-        .catch(() =>
-          Swal.fire("Error", "Gagal mengambil data", "error")
-        );
-    }
-  }, [id]);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/${id}`);
+        setData({
+          nama_kategori: res.data.nama_kategori || "",
+          keterangan: res.data.keterangan || "",
+        });
+        setLoading(false);
+      } catch {
+        Swal.fire("Error", "Gagal mengambil data", "error");
+        navigate("/kategoriTagihan");
+      }
+    };
+    fetchData();
+  }, [id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!data.nama_kategori.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Data Belum Lengkap",
+        text: "Nama kategori wajib diisi",
+      });
+      return;
+    }
+
     try {
-      if (id) {
-        await axios.put(`${API_URL}/${id}`, formData);
-      } else {
-        await axios.post(API_URL, formData);
-      }
+      await axios.put(`${API_URL}/${id}`, data);
       Swal.fire({
         icon: "success",
-        title: "Berhasil!",
+        title: "Berhasil",
+        text: "Kategori berhasil diperbarui",
         timer: 1500,
         showConfirmButton: false,
       });
-      navigate("/kelas");
+      navigate("/kategoriTagihan");
     } catch {
-      Swal.fire("Error", "Gagal menyimpan data", "error");
+      Swal.fire("Error", "Gagal mengupdate kategori", "error");
     }
   };
+
+  if (loading) return <div className="text-center mt-20">Loading...</div>;
 
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
+
       <div className="flex-1 p-8">
-        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 mt-20">
+        <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl ml-52 mt-28">
           <h2 className="text-2xl font-bold mb-6 text-sky-700 text-center">
-            {id ? "Edit" : "Tambah"} Data Kelas
+            Edit Kategori Tagihan
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block font-semibold mb-2">Kelas</label>
+              <label className="block font-semibold mb-2">Nama Kategori</label>
               <input
                 type="text"
-                name="kelas"
-                value={formData.kelas}
+                name="nama_kategori"
+                value={data.nama_kategori}
                 onChange={handleChange}
-                required
                 className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                placeholder="Masukkan Nama Kategori"
               />
             </div>
 
             <div>
-              <label className="block font-semibold mb-2">Jurusan</label>
-              <input
-                type="text"
-                name="jurusan"
-                value={formData.jurusan}
+              <label className="block font-semibold mb-2">Keterangan</label>
+              <textarea
+                name="keterangan"
+                value={data.keterangan}
                 onChange={handleChange}
-                required
                 className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                placeholder="Masukkan Keterangan"
               />
             </div>
 
             <div className="flex justify-end gap-3 mt-6">
               <button
                 type="button"
-                onClick={() => navigate("/kelas")}
+                onClick={() => navigate("/kategoriTagihan")}
                 className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
               >
                 <i className="ri-arrow-left-line"></i> Kembali
               </button>
+
               <button
                 type="submit"
                 className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
@@ -107,4 +125,4 @@ const Tmbhkls = () => {
   );
 };
 
-export default Tmbhkls;
+export default EditKategoriTagihan;

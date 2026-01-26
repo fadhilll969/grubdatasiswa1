@@ -37,12 +37,12 @@ function Dasbor() {
     { path: "/rekap-presensi", icon: "ri-file-list-3-line", label: "Rekap Presensi" },
 
     { isSection: true, label: "Database" },
-    { path: "/kategori/data", icon: "ri-folder-2-line", label: "Kategori Data" },
+    { path: "/kategoridata/data", icon: "ri-folder-2-line", label: " Data" },
     { path: "/kelas", icon: "ri-team-line", label: "Kelas" },
     { path: "/h", icon: "ri-database-2-line", label: "Master Data" },
 
     { isSection: true, label: "Keuangan" },
-    { path: "/kategori", icon: "ri-price-tag-3-line", label: "Kategori Tagihan" },
+    { path: "/kategoriTagihan", icon: "ri-price-tag-3-line", label: "Kategori Tagihan" },
     { path: "/tagihan", icon: "ri-bill-line", label: "Tagihan" },
     { path: "/tagihan/rekap", icon: "ri-file-list-3-line", label: "Rekap Tagihan" },
   ];

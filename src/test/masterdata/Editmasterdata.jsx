@@ -4,62 +4,51 @@ import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
+import { BASE_URL } from "../../config/api";
 
 const Editmasterdata = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const API_URL_DATA = `${BASE_URL}/masterdata`;
+  const API_URL_KATEGORI = `${BASE_URL}/kategoridata`;
+  const API_URL_KELAS = `${BASE_URL}/kelas`;
+
   const [kategoriList, setKategoriList] = useState([]);
   const [kelasList, setKelasList] = useState([]);
-  const [jurusanList, setJurusanList] = useState([]);
+  const [jurusanOptions, setJurusanOptions] = useState([]);
 
   const [selectedKategori, setSelectedKategori] = useState("");
   const [selectedKelas, setSelectedKelas] = useState("");
   const [selectedJurusan, setSelectedJurusan] = useState("");
-
   const [mapel, setMapel] = useState("");
-  const [name, setName] = useState("");
+  const [nama, setNama] = useState("");
   const [email, setEmail] = useState("");
-
   const [nomor, setNomor] = useState("");
 
-  const API_URL_DATA = "http://localhost:5000/doss";
-  const API_URL_KATEGORI = "http://localhost:5000/clok";
-  const API_URL_KELAS = "http://localhost:5000/kls";
-
+  // Ambil data master dan pilihan kategori/kelas
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${API_URL_DATA}/${id}`);
-        const data = res.data || {};
+        const data = res.data;
 
-        setName(data.nama || "");
+        setNama(data.nama || "");
         setEmail(data.email || "");
-
         setNomor(data.nomor || "");
-
-
         setSelectedKategori(data.kategori || "");
-
         if (data.kategori === "Siswa") {
           setSelectedKelas(data.kelas || "");
           setSelectedJurusan(data.jurusan || "");
-        } else {
-          setSelectedKelas("");
-          setSelectedJurusan("");
         }
-
         if (data.kategori === "Guru") {
           setMapel(data.mapel || "");
-        } else {
-          setMapel("");
         }
-      } catch (err) {
-        console.error("Gagal mengambil data:", err);
+      } catch {
         Swal.fire({
           icon: "error",
           title: "Gagal mengambil data",
-          text: "Cek koneksi atau server.",
+          text: "Cek koneksi atau server",
         });
       }
     };
@@ -70,14 +59,14 @@ const Editmasterdata = () => {
           axios.get(API_URL_KATEGORI),
           axios.get(API_URL_KELAS),
         ]);
-        setKategoriList(
-          Array.isArray(katRes.data)
-            ? katRes.data.filter((kat) => kat.aktif)
-            : []
-        );
-        setKelasList(Array.isArray(klsRes.data) ? klsRes.data : []);
-      } catch (err) {
-        console.error("Gagal mengambil kategori/kelas:", err);
+
+        setKategoriList(katRes.data || []);
+        setKelasList(klsRes.data || []);
+      } catch {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal mengambil kategori/kelas",
+        });
       }
     };
 
@@ -85,89 +74,82 @@ const Editmasterdata = () => {
     fetchData();
   }, [id]);
 
+  // Update jurusan options saat kelas berubah
   useEffect(() => {
     if (selectedKelas) {
-      const jurusanOptions = kelasList
+      const options = kelasList
         .filter((k) => k.kelas === selectedKelas)
-        .map((k) => k.jurusan)
-        .filter(Boolean);
-
-      setJurusanList(jurusanOptions);
-
-      if (!jurusanOptions.includes(selectedJurusan)) {
-        setSelectedJurusan(jurusanOptions[0] || "");
+        .map((k) => k.jurusan);
+      setJurusanOptions(options);
+      if (!options.includes(selectedJurusan)) {
+        setSelectedJurusan(options[0] || "");
       }
     } else {
-      setJurusanList([]);
+      setJurusanOptions([]);
       setSelectedJurusan("");
     }
   }, [selectedKelas, kelasList, selectedJurusan]);
 
-  const handleUpdateData = async () => {
-
-    if (!name || !email || !selectedKategori) {
+  const handleUpdate = async () => {
+    if (!nama || !email || !selectedKategori) {
       return Swal.fire({
         icon: "warning",
-        title: "Data tidak lengkap!",
-        text: "Nama, Email, dan Kategori harus diisi.",
+        title: "Data belum lengkap!",
       });
     }
-
     if (!/\S+@\S+\.\S+/.test(email)) {
       return Swal.fire({
         icon: "warning",
         title: "Email tidak valid!",
-        text: "Masukkan format email yang benar.",
       });
     }
-
     if (selectedKategori === "Siswa" && (!selectedKelas || !selectedJurusan)) {
       return Swal.fire({
         icon: "warning",
-        title: "Data Siswa Kurang!",
-        text: "Kelas & Jurusan wajib diisi.",
+        title: "Kelas & Jurusan wajib diisi!",
+      });
+    }
+    if (selectedKategori === "Guru" && !mapel) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Mata Pelajaran wajib diisi!",
       });
     }
 
     const updatedData = {
-      nama: name,
+      nama,
       email,
+      nomor,
       kategori: selectedKategori,
-      nomor: nomor,
-      ...(selectedKategori === "Siswa" && {
-        kelas: selectedKelas,
-        jurusan: selectedJurusan,
-      }),
+      ...(selectedKategori === "Siswa" && { kelas: selectedKelas, jurusan: selectedJurusan }),
       ...(selectedKategori === "Guru" && { mapel }),
     };
 
-    Swal.fire({
+    const confirm = await Swal.fire({
       title: "Simpan perubahan?",
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Ya",
       cancelButtonText: "Batal",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.put(`${API_URL_DATA}/${id}`, updatedData);
-          Swal.fire({
-            icon: "success",
-            title: "Perubahan disimpan!",
-            timer: 1500,
-            showConfirmButton: false,
-          });
-          navigate("/h");
-        } catch (error) {
-          console.error("PUT error:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Gagal!",
-            text: "Tidak dapat menyimpan perubahan.",
-          });
-        }
-      }
     });
+
+    if (confirm.isConfirmed) {
+      try {
+        await axios.put(`${API_URL_DATA}/${id}`, updatedData);
+        Swal.fire({
+          icon: "success",
+          title: "Perubahan berhasil disimpan!",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        navigate("/h"); // redirect ke halaman daftar masterdata
+      } catch {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal menyimpan data!",
+        });
+      }
+    }
   };
 
   return (
@@ -179,18 +161,17 @@ const Editmasterdata = () => {
             Edit Data
           </h2>
 
-          <input
-            type="text"
-            value={nomor}
-            onChange={(e) => {
-              const value = e.target.value.replace(/\D/g, "");  
-              setNomor(value);
-            }}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2"
-            placeholder="Masukkan nomor"
-          />
+          <div className="mb-3">
+            <label className="font-semibold block mb-1">Nomor</label>
+            <input
+              value={nomor}
+              onChange={(e) => setNomor(e.target.value.replace(/\D/g, ""))}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+              placeholder="Masukkan Nomor"
+            />
+          </div>
 
-          <div className="mb-2">
+          <div className="mb-3">
             <label className="font-semibold block mb-1">Kategori</label>
             <select
               value={selectedKategori}
@@ -213,7 +194,7 @@ const Editmasterdata = () => {
 
           {selectedKategori === "Siswa" && (
             <>
-              <div className="mb-2">
+              <div className="mb-3">
                 <label className="font-semibold block mb-1">Kelas</label>
                 <select
                   value={selectedKelas}
@@ -221,15 +202,15 @@ const Editmasterdata = () => {
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 >
                   <option value="">Pilih Kelas</option>
-                  {[...new Set(kelasList.map((k) => k.kelas))].map((kelas) => (
-                    <option key={kelas} value={kelas}>
-                      {kelas}
+                  {[...new Set(kelasList.map((k) => k.kelas))].map((kls) => (
+                    <option key={kls} value={kls}>
+                      {kls}
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="mb-2">
+              <div className="mb-3">
                 <label className="font-semibold block mb-1">Jurusan</label>
                 <select
                   value={selectedJurusan}
@@ -237,9 +218,9 @@ const Editmasterdata = () => {
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 >
                   <option value="">Pilih Jurusan</option>
-                  {jurusanList.map((jur) => (
-                    <option key={jur} value={jur}>
-                      {jur.toUpperCase()}
+                  {jurusanOptions.map((j) => (
+                    <option key={j} value={j}>
+                      {j.toUpperCase()}
                     </option>
                   ))}
                 </select>
@@ -248,48 +229,48 @@ const Editmasterdata = () => {
           )}
 
           {selectedKategori === "Guru" && (
-            <div className="mb-2">
+            <div className="mb-3">
               <label className="font-semibold block mb-1">Mata Pelajaran</label>
               <input
                 value={mapel}
                 onChange={(e) => setMapel(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2"
-                placeholder="Mata Pelajaran"
+                placeholder="Masukkan Mata Pelajaran"
               />
             </div>
           )}
 
-          <div className="mb-2">
+          <div className="mb-3">
             <label className="font-semibold block mb-1">Nama</label>
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={nama}
+              onChange={(e) => setNama(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
-              placeholder="Nama"
+              placeholder="Masukkan Nama"
             />
           </div>
 
-          <div className="mb-2">
+          <div className="mb-6">
             <label className="font-semibold block mb-1">Email</label>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
-              placeholder="Email"
+              placeholder="Masukkan Email"
             />
           </div>
 
           <div className="flex justify-end gap-3">
             <button
-              className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+              className="bg-red-500 text-white px-4 py-2 rounded-lg"
               onClick={() => navigate("/h")}
             >
               <i className="ri-arrow-left-line"></i> Kembali
             </button>
 
             <button
-              className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
-              onClick={handleUpdateData}
+              className="bg-sky-600 text-white px-4 py-2 rounded-lg"
+              onClick={handleUpdate}
             >
               <i className="ri-save-3-line"></i> Simpan
             </button>

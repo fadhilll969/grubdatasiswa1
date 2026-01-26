@@ -4,10 +4,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
+import { BASE_URL } from "../../config/api";
 
-const API_URL = "http://localhost:5000/kls";
+const API_URL = `${BASE_URL}/kelas`;
 
-const Kelas = () => {
+const DataKelas = () => {
   const navigate = useNavigate();
   const { kelas: kelasParam } = useParams();
   const [kelasList, setKelasList] = useState([]);
@@ -26,7 +27,6 @@ const Kelas = () => {
 
         setKelasList(data);
       } catch (error) {
-        console.error("Gagal mengambil data kelas:", error);
         Swal.fire({ icon: "error", title: "Gagal mengambil data kelas" });
       } finally {
         setLoading(false);
@@ -51,9 +51,16 @@ const Kelas = () => {
         axios.delete(`${API_URL}/${id}`)
           .then(() => {
             setKelasList(prev => prev.filter(item => item.id !== id));
-            Swal.fire({ icon: "success", title: "Data Terhapus!", timer: 1500, showConfirmButton: false });
+            Swal.fire({
+              icon: "success",
+              title: "Data Terhapus!",
+              timer: 1500,
+              showConfirmButton: false,
+            });
           })
-          .catch(() => Swal.fire({ icon: "error", title: "Gagal menghapus data" }));
+          .catch(() =>
+            Swal.fire({ icon: "error", title: "Gagal menghapus data" })
+          );
       }
     });
   };
@@ -74,20 +81,21 @@ const Kelas = () => {
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
               onClick={() => navigate("/tambahkelas")}
             >
-              <i className="ri-add-circle-line text-lg"></i>
-              Tambah Kelas
+              <i className="ri-add-circle-line text-lg"></i> Tambah Kelas
             </button>
           </div>
         </div>
 
         <div className="rounded-xl mt-6 overflow-x-auto shadow-md bg-white">
           {loading ? (
-            <div className="text-center py-6 text-gray-600 font-medium">Memuat data...</div>
+            <div className="text-center py-6 text-gray-600 font-medium">
+              Memuat data...
+            </div>
           ) : (
             <table className="min-w-full border-separate border-spacing-0 text-center">
               <thead>
-                <tr className="bg-sky-700 text-white text-center">
-                  <th className="py-3 px-2 rounded-tl-lg text-center">No</th>
+                <tr className="bg-sky-700 text-white">
+                  <th className="py-3 px-2 rounded-tl-lg">No</th>
                   <th className="py-3 px-4">Kelas</th>
                   <th className="py-3 px-4">Jurusan</th>
                   <th className="py-3 px-4 rounded-tr-lg">Aksi</th>
@@ -104,23 +112,25 @@ const Kelas = () => {
                   kelasList.map((item, index) => (
                     <tr
                       key={item.id}
-                      className={`border-b border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-sky-50"} hover:bg-sky-100 transition`}
+                      className={`border-b border-gray-200 ${
+                        index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                      } hover:bg-sky-100 transition`}
                     >
                       <td className="py-3 px-4">{index + 1}</td>
                       <td className="py-3 px-4">{item.kelas}</td>
                       <td className="py-3 px-4">{item.jurusan}</td>
-                      <td className="py-3 px-4 text-left flex justify-center gap-2">
+                      <td className="py-3 px-4 flex justify-center gap-2">
                         <button
-                          className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition flex items-center gap-1"
+                          className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 transition"
                           onClick={() => navigate(`/editkelas/${item.id}`)}
                         >
-                          <i className="ri-edit-2-line text-sm"></i> Edit
+                          <i className="ri-edit-2-line"></i> Edit
                         </button>
                         <button
-                          className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition flex items-center gap-1"
+                          className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
                           onClick={() => handleDelete(item.id)}
                         >
-                          <i className="ri-delete-bin-6-line text-sm"></i> Hapus
+                          <i className="ri-delete-bin-6-line"></i> Hapus
                         </button>
                       </td>
                     </tr>
@@ -130,10 +140,9 @@ const Kelas = () => {
             </table>
           )}
         </div>
-
       </div>
     </div>
   );
 };
 
-export default Kelas;
+export default DataKelas;

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import Dasbor from "../Dasbor";
 import "remixicon/fonts/remixicon.css";
 
-const API_URL = "http://localhost:5000/coco";
+const API_URL = "http://localhost:8080/api/tagihan";
 
 const EditTagihan = () => {
   const { id } = useParams();
@@ -26,7 +26,10 @@ const EditTagihan = () => {
       .get(`${API_URL}/${id}`)
       .then((res) => {
         setForm({
-          ...res.data,
+          nama: res.data.nama,
+          email: res.data.email,
+          jumlah: res.data.jumlah,
+          status: res.data.status,
           tanggal: res.data.tanggal
             ? res.data.tanggal.slice(0, 10)
             : "",

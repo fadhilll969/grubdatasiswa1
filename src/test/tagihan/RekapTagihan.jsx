@@ -80,7 +80,7 @@ const RekapTagihan = () => {
             </div>
           </div>
         </div>
-
+ 
 
         {/* TABEL */}
         <div className="overflow-x-auto bg-white rounded-lg shadow-md">

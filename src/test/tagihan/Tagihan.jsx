@@ -20,13 +20,16 @@ const Tagihan = () => {
     setLoading(true);
     try {
       const res = await axios.get(API_TAGIHAN);
-      setData(
-        res.data.map((item) => ({
+
+      const sortedData = res.data
+        .map((item) => ({
           ...item,
           status: item.status || "Belum Bayar",
           jumlah: Number(item.jumlah || 0),
         }))
-      );
+        .sort((a, b) => b.id - a.id); // 🔥 data terbaru di atas
+
+      setData(sortedData);
     } catch (err) {
       console.error(err);
       Swal.fire("Gagal", "Tidak dapat memuat data tagihan", "error");
@@ -34,6 +37,7 @@ const Tagihan = () => {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchData();
@@ -135,7 +139,7 @@ const Tagihan = () => {
 
             <button
               onClick={() => navigate("/tagihan/tambah")}
-              className="bg-blue-600 text-white px-4 py-2 ml-50 rounded-lg flex items-center gap-2"
+              className="bg-blue-600 text-white px-4 py-2 ml-55 rounded-lg flex items-center gap-2"
             >
               <i className="ri-add-circle-line" /> Tambah Tagihan
             </button>
@@ -165,13 +169,12 @@ const Tagihan = () => {
                   filteredData.map((d, i) => (
                     <tr
                       key={d.id}
-                      className={`${
-                        i % 2 === 0 ? "bg-white" : "bg-sky-50"
-                      } hover:bg-sky-100`}
+                      className={`${i % 2 === 0 ? "bg-white" : "bg-sky-50"
+                        } hover:bg-sky-100`}
                     >
                       <td className="py-3 px-4 text-center">{i + 1}</td>
                       <td className="py-3 px-4">{d.masterdata?.nama || "-"}</td>
-                      <td className="py-3 px-4">{d.masterdata?.email || "-"}</td>
+                      <td className="py-3 px-4 text-right">{d.masterdata?.email || "-"}</td>
                       <td className="py-3 px-4 text-right">
                         Rp {d.jumlah.toLocaleString("id-ID")}
                       </td>
@@ -179,15 +182,14 @@ const Tagihan = () => {
                         {d.kategoriTagihan?.nama_kategori || "-"}
                       </td>
                       <td
-                        className={`py-3 px-4 font-semibold ${
-                          d.status === "Sudah Bayar"
-                            ? "text-green-600"
-                            : "text-red-600"
-                        }`}
+                        className={`py-3 px-4 font-semibold ${d.status === "Sudah Bayar"
+                          ? "text-green-600"
+                          : "text-red-600"
+                          }`}
                       >
                         {d.status}
                       </td>
-                      <td className="py-3 px-4">{formatTanggal(d.tanggal)}</td>
+                      <td className="py-3 px-4 text-right">{formatTanggal(d.tanggal)}</td>
                       <td className="py-3 px-4 text-center">
                         <div className="flex justify-center gap-2">
                           <button

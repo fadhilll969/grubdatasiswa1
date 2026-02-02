@@ -257,9 +257,13 @@ const Horw = () => {
                   <td className="p-3 text-center">{i + 1}</td>
                   <td className="p-3">{d.kategori}</td>
                   <td className="p-3">{d.nama}</td>
-                  <td className="p-3 text-center">{d.kelas || "-"}</td>
+                  <td className="p-3 text-center">{d.kelas?.kelas || "-"}</td>
                   <td className="p-3">
-                    {d.kategori === "Siswa" ? d.jurusan || "-" : d.mapel || "-"}
+                    {d.kategori === "Siswa"
+                      ? d.kelas?.jurusan || "-"
+                      : d.kategori === "Guru"
+                      ? d.mapel || "-"
+                      : "-"}
                   </td>
                   <td className="p-3 text-right">{d.email || "-"}</td>
                 </tr>
@@ -272,7 +276,7 @@ const Horw = () => {
         <h2 className="text-3xl font-bold mb-4">Daftar Tagihan</h2>
         <div className="overflow-x-auto bg-white rounded-lg shadow">
           <table className="w-full table-auto">
-            <thead className="bg-sky-600   text-white">
+            <thead className="bg-sky-600 text-white">
               <tr>
                 <th className="p-3">No</th>
                 <th className="p-3">Nama</th>
@@ -293,9 +297,7 @@ const Horw = () => {
                   <td className="p-3">{t.masterdata?.nama || "-"}</td>
                   <td className="p-3 text-right">{t.masterdata?.email || "-"}</td>
                   <td className="p-3 text-right">{formatRupiah(t.jumlah)}</td>
-                  <td className="p-3 text-center">
-                    {t.kategoriTagihan?.nama_kategori || "-"}
-                  </td>
+                  <td className="p-3 text-center">{t.kategoriTagihan?.nama_kategori || "-"}</td>
                   <td className="p-3 text-center">
                     <span
                       className={`px-3 py-1 rounded-full text-sm font-semibold ${

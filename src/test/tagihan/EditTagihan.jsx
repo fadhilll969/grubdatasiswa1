@@ -28,27 +28,28 @@ const EditTagihan = () => {
 
   // ===== Ambil master & kategori =====
   useEffect(() => {
-    axios.get(API_MASTER).then((res) => {
-      setMasterList(res.data.filter((m) => m.kategori === "Siswa"));
-    });
+    // Ambil daftar siswa
+    axios.get(`${API_MASTER}/siswa`)
+      .then(res => setMasterList(res.data))
+      .catch(err => console.error("Gagal ambil master:", err));
 
-    axios.get(API_KATEGORI).then((res) => {
-      setKategoriList(res.data.filter((k) => k.aktif));
-    });
+    // Ambil kategori aktif
+    axios.get(API_KATEGORI)
+      .then(res => setKategoriList(res.data.filter(k => k.aktif)))
+      .catch(err => console.error("Gagal ambil kategori:", err));
   }, []);
 
   // ===== Ambil data tagihan =====
   useEffect(() => {
-    axios
-      .get(`${API_TAGIHAN}/${id}`)
-      .then((res) => {
+    axios.get(`${API_TAGIHAN}/${id}`)
+      .then(res => {
         const t = res.data;
         setForm({
           masterdataId: t.masterdata?.id?.toString() || "",
           email: t.masterdata?.email || "",
           kategoriId: t.kategoriTagihan?.id?.toString() || "",
-          jumlah: t.jumlah ? t.jumlah.toString() : "",
-          tanggal: t.tanggal ? t.tanggal.slice(0, 10) : "",
+          jumlah: t.jumlah?.toString() || "",
+          tanggal: t.tanggal || "",
         });
         setLoading(false);
       })
@@ -61,7 +62,7 @@ const EditTagihan = () => {
   // ===== pilih nama -> auto email =====
   const handleMasterChange = (e) => {
     const val = e.target.value;
-    const selected = masterList.find((m) => m.id.toString() === val);
+    const selected = masterList.find(m => m.id.toString() === val);
 
     setForm({
       ...form,
@@ -73,7 +74,6 @@ const EditTagihan = () => {
   // ===== change handler =====
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     if (name === "jumlah") {
       const onlyNumber = value.replace(/[^0-9]/g, "");
       setForm({ ...form, jumlah: onlyNumber });
@@ -93,15 +93,16 @@ const EditTagihan = () => {
 
     try {
       await axios.put(`${API_TAGIHAN}/${id}`, {
+        masterdata: { id: Number(form.masterdataId) },
+        kategoriTagihan: { id: Number(form.kategoriId) },
         jumlah: Number(form.jumlah),
         tanggal: form.tanggal,
-        masterdata: { id: form.masterdataId },
-        kategoriTagihan: { id: form.kategoriId },
       });
 
       Swal.fire("Berhasil", "Data tagihan diperbarui", "success");
       navigate("/tagihan");
-    } catch {
+    } catch (err) {
+      console.error(err);
       Swal.fire("Gagal", "Update gagal", "error");
     }
   };
@@ -120,7 +121,6 @@ const EditTagihan = () => {
   return (
     <div className="min-h-screen bg-sky-200 flex">
       <Dasbor />
-
       <div className="flex-1 p-8">
         <div className="bg-white rounded-xl shadow-xl p-8 max-w-xl mx-auto mt-20">
           <h2 className="text-2xl font-bold text-sky-700 text-center mb-6">
@@ -138,10 +138,8 @@ const EditTagihan = () => {
                 required
               >
                 <option value="">-- Pilih Nama --</option>
-                {masterList.map((m) => (
-                  <option key={m.id} value={m.id}>
-                    {m.nama}
-                  </option>
+                {masterList.map(m => (
+                  <option key={m.id} value={m.id}>{m.nama}</option>
                 ))}
               </select>
             </div>
@@ -167,26 +165,20 @@ const EditTagihan = () => {
                 required
               >
                 <option value="">-- Pilih Jenis Tagihan --</option>
-                {kategoriList.map((k) => (
-                  <option key={k.id} value={k.id}>
-                    {k.nama_kategori}
-                  </option>
+                {kategoriList.map(k => (
+                  <option key={k.id} value={k.id}>{k.nama_kategori}</option>
                 ))}
               </select>
             </div>
 
-           <div>
+            {/* JUMLAH */}
+            <div>
               <label className="block font-semibold mb-2">Jumlah</label>
               <input
                 name="jumlah"
                 type="text"
-                value={
-                  form.jumlah ? `Rp. ${Number(form.jumlah).toLocaleString("id-ID")}` : ""
-                }
-                onChange={(e) => {
-                  const numericValue = e.target.value.replace(/\D/g, ""); // Ambil angka saja
-                  setForm({ ...form, jumlah: numericValue });
-                }}
+                value={form.jumlah ? `Rp. ${Number(form.jumlah).toLocaleString("id-ID")}` : ""}
+                onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
                 placeholder="Rp. 0"
                 required
@@ -202,6 +194,7 @@ const EditTagihan = () => {
                 value={form.tanggal}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
+                required
               />
             </div>
 

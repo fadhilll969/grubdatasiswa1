@@ -60,49 +60,63 @@ const Tambahdatakelas = () => {
   }, [selectedKelas, kelasList]);
 
   const handleSubmit = async () => {
-    // Validasi sederhana
-    if (!nama || !nomor || !email || !selectedKategori) {
-      Swal.fire({ icon: "warning", title: "Data belum lengkap!" });
-      return;
-    }
+  // Validasi sederhana
+  if (!nama || !nomor || !email || !selectedKategori) {
+    Swal.fire({ icon: "warning", title: "Data belum lengkap!" });
+    return;
+  }
 
-    if (selectedKategori === "Siswa" && (!selectedKelas || !selectedJurusan)) {
-      Swal.fire({ icon: "warning", title: "Kelas & Jurusan wajib diisi!" });
-      return;
-    }
+  if (selectedKategori === "Siswa" && (!selectedKelas || !selectedJurusan)) {
+    Swal.fire({ icon: "warning", title: "Kelas & Jurusan wajib diisi!" });
+    return;
+  }
 
-    if (selectedKategori === "Guru" && !mapel) {
-      Swal.fire({ icon: "warning", title: "Mapel wajib diisi!" });
-      return;
-    }
+  if (selectedKategori === "Guru" && !mapel) {
+    Swal.fire({ icon: "warning", title: "Mapel wajib diisi!" });
+    return;
+  }
 
-    const newData = {
-      nama,
-      nomor,
-      email,
-      kategori: selectedKategori,
-      ...(selectedKategori === "Siswa" && { kelas: selectedKelas, jurusan: selectedJurusan }),
-      ...(selectedKategori === "Guru" && { mapel }),
-    };
+  // Cari objek kategori dan kelas dari list
+  const kategoriObj = kategoriList.find(k => k.kategori_nama === selectedKategori);
+  const kelasObj = kelasList.find(k => k.kelas === selectedKelas && k.jurusan === selectedJurusan);
 
-    try {
-      const confirm = await Swal.fire({
-        title: "Simpan data?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Ya",
-        cancelButtonText: "Batal",
-      });
-
-      if (confirm.isConfirmed) {
-        await axios.post(API_URL_DATA, newData);
-        Swal.fire({ icon: "success", title: "Data berhasil ditambahkan!", timer: 1500, showConfirmButton: false });
-        navigate("/h"); // redirect ke halaman masterdata
-      }
-    } catch (err) {
-      Swal.fire({ icon: "error", title: "Gagal menyimpan data!" });
-    }
+  // Buat payload sesuai entity Masterdata (tanpa DTO)
+  const newData = {
+    nama,
+    nomor,
+    email,
+    kategori: kategoriObj ? { id: kategoriObj.id } : null, // kategori = object {id: ...}
+    ...(selectedKategori === "Siswa" && kelasObj && { kelas: { id: kelasObj.id } }), // kelas = object {id: ...}
+    ...(selectedKategori === "Guru" && { mapel }), // mapel hanya untuk Guru
   };
+
+  console.log("Payload dikirim:", newData); // untuk debugging
+
+  try {
+    const confirm = await Swal.fire({
+      title: "Simpan data?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Batal",
+    });
+
+    if (confirm.isConfirmed) {
+      await axios.post(API_URL_DATA, newData); // kirim ke backend
+      Swal.fire({
+        icon: "success",
+        title: "Data berhasil ditambahkan!",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      navigate("/h"); // redirect ke halaman masterdata
+    }
+  } catch (err) {
+    console.error("Error POST masterdata:", err.response || err);
+    Swal.fire({ icon: "error", title: "Gagal menyimpan data!" });
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-sky-200 flex">

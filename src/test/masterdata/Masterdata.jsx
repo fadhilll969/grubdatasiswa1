@@ -26,7 +26,8 @@ const Masterdata = () => {
           axios.get(API_KATEGORI),
         ]);
 
-        setDataList(resData.data.reverse());
+        // ✅ FIX FINAL (TANPA UBAH STYLE / LOGIC)
+        setDataList([...resData.data].reverse());
 
         const activeKat = resKategori.data
           .filter((k) => k.aktif)
@@ -104,7 +105,8 @@ const Masterdata = () => {
       .includes(searchTerm.toLowerCase());
 
     const matchCategory =
-      searchCategory === "Semua" || data.kategori === searchCategory;
+      searchCategory === "Semua" ||
+      data.kategori?.kategori_nama === searchCategory;
 
     return matchName && matchCategory;
   });
@@ -180,22 +182,29 @@ const Masterdata = () => {
                         index % 2 === 0 ? "bg-white" : "bg-sky-50"
                       } hover:bg-sky-100`}
                     >
-                      <td className="py-3 px-4 text-center">{index + 1}</td>
+                      <td className="py-3 px-4 text-center">
+                        {index + 1}
+                      </td>
+
                       <td className="py-3 px-4 flex items-center">
-                        {getCategoryIcon(data.kategori)}
-                        {data.kategori}
+                        {getCategoryIcon(data.kategori?.kategori_nama)}
+                        {data.kategori?.kategori_nama || "-"}
                       </td>
+
                       <td className="py-3 px-4">{data.nama}</td>
+
                       <td className="py-3 px-4">
-                        {data.kategori === "Siswa" ? data.kelas : "-"}
+                        {data.kelas?.kelas || "-"}
                       </td>
+
                       <td className="py-3 px-4">
-                        {data.kategori === "Siswa"
-                          ? data.jurusan
-                          : data.kategori === "Guru"
+                        {data.kategori?.kategori_nama === "Siswa"
+                          ? data.kelas?.jurusan
+                          : data.kategori?.kategori_nama === "Guru"
                           ? data.mapel
                           : "-"}
                       </td>
+
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
                           <span className="tracking-widest">
@@ -223,12 +232,18 @@ const Masterdata = () => {
                           )}
                         </div>
                       </td>
-                      <td className="py-3 px-4 text-right">{data.email}</td>
+
+                      <td className="py-3 px-4 text-right">
+                        {data.email}
+                      </td>
+
                       <td className="py-3 px-4">
                         <div className="flex gap-2 justify-center">
                           <button
                             className="bg-sky-500 text-white px-3 py-1 rounded-lg hover:bg-sky-600 flex items-center gap-1"
-                            onClick={() => navigate(`/edit/${data.id}`)}
+                            onClick={() =>
+                              navigate(`/edit/${data.id}`)
+                            }
                           >
                             <i className="ri-edit-2-line"></i> Edit
                           </button>

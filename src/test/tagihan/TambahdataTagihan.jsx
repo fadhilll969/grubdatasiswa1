@@ -20,18 +20,18 @@ const TambahdataTagihan = () => {
     masterdataId: "",
     email: "",
     kategoriId: "",
-    jumlah: "", // Simpan nilai murni (angka)
+    jumlah: "",
     tanggal: "",
   });
 
   const [loading, setLoading] = useState(false);
 
-  // ===== GET MASTERDATA & KATEGORI =====
+  // ===== GET MASTERDATA SISWA & KATEGORI =====
   useEffect(() => {
     const fetchMaster = async () => {
       try {
-        const resMaster = await axios.get(API_MASTER);
-        setMasterList(resMaster.data);
+        const resMaster = await axios.get(`${API_MASTER}/siswa`);
+        setMasterList(resMaster.data); // sudah filter Siswa di backend
       } catch (err) {
         console.error("Gagal ambil master data:", err);
       }
@@ -78,18 +78,23 @@ const TambahdataTagihan = () => {
     setLoading(true);
 
     try {
+      // ===== FIX: endpoint tanpa "/tambah" & payload sesuai Spring =====
       await axios.post(
-        `${API_TAGIHAN}?masterdataId=${form.masterdataId}&kategoriId=${form.kategoriId}`,
+        API_TAGIHAN,
         {
-          jumlah: Number(form.jumlah), // Kirim angka murni
-          tanggal: form.tanggal,
+          masterdata: { id: Number(form.masterdataId) },
+          kategoriTagihan: { id: Number(form.kategoriId) },
+          jumlah: Number(form.jumlah),
+          tanggal: form.tanggal, // format "yyyy-MM-dd"
         },
         { headers: { "Content-Type": "application/json" } }
       );
 
+
       Swal.fire("Berhasil", "Data tagihan berhasil ditambahkan", "success");
       navigate("/tagihan");
     } catch (err) {
+      console.error(err);
       Swal.fire("Gagal", "Tambah data gagal", "error");
     } finally {
       setLoading(false);
@@ -106,7 +111,7 @@ const TambahdataTagihan = () => {
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* NAMA (Hanya Siswa) */}
+            {/* NAMA (Siswa) */}
             <div>
               <label className="block font-semibold mb-2">Nama</label>
               <select
@@ -116,13 +121,11 @@ const TambahdataTagihan = () => {
                 required
               >
                 <option value="">-- Pilih Nama (Siswa) --</option>
-                {masterList
-                  .filter((m) => m.kategori === "Siswa")
-                  .map((m) => (
-                    <option key={m.id} value={m.id}>
-                      {m.nama}
-                    </option>
-                  ))}
+                {masterList.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.nama}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -156,17 +159,19 @@ const TambahdataTagihan = () => {
               </select>
             </div>
 
-            {/* JUMLAH dengan format Rp */}
-           <div>
+            {/* JUMLAH */}
+            <div>
               <label className="block font-semibold mb-2">Jumlah</label>
               <input
                 name="jumlah"
                 type="text"
                 value={
-                  form.jumlah ? `Rp. ${Number(form.jumlah).toLocaleString("id-ID")}` : ""
+                  form.jumlah
+                    ? `Rp. ${Number(form.jumlah).toLocaleString("id-ID")}`
+                    : ""
                 }
                 onChange={(e) => {
-                  const numericValue = e.target.value.replace(/\D/g, ""); // Ambil angka saja
+                  const numericValue = e.target.value.replace(/\D/g, "");
                   setForm({ ...form, jumlah: numericValue });
                 }}
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 outline-none"
@@ -178,7 +183,7 @@ const TambahdataTagihan = () => {
             {/* TANGGAL */}
             <div>
               <label className="block font-semibold mb-2">Tanggal</label>
-               <input
+              <input
                 name="tanggal"
                 type="date"
                 value={form.tanggal}
@@ -188,7 +193,7 @@ const TambahdataTagihan = () => {
               />
             </div>
 
-            {/* BUTTONS */}
+            {/* BUTTON */}
             <div className="flex justify-end gap-3 pt-4">
               <button
                 type="button"
@@ -200,12 +205,24 @@ const TambahdataTagihan = () => {
 
               <button
                 type="submit"
-                disabled={loading || !form.masterdataId}
-                className={`bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg ${
-                  loading || !form.masterdataId ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                disabled={
+                  loading ||
+                  !form.masterdataId ||
+                  !form.kategoriId ||
+                  !form.jumlah ||
+                  !form.tanggal
+                }
+                className={`bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg ${loading ||
+                  !form.masterdataId ||
+                  !form.kategoriId ||
+                  !form.jumlah ||
+                  !form.tanggal
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+                  }`}
               >
-                <i className="ri-save-3-line"></i> {loading ? "Menyimpan..." : "Simpan"}
+                <i className="ri-save-3-line"></i>{" "}
+                {loading ? "Menyimpan..." : "Simpan"}
               </button>
             </div>
           </form>

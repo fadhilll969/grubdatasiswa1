@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import Swal from 'sweetalert2';
-import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { BASE_URL } from "../config/api";
 
+const LOGIN_URL = `${BASE_URL}/users`;
 
 function Login() {
   const [formData, setFormData] = useState({
-
     email: "",
     password: "",
   });
@@ -24,25 +24,22 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/users', formData);
-      console.log('Register success:', response.data);
+      const response = await axios.post(
+        "http://localhost:8080/api/users/login",
+        formData
+      );
 
-
-      await Swal.fire({
+      Swal.fire({
         title: "Login Berhasil!",
-        text: "",
         icon: "success",
         confirmButtonText: "OK"
       });
 
-
-      navigate('/w');
+      navigate("/w");
     } catch (error) {
-      console.error('Error register:', error);
-
       Swal.fire({
-        title: "gagal",
-        text: "Terjadi kesalahan saat mengirim data.",
+        title: "Login gagal",
+        text: error.response?.data || "Email atau password salah",
         icon: "error",
         confirmButtonText: "OK"
       });
@@ -51,60 +48,54 @@ function Login() {
     }
   };
 
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-sky-600 bg-indigo-400">
-      <div className="bg-white p-8 rounded-lg shadow-md w-90 h-110 max-w-sm mt-5">
-        <h1 className="text-4xl font-bold text-center mb-6">Login</h1>
-        <form onSubmit={handleSubmit}>
 
-          <div className="mb-4 mt-10">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-sky-600">
+      <div className="bg-white p-8 rounded-lg shadow-md max-w-sm w-full">
+        <h1 className="text-4xl font-bold text-center mb-6">Login</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2">Email</label>
             <input
-              className="shadow border rounded w-full py-2 px-3 text-gray-700"
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Masukkan Email"
+              className="w-full border rounded px-3 py-2"
               required
             />
           </div>
-          <div className="mb-6 mt-10">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+
+          <div className="mb-6">
+            <label className="block text-sm font-bold mb-2">Password</label>
             <input
-              className="shadow border rounded w-full py-2 px-3 text-gray-700"
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Masukkan Password"
+              className="w-full border rounded px-3 py-2"
               required
             />
           </div>
-          <div className="flex justify-center mt-10">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-7 rounded"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Mengirim..." : "Masuk"}
-            </button>
-          </div>
-          <div className="flex justify-between mt-5 ml-5">
-            <h1 className="">
-              Belum Punya Akun?
-              <span className="font-bold ml-1 text-sky-400 underline">
-                <Link to="/register">
-                  Daftar Sekarang
-                </Link>
-              </span>
-              <button >
-              </button>
-            </h1>
-          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-500 hover:bg-blue-700 text-white py-2 rounded"
+          >
+            {loading ? "Mengirim..." : "Masuk"}
+          </button>
         </form>
-      </div >
-    </div >
+
+        <p className="text-center mt-4">
+          Belum punya akun?{" "}
+          <Link to="/register" className="text-sky-500 font-bold underline">
+            Daftar sekarang
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }
 

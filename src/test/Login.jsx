@@ -24,10 +24,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/users/login",
-        formData
-      );
+      await axios.post(`${BASE_URL}/users/login`, formData);
 
       Swal.fire({
         title: "Login Berhasil!",
@@ -38,12 +35,12 @@ function Login() {
       navigate("/w");
     } catch (error) {
       Swal.fire({
-        title: "Login gagal",
-        text: error.response?.data || "Email atau password salah",
         icon: "error",
-        confirmButtonText: "OK"
+        title: "Login gagal",
+        text: "Email atau password salah"
       });
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };

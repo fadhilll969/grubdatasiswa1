@@ -1,37 +1,46 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../config/api";
 
 const Presensi = () => {
   const [dataOrang, setDataOrang] = useState([]);
   const [dataPresensi, setDataPresensi] = useState([]);
   const [nis, setNis] = useState("");
   const [orangDitemukan, setOrangDitemukan] = useState(null);
-  const [pilihan, setPilihan] = useState("");
+  const [pilihan, setPilihan] = useState(""); // HADIR | IZIN
   const [keteranganIzin, setKeteranganIzin] = useState("");
-  const [sudahProses, setSudahProses] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const API_PRESENSI = "http://localhost:5000/presensi";
-  const API_DOSS = "http://localhost:5000/doss";
+  const API_MASTERDATA = `${BASE_URL}/masterdata`;
+  const API_PRESENSI = `${BASE_URL}/presensi`;
   const tanggalHariIni = new Date().toISOString().split("T")[0];
 
-  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  // ===== SET JAM (UBAH SESUKA LO) =====
+  const JAM_PRESENSI = {
+    masukMulai: "06:00",
+    masukSelesai: "08:00",
+    pulangMulai: "15:00", // ganti "12:00" kalau mau pulang jam 12
+  };
 
-  const getJamNow = () =>
-    new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+  const getJamNowHHMM = () => {
+    const d = new Date();
+    return d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+  };
 
-  // ================= FETCH MASTER =================
+  const isBetween = (now, start, end) => now >= start && now <= end;
+
+  // ===== MASTER DATA =====
   useEffect(() => {
-    axios
-      .get(API_DOSS)
-      .then((res) =>
-        setDataOrang(
-          res.data
-            .filter((x) => ["Siswa", "Guru", "Karyawan"].includes(x.kategori))
-            .map((s) => ({ nis: s.nomor, nama: s.nama, kategori: s.kategori }))
-        )
-      )
-      .catch(() => Swal.fire("Error", "Gagal memuat data master", "error"));
+    axios.get(API_MASTERDATA).then((res) => {
+      setDataOrang(
+        res.data.map((s) => ({
+          nis: String(s.nomor),
+          nama: s.nama,
+          kategori: s.kategori?.kategori_nama, // string (AMAN)
+        }))
+      );
+    });
   }, []);
 
   const fetchPresensi = async () => {
@@ -43,105 +52,125 @@ const Presensi = () => {
     fetchPresensi();
   }, []);
 
-  // ================= HANDLER =================
-  const handleNisChange = (e) => {
-    const value = e.target.value.trim();
-    setNis(value);
-    const orang = dataOrang.find((o) => o.nis === value) || null;
-    setOrangDitemukan(orang);
-    setSudahProses(false);
-  };
+  const getPresensiHariIni = (orang) =>
+    dataPresensi.find(
+      (d) => d.nis === orang.nis && d.tanggal === tanggalHariIni
+    );
 
-  const resetSemua = () => {
+  const reset = () => {
     setNis("");
     setOrangDitemukan(null);
-    setPilihan("");
     setKeteranganIzin("");
-    setSudahProses(false);
+    setIsProcessing(false);
   };
 
-  const presensiHariIni = orangDitemukan
-    ? dataPresensi.find((d) => d.nis === orangDitemukan.nis && d.tanggal === tanggalHariIni)
-    : null;
+  // ===== PROSES HADIR (MASUK / PULANG) =====
+  const prosesHadir = async (orang) => {
+    const now = getJamNowHHMM();
+    const presensi = getPresensiHariIni(orang);
 
-  const validasiJamMasuk = () => new Date().getHours() >= 6;
-  const validasiJamPulang = () => new Date().getHours() >= 12;
-
-  // ================= PROSES HADIR =================
-  const prosesMasukPulang = async () => {
-    if (!orangDitemukan) return;
-
-    // ❌ BLOK JIKA SUDAH IZIN
-    if (presensiHariIni && presensiHariIni.kehadiran === "IZIN") {
-      await delay(400);
-      return Swal.fire({
-        icon: "warning",
-        title: "Tidak bisa absen",
-        text: "Anda sudah izin hari ini",
-        timer: 2000,
-        showConfirmButton: false,
-      });
+    // ❌ SUDAH IZIN
+    if (presensi?.kehadiran === "IZIN") {
+      return Swal.fire(
+        "Sudah izin",
+        "Hari ini Anda sudah izin dan tidak bisa hadir",
+        "info"
+      );
     }
 
-    if (!presensiHariIni) {
-      if (!validasiJamMasuk())
-        return Swal.fire("Belum waktunya absen masuk", "", "warning");
+    // ✅ ABSEN MASUK
+    if (!presensi) {
+      if (
+        !isBetween(
+          now,
+          JAM_PRESENSI.masukMulai,
+          JAM_PRESENSI.masukSelesai
+        )
+      ) {
+        return Swal.fire(
+          "Di luar jam masuk",
+          `Masuk hanya ${JAM_PRESENSI.masukMulai} - ${JAM_PRESENSI.masukSelesai}`,
+          "warning"
+        );
+      }
 
       await axios.post(API_PRESENSI, {
-        nis: orangDitemukan.nis,
-        nama: orangDitemukan.nama,
+        nis: orang.nis,
+        nama: orang.nama,
         tanggal: tanggalHariIni,
-        jamMasuk: getJamNow(),
+        jamMasuk: now,
         jamPulang: "",
         kehadiran: "HADIR",
         keterangan: "",
       });
 
-      await delay(600);
-      Swal.fire({ icon: "success", title: "Absen Masuk Berhasil", timer: 1500, showConfirmButton: false });
-    } else if (!presensiHariIni.jamPulang) {
-      if (!validasiJamPulang())
-        return Swal.fire("Belum waktunya absen pulang", "", "warning");
-
-      await axios.put(`${API_PRESENSI}/${presensiHariIni.id}`, {
-        ...presensiHariIni,
-        jamPulang: getJamNow(),
+      return Swal.fire({
+        icon: "success",
+        title: orang.nama,
+        text: "Absen masuk berhasil",
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
+        fetchPresensi();
+        reset();
       });
-
-      await delay(600);
-      Swal.fire({ icon: "success", title: "Absen Pulang Berhasil", timer: 1500, showConfirmButton: false });
-    } else {
-      return Swal.fire("Sudah absen hari ini", "", "info");
     }
 
-    await fetchPresensi();
-    await delay(1600);
-    resetSemua();
+    // ✅ ABSEN PULANG
+    if (!presensi.jamPulang) {
+      if (now < JAM_PRESENSI.pulangMulai) {
+        return Swal.fire(
+          "Belum waktunya pulang",
+          `Pulang setelah jam ${JAM_PRESENSI.pulangMulai}`,
+          "warning"
+        );
+      }
+
+      await axios.put(`${API_PRESENSI}/${presensi.id}`, {
+        ...presensi,
+        jamPulang: now,
+      });
+
+      return Swal.fire({
+        icon: "success",
+        title: orang.nama,
+        text: "Absen pulang berhasil",
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
+        fetchPresensi();
+        reset();
+      });
+    }
+
+    // ❌ SUDAH KOMPLIT
+    Swal.fire(
+      "Presensi lengkap",
+      "Anda sudah absen masuk & pulang hari ini",
+      "info"
+    );
+    reset();
   };
 
-  // ================= PROSES IZIN =================
-  const prosesIzin = async () => {
-    // ❌ BLOK HADIR → TIDAK BOLEH IZIN
-    if (presensiHariIni && presensiHariIni.kehadiran === "HADIR") {
-      await delay(400);
-      return Swal.fire({
-        icon: "warning",
-        title: "Tidak bisa izin",
-        text: "Anda sudah absen masuk hari ini",
-        timer: 2000,
-        showConfirmButton: false,
-      });
+  // ===== PROSES IZIN =====
+  const prosesIzin = async (orang) => {
+    if (!keteranganIzin.trim()) {
+      setIsProcessing(false);
+      return Swal.fire("Isi keterangan izin dulu", "", "warning");
     }
 
-    if (!keteranganIzin.trim())
-      return Swal.fire("Keterangan wajib diisi", "", "warning");
-
-    if (presensiHariIni)
-      return Swal.fire("Sudah absen hari ini", "", "warning");
+    const presensi = getPresensiHariIni(orang);
+    if (presensi) {
+      return Swal.fire(
+        "Tidak bisa izin",
+        "Anda sudah melakukan presensi hari ini",
+        "warning"
+      );
+    }
 
     await axios.post(API_PRESENSI, {
-      nis: orangDitemukan.nis,
-      nama: orangDitemukan.nama,
+      nis: orang.nis,
+      nama: orang.nama,
       tanggal: tanggalHariIni,
       jamMasuk: "",
       jamPulang: "",
@@ -149,93 +178,116 @@ const Presensi = () => {
       keterangan: keteranganIzin,
     });
 
-    await delay(600);
-    Swal.fire({ icon: "success", title: "Izin Berhasil", timer: 1500, showConfirmButton: false });
-
-    await fetchPresensi();
-    await delay(1600);
-    resetSemua();
+    Swal.fire({
+      icon: "success",
+      title: orang.nama,
+      text: "Izin berhasil",
+      timer: 1500,
+      showConfirmButton: false,
+    }).then(() => {
+      fetchPresensi();
+      reset();
+    });
   };
 
-  // ================= AUTO SUBMIT =================
-  useEffect(() => {
-    if (!orangDitemukan || !pilihan || sudahProses) return;
+  // ===== AUTO SUBMIT (TANPA ENTER) =====
+  const handleNisChange = async (e) => {
+    const v = e.target.value.trim();
+    setNis(v);
 
-    // ❌ BLOK IZIN jika sudah HADIR
-    if (pilihan === "IZIN" && presensiHariIni && presensiHariIni.kehadiran === "HADIR") {
-      setSudahProses(true);
-      Swal.fire({
-        icon: "warning",
-        title: "Tidak bisa izin",
-        text: "Anda sudah absen masuk hari ini",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      return;
+    if (!v || isProcessing) return;
+
+    const orang = dataOrang.find((o) => o.nis === v);
+    if (!orang) return;
+
+    if (!pilihan) {
+      return Swal.fire("Pilih HADIR / IZIN dulu", "", "warning");
     }
 
-    // ❌ BLOK HADIR jika sudah IZIN
-    if (pilihan === "HADIR" && presensiHariIni && presensiHariIni.kehadiran === "IZIN") {
-      setSudahProses(true);
-      Swal.fire({
-        icon: "warning",
-        title: "Tidak bisa absen",
-        text: "Anda sudah izin hari ini",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      return;
+    const presensi = getPresensiHariIni(orang);
+
+    // Gate keras
+    if (presensi?.kehadiran === "IZIN") {
+      return Swal.fire(
+        "Sudah izin",
+        "Hari ini Anda sudah izin",
+        "info"
+      );
+    }
+    if (
+      presensi?.kehadiran === "HADIR" &&
+      presensi.jamMasuk &&
+      presensi.jamPulang
+    ) {
+      return Swal.fire(
+        "Selesai",
+        "Anda sudah absen masuk & pulang",
+        "info"
+      );
     }
 
-    setSudahProses(true);
+    setIsProcessing(true);
+    setOrangDitemukan(orang);
 
-    if (pilihan === "HADIR") prosesMasukPulang();
-    if (pilihan === "IZIN" && keteranganIzin.trim()) prosesIzin();
-  }, [orangDitemukan, pilihan, keteranganIzin]);
+    if (pilihan === "HADIR") await prosesHadir(orang);
+    // IZIN diproses setelah isi keterangan
+  };
 
-  // ================= UI =================
   return (
     <div className="min-h-screen bg-sky-200 flex justify-center items-center">
       <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-xl">
         <h1 className="text-2xl font-bold text-center">Presensi</h1>
 
+        {/* PILIHAN */}
         <div className="flex gap-3 justify-center mt-4">
           {["HADIR", "IZIN"].map((p) => (
             <button
               key={p}
-              onClick={() => setPilihan(p)}
-              className={`px-4 py-2 rounded-lg text-white font-bold ${p === "HADIR" ? "bg-green-600" : "bg-yellow-500"}`}
+              onClick={() => {
+                setPilihan(p);
+                reset();
+              }}
+              className={`px-4 py-2 rounded-lg text-white font-bold ${
+                p === "HADIR" ? "bg-green-600" : "bg-yellow-500"
+              }`}
             >
               {p}
             </button>
           ))}
         </div>
 
+        {/* INPUT NOMOR */}
         {pilihan && (
+          <input
+            className="w-full border p-3 rounded-lg mt-4"
+            placeholder={`Scan / Masukkan Nomor (${pilihan})`}
+            value={nis}
+            onChange={handleNisChange}
+            autoFocus
+          />
+        )}
+
+        {orangDitemukan && (
+          <div className="mt-3 bg-gray-100 p-3 rounded text-center">
+            <b>{orangDitemukan.nama}</b>
+            <p>{orangDitemukan.kategori}</p>
+          </div>
+        )}
+
+        {pilihan === "IZIN" && orangDitemukan && (
           <>
-            <input
-              className="w-full border p-3 rounded-lg mt-4"
-              placeholder="Scan / Masukkan Nomor"
-              value={nis}
-              onChange={handleNisChange}
-              autoFocus
+            <textarea
+              className="w-full mt-3 border p-3 rounded"
+              placeholder="Keterangan izin"
+              value={keteranganIzin}
+              onChange={(e) => setKeteranganIzin(e.target.value)}
             />
-
-            {orangDitemukan && (
-              <div className="mt-3 bg-gray-100 p-3 rounded">
-                <b>{orangDitemukan.nama}</b>
-                <p>{orangDitemukan.kategori}</p>
-              </div>
-            )}
-
-            {pilihan === "IZIN" && orangDitemukan && (
-              <textarea
-                className="w-full mt-3 border p-3 rounded"
-                placeholder="Keterangan izin"
-                value={keteranganIzin}
-                onChange={(e) => setKeteranganIzin(e.target.value)}
-              />
-            )}
+            <button
+              className="w-full mt-3 bg-yellow-500 text-white font-bold py-2 rounded"
+              onClick={() => prosesIzin(orangDitemukan)}
+            >
+              Kirim Izin
+            </button>
           </>
         )}
       </div>

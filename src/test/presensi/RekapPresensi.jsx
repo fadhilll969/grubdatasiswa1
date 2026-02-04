@@ -5,14 +5,17 @@ import Dasbor from "../Dasbor";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../config/api";
+
+const API_PRESENSI = `${BASE_URL}/presensi`;
+
 
 const RekapPresensi = () => {
   const [dataPresensi, setDataPresensi] = useState([]);
   const [filterKehadiran, setFilterKehadiran] = useState("SEMUA");
   const [filterTanggal, setFilterTanggal] = useState(null); // pakai Date object
   const navigate = useNavigate();
-  const API_PRESENSI = "http://localhost:5000/presensi";
-
+ 
   const formatTanggal = (tgl) => {
     const [year, month, day] = tgl.split("-");
     return `${day}/${month}/${year}`;

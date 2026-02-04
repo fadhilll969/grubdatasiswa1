@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axios from "axios";
+import { BASE_URL } from "../config/api";
+
+const REGISTER_URL = `${BASE_URL}/users/register`;
+
 
 function Register() {
     const navigate = useNavigate();
@@ -16,26 +21,30 @@ function Register() {
     };
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setLoading(true);  
+    const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        users.push({ ...formData, id: Date.now() });
-        localStorage.setItem("users", JSON.stringify(users));
+  try {
+    await axios.post(REGISTER_URL, formData);
 
-        Swal.fire({
-            icon: "success",
-            title: "Berhasil daftar!",
-            text: "Akun kamu berhasil dibuat.",
-            confirmButtonText: "Oke",
-        }).then(() => {
-            setLoading(false);  
-            navigate("/f");
-        });
+    Swal.fire({
+      icon: "success",
+      title: "Berhasil daftar!",
+      text: "Akun kamu berhasil dibuat",
+    });
 
-        setFormData({ name: "", email: "", password: "" });
-    };
+    navigate("/login");
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Gagal daftar",
+      text: error.response?.data || "Server error",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
 
     return (

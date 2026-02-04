@@ -69,7 +69,7 @@ const Masterdata = () => {
             Swal.fire({
               icon: "error",
               title: "Gagal!",
-              text: "Gagal menghapus data dari server.",
+              text: "utang tolol, bayar dulu bego baru hapus",
             });
           });
       }

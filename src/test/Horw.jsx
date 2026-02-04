@@ -91,20 +91,22 @@ const Horw = () => {
   const fetchMasterdata = async () => {
     try {
       const res = await axios.get(MASTERDATA_URL);
-      const data = res.data || [];
+      const data = Array.isArray(res.data) ? res.data : [];
 
       setJumlah({
         total: data.length,
-        siswa: data.filter((d) => d.kategori === "Siswa").length,
-        guru: data.filter((d) => d.kategori === "Guru").length,
-        karyawan: data.filter((d) => d.kategori === "Karyawan").length,
+        siswa: data.filter(d => d.kategori?.kategori_nama === "Siswa").length,
+        guru: data.filter(d => d.kategori?.kategori_nama === "Guru").length,
+        karyawan: data.filter(d => d.kategori?.kategori_nama === "Karyawan").length,
       });
 
-      setDataList(data.reverse());
-    } catch {
+      // ✅ jangan mutasi data asli
+      setDataList([...data].reverse());
+    } catch (err) {
       Swal.fire("Error", "Gagal memuat masterdata", "error");
     }
   };
+
 
   const fetchRekapTagihan = async () => {
     try {
@@ -255,15 +257,17 @@ const Horw = () => {
                   className={`${i % 2 ? "bg-sky-50" : "bg-white"} hover:bg-sky-100 transition`}
                 >
                   <td className="p-3 text-center">{i + 1}</td>
-                  <td className="p-3">{d.kategori}</td>
+                  <td className="p-3">{d.kategori?.kategori_nama || "-"}</td>
                   <td className="p-3">{d.nama}</td>
-                  <td className="p-3 text-center">{d.kelas?.kelas || "-"}</td>
-                  <td className="p-3">
-                    {d.kategori === "Siswa"
-                      ? d.kelas?.jurusan || "-"
-                      : d.kategori === "Guru"
-                      ? d.mapel || "-"
-                      : "-"}
+                  <td className="p-3">{d.kelas?.kelas || "-"}</td>
+                  <td className="p-3 text-center">
+                    {d.kategori?.kategori_nama === "Siswa" ? (
+                      d.kelas ? d.kelas.jurusan : "-"
+                    ) : d.kategori?.kategori_nama === "Guru" ? (
+                      d.mapel || "-"
+                    ) : (
+                      "-"
+                    )}
                   </td>
                   <td className="p-3 text-right">{d.email || "-"}</td>
                 </tr>
@@ -300,11 +304,10 @@ const Horw = () => {
                   <td className="p-3 text-center">{t.kategoriTagihan?.nama_kategori || "-"}</td>
                   <td className="p-3 text-center">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        t.status === "Sudah Bayar"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
+                      className={`px-3 py-1 rounded-full text-sm font-semibold ${t.status === "Sudah Bayar"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                        }`}
                     >
                       {t.status}
                     </span>

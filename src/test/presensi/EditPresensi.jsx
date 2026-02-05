@@ -5,8 +5,6 @@ import Swal from "sweetalert2";
 import Dasbor from "../Dasbor";
 import { BASE_URL } from "../../config/api";
 
-
-
 const EditPresensi = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -19,7 +17,12 @@ const EditPresensi = () => {
   });
 
   const [loading, setLoading] = useState(false);
-const API_PRESENSI = `${BASE_URL}/presensi`;
+  const API_PRESENSI = `${BASE_URL}/presensi`;
+
+  const normalizeTime = (time) => {
+    if (!time) return "";
+    return time.replace(".", ":");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,10 +31,11 @@ const API_PRESENSI = `${BASE_URL}/presensi`;
         setForm({
           kehadiran: res.data.kehadiran,
           keterangan: res.data.keterangan || "",
-          jamMasuk: res.data.jamMasuk || "",
-          jamPulang: res.data.jamPulang || "",
+          jamMasuk: normalizeTime(res.data.jamMasuk),
+          jamPulang: normalizeTime(res.data.jamPulang),
         });
       } catch (err) {
+        console.error(err);
         Swal.fire("Error", "Gagal mengambil data", "error");
       }
     };
@@ -45,32 +49,35 @@ const API_PRESENSI = `${BASE_URL}/presensi`;
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let payload = { ...form };
+
     // ===== VALIDASI =====
-    if (form.kehadiran === "IZIN") {
-      if (!form.keterangan.trim()) {
-        return Swal.fire("Isi keterangan izin!", "", "warning");
+    if (payload.kehadiran === "IZIN") {
+      if (!payload.keterangan.trim()) {
+        return Swal.fire("Isi keterangan izin dulu!", "", "warning");
       }
-      form.jamMasuk = "";
-      form.jamPulang = "";
+      payload.jamMasuk = "";
+      payload.jamPulang = "";
     }
 
-    if (form.kehadiran === "HADIR") {
-      if (!form.jamMasuk) {
+    if (payload.kehadiran === "HADIR") {
+      if (!payload.jamMasuk) {
         return Swal.fire("Jam masuk wajib diisi", "", "warning");
       }
-      if (form.jamPulang && form.jamPulang < form.jamMasuk) {
+      if (payload.jamPulang && payload.jamPulang < payload.jamMasuk) {
         return Swal.fire(
           "Jam pulang tidak valid",
           "Jam pulang tidak boleh lebih awal dari jam masuk",
           "warning"
         );
       }
-      form.keterangan = "";
+      payload.keterangan = "";
     }
 
     setLoading(true);
     try {
-      await axios.put(`${API_PRESENSI}/${id}`, form);
+      await axios.put(`${API_PRESENSI}/${id}`, payload);
+
       Swal.fire({
         icon: "success",
         title: "Berhasil",
@@ -78,8 +85,10 @@ const API_PRESENSI = `${BASE_URL}/presensi`;
         timer: 1500,
         showConfirmButton: false,
       });
+
       navigate("/rekap-presensi");
     } catch (err) {
+      console.error(err.response || err);
       Swal.fire("Error", "Gagal menyimpan data", "error");
     } finally {
       setLoading(false);

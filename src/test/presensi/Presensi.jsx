@@ -19,7 +19,7 @@ const Presensi = () => {
   // ===== SET JAM (UBAH SESUKA LO) =====
   const JAM_PRESENSI = {
     masukMulai: "06:00",
-    masukSelesai: "08:00",
+    masukSelesai: "13:00",
     pulangMulai: "15:00", // ganti "12:00" kalau mau pulang jam 12
   };
 

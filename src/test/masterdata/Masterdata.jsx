@@ -17,7 +17,8 @@ const Masterdata = () => {
   const [kategoriOptions, setKategoriOptions] = useState([]);
   const [visibleNomor, setVisibleNomor] = useState({});
 
-  // Ambil data master & kategori
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,13 +27,19 @@ const Masterdata = () => {
           axios.get(API_KATEGORI),
         ]);
 
-        // ✅ FIX FINAL (TANPA UBAH STYLE / LOGIC)
         setDataList([...resData.data].reverse());
 
-        const activeKat = resKategori.data
-          .filter((k) => k.aktif)
+        const usedKategori = new Set(
+          resData.data
+            .map((d) => d.kategori?.kategori_nama)
+            .filter(Boolean)
+        );
+
+        const kategoriTerpakai = resKategori.data
+          .filter((k) => usedKategori.has(k.kategori_nama))
           .map((k) => k.kategori_nama);
-        setKategoriOptions(activeKat);
+
+        setKategoriOptions(kategoriTerpakai);
       } catch (err) {
         console.error("Gagal ambil data atau kategori:", err);
       }
@@ -41,7 +48,6 @@ const Masterdata = () => {
     fetchData();
   }, []);
 
-  // Hapus data
   const handleDelete = (id) => {
     Swal.fire({
       title: "Yakin ingin menghapus data ini?",
@@ -67,9 +73,9 @@ const Masterdata = () => {
           })
           .catch(() => {
             Swal.fire({
-              icon: "error",
-              title: "Gagal!",
-              text: "utang tolol, bayar dulu bego baru hapus",
+              icon: "warning",
+              title: "Gagal",
+              text: "Data sudah terisi di tagihan",
             });
           });
       }
@@ -178,9 +184,8 @@ const Masterdata = () => {
                   filteredData.map((data, index) => (
                     <tr
                       key={data.id}
-                      className={`${
-                        index % 2 === 0 ? "bg-white" : "bg-sky-50"
-                      } hover:bg-sky-100`}
+                      className={`${index % 2 === 0 ? "bg-white" : "bg-sky-50"
+                        } hover:bg-sky-100`}
                     >
                       <td className="py-3 px-4 text-center">
                         {index + 1}
@@ -201,8 +206,8 @@ const Masterdata = () => {
                         {data.kategori?.kategori_nama === "Siswa"
                           ? data.kelas?.jurusan
                           : data.kategori?.kategori_nama === "Guru"
-                          ? data.mapel
-                          : "-"}
+                            ? data.mapel
+                            : "-"}
                       </td>
 
                       <td className="py-3 px-4">

@@ -25,20 +25,7 @@ const KategoriTagihan = () => {
     fetchData();
   }, []);
 
-  const handleToggleAktif = async (item) => {
-    const newStatus = !item.aktif;
-    setKategoriList(prev =>
-      prev.map(k => (k.id === item.id ? { ...k, aktif: newStatus } : k))
-    );
-    try {
-      await axios.put(`${API_URL}/${item.id}`, { ...item, aktif: newStatus });
-    } catch {
-      setKategoriList(prev =>
-        prev.map(k => (k.id === item.id ? { ...k, aktif: item.aktif } : k))
-      );
-      Swal.fire("Error", "Gagal mengubah status", "error");
-    }
-  };
+   
 
   const handleDelete = async (id) => {
     const confirm = await Swal.fire({
@@ -83,15 +70,14 @@ const KategoriTagihan = () => {
           </div>
         </div>
 
-        <div className="rounded-xl mt-6 overflow-x-auto shadow-md bg-white">
-          <table className="min-w-full table-auto text-center">
+         <div className="rounded-xl mt-6 overflow-x-auto shadow-md bg-white">
+          <table className="min-w-full border-separate border-spacing-0 text-center">
             <thead className="bg-sky-700 text-white">
               <tr>
                 <th className="py-3 px-4">No</th>
                 <th className="py-3 text-left px-4">Nama Kategori</th>
                 <th className="py-3 text-left px-4">Keterangan</th>
-                <th className="py-3 px-4">Aktif</th>
-                <th className="py-3 px-4">Aksi</th>
+                 <th className="py-3 px-4">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -105,13 +91,6 @@ const KategoriTagihan = () => {
                     <td className="py-3 px-4">{idx + 1}</td>
                     <td className="py-3 text-left px-4">{item.nama_kategori}</td>
                     <td className="py-3 text-left px-4">{item.keterangan || "-"}</td>
-                    <td className="py-3 px-4">
-                      <input
-                        type="checkbox"
-                        checked={item.aktif}
-                        onChange={() => handleToggleAktif(item)}
-                      />
-                    </td>
                     <td className="py-3 px-4">
                       <div className="flex justify-center gap-2">
                         <button

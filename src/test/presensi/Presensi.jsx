@@ -8,7 +8,7 @@ const Presensi = () => {
   const [dataPresensi, setDataPresensi] = useState([]);
   const [nis, setNis] = useState("");
   const [orangDitemukan, setOrangDitemukan] = useState(null);
-  const [pilihan, setPilihan] = useState(""); // HADIR | IZIN
+  const [pilihan, setPilihan] = useState("");  
   const [keteranganIzin, setKeteranganIzin] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -16,11 +16,11 @@ const Presensi = () => {
   const API_PRESENSI = `${BASE_URL}/presensi`;
   const tanggalHariIni = new Date().toISOString().split("T")[0];
 
-  // ===== SET JAM (UBAH SESUKA LO) =====
+  // mengatur jam
   const JAM_PRESENSI = {
     masukMulai: "06:00",
     masukSelesai: "13:00",
-    pulangMulai: "15:00", // ganti "12:00" kalau mau pulang jam 12
+    pulangMulai: "15:00",  
   };
 
   const getJamNowHHMM = () => {
@@ -30,14 +30,13 @@ const Presensi = () => {
 
   const isBetween = (now, start, end) => now >= start && now <= end;
 
-  // ===== MASTER DATA =====
-  useEffect(() => {
+   useEffect(() => {
     axios.get(API_MASTERDATA).then((res) => {
       setDataOrang(
         res.data.map((s) => ({
           nis: String(s.nomor),
           nama: s.nama,
-          kategori: s.kategori?.kategori_nama, // string (AMAN)
+          kategori: s.kategori?.kategori_nama,  
         }))
       );
     });
@@ -64,13 +63,11 @@ const Presensi = () => {
     setIsProcessing(false);
   };
 
-  // ===== PROSES HADIR (MASUK / PULANG) =====
-  const prosesHadir = async (orang) => {
+   const prosesHadir = async (orang) => {
     const now = getJamNowHHMM();
     const presensi = getPresensiHariIni(orang);
 
-    // ❌ SUDAH IZIN
-    if (presensi?.kehadiran === "IZIN") {
+     if (presensi?.kehadiran === "IZIN") {
       return Swal.fire(
         "Sudah izin",
         "Hari ini Anda sudah izin dan tidak bisa hadir",
@@ -78,7 +75,7 @@ const Presensi = () => {
       );
     }
 
-    // ✅ ABSEN MASUK
+  
     if (!presensi) {
       if (
         !isBetween(
@@ -116,7 +113,7 @@ const Presensi = () => {
       });
     }
 
-    // ✅ ABSEN PULANG
+     
     if (!presensi.jamPulang) {
       if (now < JAM_PRESENSI.pulangMulai) {
         return Swal.fire(
@@ -143,8 +140,7 @@ const Presensi = () => {
       });
     }
 
-    // ❌ SUDAH KOMPLIT
-    Swal.fire(
+     Swal.fire(
       "Presensi lengkap",
       "Anda sudah absen masuk & pulang hari ini",
       "info"
@@ -152,8 +148,7 @@ const Presensi = () => {
     reset();
   };
 
-  // ===== PROSES IZIN =====
-  const prosesIzin = async (orang) => {
+   const prosesIzin = async (orang) => {
     if (!keteranganIzin.trim()) {
       setIsProcessing(false);
       return Swal.fire("Isi keterangan izin dulu", "", "warning");
@@ -206,8 +201,7 @@ const Presensi = () => {
 
     const presensi = getPresensiHariIni(orang);
 
-    // Gate keras
-    if (presensi?.kehadiran === "IZIN") {
+     if (presensi?.kehadiran === "IZIN") {
       return Swal.fire(
         "Sudah izin",
         "Hari ini Anda sudah izin",
@@ -230,15 +224,14 @@ const Presensi = () => {
     setOrangDitemukan(orang);
 
     if (pilihan === "HADIR") await prosesHadir(orang);
-    // IZIN diproses setelah isi keterangan
-  };
+   };
 
   return (
     <div className="min-h-screen bg-sky-200 flex justify-center items-center">
       <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-xl">
         <h1 className="text-2xl font-bold text-center">Presensi</h1>
 
-        {/* PILIHAN */}
+       
         <div className="flex gap-3 justify-center mt-4">
           {["HADIR", "IZIN"].map((p) => (
             <button
@@ -256,7 +249,7 @@ const Presensi = () => {
           ))}
         </div>
 
-        {/* INPUT NOMOR */}
+       
         {pilihan && (
           <input
             className="w-full border p-3 rounded-lg mt-4"

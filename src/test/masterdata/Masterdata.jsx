@@ -8,6 +8,8 @@ import { BASE_URL } from "../../config/api";
 
 const Masterdata = () => {
   const navigate = useNavigate();
+
+  //api
   const API_URL = `${BASE_URL}/masterdata`;
   const API_KATEGORI = `${BASE_URL}/kategoridata`;
 
@@ -18,7 +20,7 @@ const Masterdata = () => {
   const [visibleNomor, setVisibleNomor] = useState({});
 
 
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -74,7 +76,7 @@ const Masterdata = () => {
           .catch(() => {
             Swal.fire({
               icon: "warning",
-              title: "Gagal",
+              title: "Tidak dapat menghapus data",
               text: "Data sudah terisi di tagihan",
             });
           });
@@ -90,7 +92,6 @@ const Masterdata = () => {
     }));
   };
 
-  // Icon kategori
   const getCategoryIcon = (kategori) => {
     switch (kategori) {
       case "Siswa":
@@ -104,7 +105,6 @@ const Masterdata = () => {
     }
   };
 
-  // Filter data
   const filteredData = dataList.filter((data) => {
     const matchName = data.nama
       ?.toLowerCase()

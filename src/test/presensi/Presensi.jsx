@@ -16,11 +16,11 @@ const Presensi = () => {
   const API_PRESENSI = `${BASE_URL}/presensi`;
   const tanggalHariIni = new Date().toISOString().split("T")[0];
 
-  // mengatur jam
+  // set jam
   const JAM_PRESENSI = {
     masukMulai: "06:00",
-    masukSelesai: "13:00",
-    pulangMulai: "15:00",  
+    masukSelesai: "09:00",
+    pulangMulai: "12:00",  
   };
 
   const getJamNowHHMM = () => {
@@ -118,7 +118,7 @@ const Presensi = () => {
       if (now < JAM_PRESENSI.pulangMulai) {
         return Swal.fire(
           "Belum waktunya pulang",
-          `Pulang setelah jam ${JAM_PRESENSI.pulangMulai}`,
+          `Absen pulang setelah jam ${JAM_PRESENSI.pulangMulai}`,
           "warning"
         );
       }
